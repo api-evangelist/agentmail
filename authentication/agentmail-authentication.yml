@@ -1,0 +1,28 @@
+generated: '2026-07-17'
+method: searched
+source: openapi/agentmail-openapi-original.yml + https://docs.agentmail.to/api-reference
+  + https://docs.agentmail.to/permissions
+docs: https://docs.agentmail.to/permissions
+summary:
+  types:
+  - http
+  http_scheme: bearer
+  api_key_prefix: am_
+  header: 'Authorization: Bearer <api_key>'
+schemes:
+- name: Bearer
+  type: http
+  scheme: bearer
+  sources:
+  - openapi/agentmail-openapi-original.yml
+  description: API-key bearer token (prefix am_) sent in the Authorization header. Not
+    OAuth2 — no scopes; access is controlled by fine-grained per-key permissions.
+permissions:
+  model: fine-grained per-key permissions
+  scoping:
+  - Unrestricted (organization-wide) keys
+  - Pod-scoped keys (restricted to one pod)
+  - Inbox-scoped keys (restricted to a single inbox; added 2026-03-18)
+  docs: https://docs.agentmail.to/permissions
+  note: Permission escalation is rejected — a key cannot grant permissions it does not
+    itself hold (403 permission_escalation).
