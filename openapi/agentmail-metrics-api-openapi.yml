@@ -1,0 +1,309 @@
+openapi: 3.1.0
+info:
+  title: API Reference agent metrics API
+  version: 1.0.0
+servers:
+- url: https://api.agentmail.to
+  description: prod
+- url: https://x402.api.agentmail.to
+  description: prod-x402
+- url: https://mpp.api.agentmail.to
+  description: prod-mpp
+- url: https://api.agentmail.eu
+  description: eu-prod
+tags:
+- name: metrics
+paths:
+  /v0/metrics/events:
+    get:
+      operationId: query-events
+      summary: Query Events
+      description: 'Counts of email events (sent, delivered, bounced, etc.) over time for
+
+        the organization. Defaults to the last 24 hours; `start` must be within
+
+        the last 90 days, and a future `end` is clamped to now. Omit `period`
+
+        for individual event counts, or set it to sum counts into buckets of
+
+        that many seconds.
+
+
+        **CLI:**
+
+        ```bash
+
+        agentmail metrics list
+
+        ```'
+      tags:
+      - metrics
+      parameters:
+      - name: event_types
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/type_metrics:MetricEventTypes'
+      - name: start
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/type_metrics:Start'
+      - name: end
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/type_metrics:End'
+      - name: period
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/type_metrics:Period'
+      - name: limit
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/type_metrics:MetricLimit'
+      - name: descending
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/type_metrics:Descending'
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Response with status 200
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/type_metrics:QueryMetricsResponse'
+        '400':
+          description: Error response with status 400
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/type_:ValidationErrorResponse'
+  /v0/metrics/usage:
+    get:
+      operationId: query-usage
+      summary: Query Usage
+      description: 'Cumulative usage series for the organization. Each point is the running
+
+        total of the usage type at that timestamp, not the change within the
+
+        bucket. Defaults to the last 24 hours; `start` must be within the last
+
+        90 days, and a future `end` is clamped to now. The range divided by
+
+        `period` must not exceed 1000 buckets.'
+      tags:
+      - metrics
+      parameters:
+      - name: usage_types
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/type_metrics:UsageTypes'
+      - name: start
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/type_metrics:Start'
+      - name: end
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/type_metrics:End'
+      - name: period
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/type_metrics:Period'
+      - name: limit
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/type_metrics:MetricLimit'
+      - name: descending
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/type_metrics:Descending'
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Response with status 200
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/type_metrics:QueryUsageResponse'
+        '400':
+          description: Error response with status 400
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/type_:ValidationErrorResponse'
+components:
+  schemas:
+    type_metrics:Period:
+      type: integer
+      description: Size of each time bucket as a whole number of seconds, between 1 and 86400.
+      title: Period
+    type_metrics:Descending:
+      type: boolean
+      description: Sort in descending order.
+      title: Descending
+    type_metrics:Start:
+      type: string
+      format: date-time
+      description: Start timestamp for the query.
+      title: Start
+    type_metrics:UsageTypes:
+      type: array
+      items:
+        $ref: '#/components/schemas/type_metrics:UsageType'
+      description: List of usage metric types to query. Omit to query every type valid for the scope.
+      title: UsageTypes
+    type_metrics:UsageType:
+      type: string
+      enum:
+      - storage_bytes
+      - message_count
+      - thread_count
+      - inbox_count
+      - pod_count
+      - domain_count
+      description: 'Type of usage metric. Inbox-scoped queries carry `storage_bytes`,
+
+        `message_count`, and `thread_count`; pod-scoped queries add `inbox_count`
+
+        and `domain_count`; organization-scoped queries add `pod_count`.'
+      title: UsageType
+    type_:ErrorCode:
+      type: string
+      description: Stable, machine-readable error code in snake_case (for example, not_found or missing_permission). Branch on this rather than the message text.
+      title: ErrorCode
+    type_metrics:UsagePoint:
+      type: object
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+          description: Timestamp of the point.
+        value:
+          type: integer
+          format: int64
+          description: Cumulative value of the usage metric at the timestamp.
+      required:
+      - timestamp
+      - value
+      title: UsagePoint
+    type_:ValidationErrorResponse:
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/type_:ErrorName'
+        code:
+          $ref: '#/components/schemas/type_:ErrorCode'
+        message:
+          $ref: '#/components/schemas/type_:ErrorMessage'
+        errors:
+          description: Validation errors. Each entry has a path and a message identifying the invalid field.
+        fix:
+          $ref: '#/components/schemas/type_:ErrorFix'
+        docs:
+          $ref: '#/components/schemas/type_:ErrorDocs'
+      required:
+      - name
+      - errors
+      title: ValidationErrorResponse
+    type_metrics:MetricLimit:
+      type: integer
+      description: Limit on number of buckets to return.
+      title: MetricLimit
+    type_:ErrorFix:
+      type: string
+      description: The concrete next action that resolves the error.
+      title: ErrorFix
+    type_:ErrorMessage:
+      type: string
+      description: Error message.
+      title: ErrorMessage
+    type_metrics:MetricEventTypes:
+      type: array
+      items:
+        $ref: '#/components/schemas/type_metrics:MetricEventType'
+      description: List of metric event types to query.
+      title: MetricEventTypes
+    type_metrics:QueryUsageResponse:
+      type: object
+      additionalProperties:
+        type: array
+        items:
+          $ref: '#/components/schemas/type_metrics:UsagePoint'
+      description: Cumulative usage series grouped by usage type.
+      title: QueryUsageResponse
+    type_:ErrorName:
+      type: string
+      description: Name of error.
+      title: ErrorName
+    type_metrics:MetricBucket:
+      type: object
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+          description: Timestamp of the bucket.
+        count:
+          type: integer
+          description: Count of events in the bucket.
+      required:
+      - timestamp
+      - count
+      title: MetricBucket
+    type_metrics:MetricEventType:
+      type: string
+      enum:
+      - message.received
+      - message.received.spam
+      - message.received.blocked
+      - message.received.unauthenticated
+      - message.sent
+      - message.delivered
+      - message.bounced
+      - message.complained
+      - message.rejected
+      - domain.verified
+      description: Type of metric event.
+      title: MetricEventType
+    type_metrics:QueryMetricsResponse:
+      type: object
+      additionalProperties:
+        type: array
+        items:
+          $ref: '#/components/schemas/type_metrics:MetricBucket'
+      description: Metrics grouped by event type.
+      title: QueryMetricsResponse
+    type_:ErrorDocs:
+      type: string
+      description: Link to the error reference entry for this code.
+      title: ErrorDocs
+    type_metrics:End:
+      type: string
+      format: date-time
+      description: End timestamp for the query.
+      title: End
+  securitySchemes:
+    Bearer:
+      type: http
+      scheme: bearer

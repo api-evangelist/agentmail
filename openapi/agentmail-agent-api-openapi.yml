@@ -1,0 +1,211 @@
+openapi: 3.1.0
+info:
+  title: API Reference agent API
+  version: 1.0.0
+servers:
+- url: https://api.agentmail.to
+  description: prod
+- url: https://x402.api.agentmail.to
+  description: prod-x402
+- url: https://mpp.api.agentmail.to
+  description: prod-mpp
+- url: https://api.agentmail.eu
+  description: eu-prod
+tags:
+- name: agent
+paths:
+  /v0/agent/sign-up:
+    post:
+      operationId: sign-up
+      summary: Sign Up
+      description: 'Create a new agent organization with an inbox and API key. This endpoint is for signing up for the first time. If you''ve already signed up, you''re all set — just use your existing API key.
+
+
+        A 6-digit OTP is sent to the human''s email for verification.
+
+
+        This endpoint is idempotent. Calling it again with the same `human_email` will rotate the API key and resend the OTP if expired.
+
+
+        The returned API key has limited permissions until the organization is verified via the verify endpoint.
+
+
+        **CLI:**
+
+        ```bash
+
+        agentmail agent sign-up --human-email user@example.com --username my-agent
+
+        ```'
+      tags:
+      - agent
+      responses:
+        '200':
+          description: Response with status 200
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/type_agent:AgentSignupResponse'
+        '400':
+          description: Error response with status 400
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/type_:ValidationErrorResponse'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/type_agent:AgentSignupRequest'
+  /v0/agent/verify:
+    post:
+      operationId: verify
+      summary: Verify
+      description: 'Verify an agent organization using the 6-digit OTP sent to the human''s email during sign-up.
+
+
+        On success, the organization is upgraded from `agent_unverified` to `agent_verified`, the send allowlist is removed, and free plan entitlements are applied.
+
+
+        The OTP expires after 24 hours and allows a maximum of 10 attempts. If you run into any difficulties receiving the OTP code, you can also create an account on [console.agentmail.to](https://console.agentmail.to) using the human email address you provided to verify your account.
+
+
+        **CLI:**
+
+        ```bash
+
+        agentmail agent verify --otp-code 123456
+
+        ```'
+      tags:
+      - agent
+      parameters:
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Response with status 200
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/type_agent:AgentVerifyResponse'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/type_agent:AgentVerifyRequest'
+components:
+  schemas:
+    type_agent:AgentVerifyResponse:
+      type: object
+      properties:
+        verified:
+          type: boolean
+          description: Whether the organization was verified.
+      required:
+      - verified
+      description: Response after successful agent verification.
+      title: AgentVerifyResponse
+    type_agent:AgentSignupRequest:
+      type: object
+      properties:
+        human_email:
+          type: string
+          description: Email address of the human who owns the agent. A 6-digit OTP will be sent to this address.
+        username:
+          type: string
+          description: Username for the auto-created inbox (e.g. "my-agent" creates my-agent@agentmail.to).
+        source:
+          type: string
+          description: 'The SDK, framework, or platform issuing this sign-up (e.g. `agentmail-python`, `agentmail-cli`, `agentmail-mcp`).
+
+            Identifies the caller — answers "who is signing up".
+
+            Max 2048 characters.'
+        referrer:
+          type: string
+          description: 'The channel that drove this sign-up — where the agent or its developer discovered AgentMail
+
+            (e.g. `agent.email`, a partner URL, a campaign tag). Answers "where did this sign-up come from".
+
+            Max 2048 characters.'
+      required:
+      - human_email
+      - username
+      description: Request body to sign up an agent.
+      title: AgentSignupRequest
+    type_agent:AgentSignupResponse:
+      type: object
+      properties:
+        organization_id:
+          type: string
+          description: ID of the created organization.
+        inbox_id:
+          type: string
+          description: ID of the auto-created inbox.
+        api_key:
+          type: string
+          description: API key for authenticating subsequent requests. Store this securely, it cannot be retrieved again.
+      required:
+      - organization_id
+      - inbox_id
+      - api_key
+      description: Response after successful agent sign-up.
+      title: AgentSignupResponse
+    type_:ErrorFix:
+      type: string
+      description: The concrete next action that resolves the error.
+      title: ErrorFix
+    type_:ErrorMessage:
+      type: string
+      description: Error message.
+      title: ErrorMessage
+    type_:ErrorDocs:
+      type: string
+      description: Link to the error reference entry for this code.
+      title: ErrorDocs
+    type_:ErrorCode:
+      type: string
+      description: Stable, machine-readable error code in snake_case (for example, not_found or missing_permission). Branch on this rather than the message text.
+      title: ErrorCode
+    type_agent:AgentVerifyRequest:
+      type: object
+      properties:
+        otp_code:
+          type: string
+          description: 6-digit verification code sent to the human's email address.
+      required:
+      - otp_code
+      description: Request body to verify an agent with an OTP code.
+      title: AgentVerifyRequest
+    type_:ValidationErrorResponse:
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/type_:ErrorName'
+        code:
+          $ref: '#/components/schemas/type_:ErrorCode'
+        message:
+          $ref: '#/components/schemas/type_:ErrorMessage'
+        errors:
+          description: Validation errors. Each entry has a path and a message identifying the invalid field.
+        fix:
+          $ref: '#/components/schemas/type_:ErrorFix'
+        docs:
+          $ref: '#/components/schemas/type_:ErrorDocs'
+      required:
+      - name
+      - errors
+      title: ValidationErrorResponse
+    type_:ErrorName:
+      type: string
+      description: Name of error.
+      title: ErrorName
+  securitySchemes:
+    Bearer:
+      type: http
+      scheme: bearer

@@ -1,0 +1,528 @@
+openapi: 3.1.0
+info:
+  title: API Reference agent pods > drafts API
+  version: 1.0.0
+servers:
+- url: https://api.agentmail.to
+  description: prod
+- url: https://x402.api.agentmail.to
+  description: prod-x402
+- url: https://mpp.api.agentmail.to
+  description: prod-mpp
+- url: https://api.agentmail.eu
+  description: eu-prod
+tags:
+- name: pods > drafts
+paths:
+  /v0/pods/{pod_id}/drafts:
+    get:
+      operationId: list
+      summary: List Drafts
+      description: '**CLI:**
+
+        ```bash
+
+        agentmail pods:drafts list --pod-id <pod_id>
+
+        ```'
+      tags:
+      - pods > drafts
+      parameters:
+      - name: pod_id
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/type_pods:PodId'
+      - name: limit
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/type_:Limit'
+      - name: page_token
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/type_:PageToken'
+      - name: labels
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/type_:Labels'
+      - name: before
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/type_:Before'
+      - name: after
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/type_:After'
+      - name: ascending
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/type_:Ascending'
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Response with status 200
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/type_drafts:ListDraftsResponse'
+        '404':
+          description: Error response with status 404
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/type_:ErrorResponse'
+  /v0/pods/{pod_id}/drafts/{draft_id}:
+    get:
+      operationId: get
+      summary: Get Draft
+      description: '**CLI:**
+
+        ```bash
+
+        agentmail pods:drafts get --pod-id <pod_id> --draft-id <draft_id>
+
+        ```'
+      tags:
+      - pods > drafts
+      parameters:
+      - name: pod_id
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/type_pods:PodId'
+      - name: draft_id
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/type_drafts:DraftId'
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Response with status 200
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/type_drafts:Draft'
+        '404':
+          description: Error response with status 404
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/type_:ErrorResponse'
+  /v0/pods/{pod_id}/drafts/{draft_id}/attachments/{attachment_id}:
+    get:
+      operationId: get-attachment
+      summary: Get Attachment
+      description: '**CLI:**
+
+        ```bash
+
+        agentmail pods:drafts get-attachment --pod-id <pod_id> --draft-id <draft_id> --attachment-id <attachment_id>
+
+        ```'
+      tags:
+      - pods > drafts
+      parameters:
+      - name: pod_id
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/type_pods:PodId'
+      - name: draft_id
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/type_drafts:DraftId'
+      - name: attachment_id
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/type_attachments:AttachmentId'
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Response with status 200
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/type_attachments:AttachmentResponse'
+        '404':
+          description: Error response with status 404
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/type_:ErrorResponse'
+components:
+  schemas:
+    type_drafts:DraftAttachments:
+      type: array
+      items:
+        $ref: '#/components/schemas/type_attachments:Attachment'
+      description: Attachments in draft.
+      title: DraftAttachments
+    type_:After:
+      type: string
+      format: date-time
+      description: Timestamp after which to filter by.
+      title: After
+    type_attachments:Attachment:
+      type: object
+      properties:
+        attachment_id:
+          $ref: '#/components/schemas/type_attachments:AttachmentId'
+        filename:
+          $ref: '#/components/schemas/type_attachments:AttachmentFilename'
+        size:
+          $ref: '#/components/schemas/type_attachments:AttachmentSize'
+        content_type:
+          $ref: '#/components/schemas/type_attachments:AttachmentContentType'
+        content_disposition:
+          $ref: '#/components/schemas/type_attachments:AttachmentContentDisposition'
+        content_id:
+          $ref: '#/components/schemas/type_attachments:AttachmentContentId'
+      required:
+      - attachment_id
+      - size
+      title: Attachment
+    type_attachments:AttachmentResponse:
+      type: object
+      properties:
+        attachment_id:
+          $ref: '#/components/schemas/type_attachments:AttachmentId'
+        filename:
+          $ref: '#/components/schemas/type_attachments:AttachmentFilename'
+        size:
+          $ref: '#/components/schemas/type_attachments:AttachmentSize'
+        content_type:
+          $ref: '#/components/schemas/type_attachments:AttachmentContentType'
+        content_disposition:
+          $ref: '#/components/schemas/type_attachments:AttachmentContentDisposition'
+        content_id:
+          $ref: '#/components/schemas/type_attachments:AttachmentContentId'
+        download_url:
+          type: string
+          description: URL to download the attachment.
+        expires_at:
+          type: string
+          format: date-time
+          description: Time at which the download URL expires.
+      required:
+      - attachment_id
+      - size
+      - download_url
+      - expires_at
+      title: AttachmentResponse
+    type_drafts:DraftBcc:
+      type: array
+      items:
+        type: string
+      description: Addresses of BCC recipients. In format `username@domain.com` or `Display Name <username@domain.com>`.
+      title: DraftBcc
+    type_drafts:DraftCc:
+      type: array
+      items:
+        type: string
+      description: Addresses of CC recipients. In format `username@domain.com` or `Display Name <username@domain.com>`.
+      title: DraftCc
+    type_pods:PodId:
+      type: string
+      description: ID of pod.
+      title: PodId
+    type_:Before:
+      type: string
+      format: date-time
+      description: Timestamp before which to filter by.
+      title: Before
+    type_drafts:DraftForwardOf:
+      type: string
+      description: ID of message being forwarded.
+      title: DraftForwardOf
+    type_attachments:AttachmentSize:
+      type: integer
+      description: Size of attachment in bytes.
+      title: AttachmentSize
+    type_drafts:DraftTo:
+      type: array
+      items:
+        type: string
+      description: Addresses of recipients. In format `username@domain.com` or `Display Name <username@domain.com>`.
+      title: DraftTo
+    type_:Count:
+      type: integer
+      description: Number of items returned.
+      title: Count
+    type_attachments:AttachmentContentId:
+      type: string
+      description: Content ID of attachment.
+      title: AttachmentContentId
+    type_:ErrorCode:
+      type: string
+      description: Stable, machine-readable error code in snake_case (for example, not_found or missing_permission). Branch on this rather than the message text.
+      title: ErrorCode
+    type_attachments:AttachmentId:
+      type: string
+      description: ID of attachment.
+      title: AttachmentId
+    type_attachments:AttachmentFilename:
+      type: string
+      description: Filename of attachment.
+      title: AttachmentFilename
+    type_attachments:AttachmentContentDisposition:
+      type: string
+      enum:
+      - inline
+      - attachment
+      description: Content disposition of attachment.
+      title: AttachmentContentDisposition
+    type_drafts:DraftId:
+      type: string
+      description: ID of draft.
+      title: DraftId
+    type_inboxes:InboxId:
+      type: string
+      description: The ID of the inbox.
+      title: InboxId
+    type_drafts:DraftLabels:
+      type: array
+      items:
+        type: string
+      description: Labels of draft.
+      title: DraftLabels
+    type_:ErrorFix:
+      type: string
+      description: The concrete next action that resolves the error.
+      title: ErrorFix
+    type_drafts:DraftUpdatedAt:
+      type: string
+      format: date-time
+      description: Time at which draft was last updated.
+      title: DraftUpdatedAt
+    type_drafts:DraftSendStatus:
+      type: string
+      enum:
+      - scheduled
+      - sending
+      - failed
+      description: Schedule send status of draft.
+      title: DraftSendStatus
+    type_:ErrorMessage:
+      type: string
+      description: Error message.
+      title: ErrorMessage
+    type_drafts:ListDraftsResponse:
+      type: object
+      properties:
+        count:
+          $ref: '#/components/schemas/type_:Count'
+        limit:
+          $ref: '#/components/schemas/type_:Limit'
+        next_page_token:
+          $ref: '#/components/schemas/type_:PageToken'
+        drafts:
+          type: array
+          items:
+            $ref: '#/components/schemas/type_drafts:DraftItem'
+          description: Ordered by `updated_at` descending.
+      required:
+      - count
+      - drafts
+      title: ListDraftsResponse
+    type_drafts:DraftSubject:
+      type: string
+      description: Subject of draft.
+      title: DraftSubject
+    type_drafts:DraftText:
+      type: string
+      description: Plain text body of draft.
+      title: DraftText
+    type_:Limit:
+      type: integer
+      description: Limit of number of items returned.
+      title: Limit
+    type_drafts:DraftSendAt:
+      type: string
+      format: date-time
+      description: Time at which to schedule send draft.
+      title: DraftSendAt
+    type_drafts:DraftReplyTo:
+      type: array
+      items:
+        type: string
+      description: Reply-to addresses. In format `username@domain.com` or `Display Name <username@domain.com>`.
+      title: DraftReplyTo
+    type_:PageToken:
+      type: string
+      description: Page token for pagination.
+      title: PageToken
+    type_:ErrorName:
+      type: string
+      description: Name of error.
+      title: ErrorName
+    type_drafts:DraftItem:
+      type: object
+      properties:
+        inbox_id:
+          $ref: '#/components/schemas/type_inboxes:InboxId'
+        draft_id:
+          $ref: '#/components/schemas/type_drafts:DraftId'
+        labels:
+          $ref: '#/components/schemas/type_drafts:DraftLabels'
+        to:
+          $ref: '#/components/schemas/type_drafts:DraftTo'
+        cc:
+          $ref: '#/components/schemas/type_drafts:DraftCc'
+        bcc:
+          $ref: '#/components/schemas/type_drafts:DraftBcc'
+        subject:
+          $ref: '#/components/schemas/type_drafts:DraftSubject'
+        preview:
+          $ref: '#/components/schemas/type_drafts:DraftPreview'
+        attachments:
+          $ref: '#/components/schemas/type_drafts:DraftAttachments'
+        in_reply_to:
+          $ref: '#/components/schemas/type_drafts:DraftInReplyTo'
+        forward_of:
+          $ref: '#/components/schemas/type_drafts:DraftForwardOf'
+        send_status:
+          $ref: '#/components/schemas/type_drafts:DraftSendStatus'
+        send_at:
+          $ref: '#/components/schemas/type_drafts:DraftSendAt'
+        updated_at:
+          $ref: '#/components/schemas/type_drafts:DraftUpdatedAt'
+      required:
+      - inbox_id
+      - draft_id
+      - labels
+      - updated_at
+      title: DraftItem
+    type_drafts:DraftPreview:
+      type: string
+      description: Text preview of draft.
+      title: DraftPreview
+    type_drafts:DraftClientId:
+      type: string
+      description: Client ID of draft.
+      title: DraftClientId
+    type_:ErrorDocs:
+      type: string
+      description: Link to the error reference entry for this code.
+      title: ErrorDocs
+    type_drafts:DraftHtml:
+      type: string
+      description: HTML body of draft.
+      title: DraftHtml
+    type_attachments:AttachmentContentType:
+      type: string
+      description: Content type of attachment.
+      title: AttachmentContentType
+    type_drafts:Draft:
+      type: object
+      properties:
+        inbox_id:
+          $ref: '#/components/schemas/type_inboxes:InboxId'
+        draft_id:
+          $ref: '#/components/schemas/type_drafts:DraftId'
+        client_id:
+          $ref: '#/components/schemas/type_drafts:DraftClientId'
+        labels:
+          $ref: '#/components/schemas/type_drafts:DraftLabels'
+        reply_to:
+          $ref: '#/components/schemas/type_drafts:DraftReplyTo'
+        to:
+          $ref: '#/components/schemas/type_drafts:DraftTo'
+        cc:
+          $ref: '#/components/schemas/type_drafts:DraftCc'
+        bcc:
+          $ref: '#/components/schemas/type_drafts:DraftBcc'
+        subject:
+          $ref: '#/components/schemas/type_drafts:DraftSubject'
+        preview:
+          $ref: '#/components/schemas/type_drafts:DraftPreview'
+        text:
+          $ref: '#/components/schemas/type_drafts:DraftText'
+        html:
+          $ref: '#/components/schemas/type_drafts:DraftHtml'
+        attachments:
+          $ref: '#/components/schemas/type_drafts:DraftAttachments'
+        in_reply_to:
+          $ref: '#/components/schemas/type_drafts:DraftInReplyTo'
+        forward_of:
+          $ref: '#/components/schemas/type_drafts:DraftForwardOf'
+        references:
+          type: array
+          items:
+            type: string
+          description: IDs of previous messages in thread.
+        send_status:
+          $ref: '#/components/schemas/type_drafts:DraftSendStatus'
+        send_at:
+          $ref: '#/components/schemas/type_drafts:DraftSendAt'
+        updated_at:
+          $ref: '#/components/schemas/type_drafts:DraftUpdatedAt'
+        created_at:
+          type: string
+          format: date-time
+          description: Time at which draft was created.
+      required:
+      - inbox_id
+      - draft_id
+      - labels
+      - updated_at
+      - created_at
+      title: Draft
+    type_:ErrorResponse:
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/type_:ErrorName'
+        code:
+          $ref: '#/components/schemas/type_:ErrorCode'
+        message:
+          $ref: '#/components/schemas/type_:ErrorMessage'
+        fix:
+          $ref: '#/components/schemas/type_:ErrorFix'
+        docs:
+          $ref: '#/components/schemas/type_:ErrorDocs'
+      required:
+      - name
+      - message
+      title: ErrorResponse
+    type_:Ascending:
+      type: boolean
+      description: Sort in ascending temporal order.
+      title: Ascending
+    type_drafts:DraftInReplyTo:
+      type: string
+      description: ID of message being replied to.
+      title: DraftInReplyTo
+    type_:Labels:
+      type: array
+      items:
+        type: string
+      description: Labels to filter by.
+      title: Labels
+  securitySchemes:
+    Bearer:
+      type: http
+      scheme: bearer

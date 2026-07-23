@@ -1,0 +1,438 @@
+openapi: 3.1.0
+info:
+  title: API Reference agent pods > api-keys API
+  version: 1.0.0
+servers:
+- url: https://api.agentmail.to
+  description: prod
+- url: https://x402.api.agentmail.to
+  description: prod-x402
+- url: https://mpp.api.agentmail.to
+  description: prod-mpp
+- url: https://api.agentmail.eu
+  description: eu-prod
+tags:
+- name: pods > api-keys
+paths:
+  /v0/pods/{pod_id}/api-keys:
+    get:
+      operationId: list
+      summary: List API Keys
+      description: '**CLI:**
+
+        ```bash
+
+        agentmail pods:api-keys list --pod-id <pod_id>
+
+        ```'
+      tags:
+      - pods > api-keys
+      parameters:
+      - name: pod_id
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/type_pods:PodId'
+      - name: limit
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/type_:Limit'
+      - name: page_token
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/type_:PageToken'
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Response with status 200
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/type_api-keys:ListApiKeysResponse'
+        '404':
+          description: Error response with status 404
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/type_:ErrorResponse'
+    post:
+      operationId: create
+      summary: Create API Key
+      description: '**CLI:**
+
+        ```bash
+
+        agentmail pods:api-keys create --pod-id <pod_id> --name "My Key"
+
+        ```'
+      tags:
+      - pods > api-keys
+      parameters:
+      - name: pod_id
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/type_pods:PodId'
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Response with status 200
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/type_api-keys:CreateApiKeyResponse'
+        '400':
+          description: Error response with status 400
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/type_:ValidationErrorResponse'
+        '404':
+          description: Error response with status 404
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/type_:ErrorResponse'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/type_api-keys:CreateApiKeyRequest'
+  /v0/pods/{pod_id}/api-keys/{api_key_id}:
+    delete:
+      operationId: delete
+      summary: Delete API Key
+      description: '**CLI:**
+
+        ```bash
+
+        agentmail pods:api-keys delete --pod-id <pod_id> --api-key-id <api_key_id>
+
+        ```'
+      tags:
+      - pods > api-keys
+      parameters:
+      - name: pod_id
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/type_pods:PodId'
+      - name: api_key_id
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/type_api-keys:ApiKeyId'
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+        '404':
+          description: Error response with status 404
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/type_:ErrorResponse'
+components:
+  schemas:
+    type_pods:PodId:
+      type: string
+      description: ID of pod.
+      title: PodId
+    type_api-keys:ApiKey:
+      type: object
+      properties:
+        api_key_id:
+          $ref: '#/components/schemas/type_api-keys:ApiKeyId'
+        prefix:
+          $ref: '#/components/schemas/type_api-keys:Prefix'
+        name:
+          $ref: '#/components/schemas/type_api-keys:Name'
+        pod_id:
+          type: string
+          description: Pod ID the api key is scoped to. If set, the key can only access resources within this pod.
+        inbox_id:
+          type: string
+          description: Inbox ID the api key is scoped to. If set, the key can only access resources within this inbox.
+        used_at:
+          type: string
+          format: date-time
+          description: Time at which api key was last used.
+        permissions:
+          $ref: '#/components/schemas/type_api-keys:ApiKeyPermissions'
+        created_at:
+          $ref: '#/components/schemas/type_api-keys:CreatedAt'
+      required:
+      - api_key_id
+      - prefix
+      - name
+      - created_at
+      title: ApiKey
+    type_:Count:
+      type: integer
+      description: Number of items returned.
+      title: Count
+    type_api-keys:Prefix:
+      type: string
+      description: Prefix of api key.
+      title: Prefix
+    type_:ErrorCode:
+      type: string
+      description: Stable, machine-readable error code in snake_case (for example, not_found or missing_permission). Branch on this rather than the message text.
+      title: ErrorCode
+    type_api-keys:CreateApiKeyResponse:
+      type: object
+      properties:
+        api_key_id:
+          $ref: '#/components/schemas/type_api-keys:ApiKeyId'
+        api_key:
+          type: string
+          description: API key.
+        prefix:
+          $ref: '#/components/schemas/type_api-keys:Prefix'
+        name:
+          $ref: '#/components/schemas/type_api-keys:Name'
+        pod_id:
+          type: string
+          description: Pod ID the api key is scoped to.
+        inbox_id:
+          type: string
+          description: Inbox ID the api key is scoped to.
+        permissions:
+          $ref: '#/components/schemas/type_api-keys:ApiKeyPermissions'
+        created_at:
+          $ref: '#/components/schemas/type_api-keys:CreatedAt'
+      required:
+      - api_key_id
+      - api_key
+      - prefix
+      - name
+      - created_at
+      title: CreateApiKeyResponse
+    type_:ValidationErrorResponse:
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/type_:ErrorName'
+        code:
+          $ref: '#/components/schemas/type_:ErrorCode'
+        message:
+          $ref: '#/components/schemas/type_:ErrorMessage'
+        errors:
+          description: Validation errors. Each entry has a path and a message identifying the invalid field.
+        fix:
+          $ref: '#/components/schemas/type_:ErrorFix'
+        docs:
+          $ref: '#/components/schemas/type_:ErrorDocs'
+      required:
+      - name
+      - errors
+      title: ValidationErrorResponse
+    type_:ErrorFix:
+      type: string
+      description: The concrete next action that resolves the error.
+      title: ErrorFix
+    type_:ErrorMessage:
+      type: string
+      description: Error message.
+      title: ErrorMessage
+    type_:Limit:
+      type: integer
+      description: Limit of number of items returned.
+      title: Limit
+    type_api-keys:Name:
+      type: string
+      description: Name of api key.
+      title: Name
+    type_:PageToken:
+      type: string
+      description: Page token for pagination.
+      title: PageToken
+    type_:ErrorName:
+      type: string
+      description: Name of error.
+      title: ErrorName
+    type_api-keys:CreateApiKeyRequest:
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/type_api-keys:Name'
+        permissions:
+          $ref: '#/components/schemas/type_api-keys:ApiKeyPermissions'
+      title: CreateApiKeyRequest
+    type_api-keys:ApiKeyId:
+      type: string
+      description: ID of api key.
+      title: ApiKeyId
+    type_:ErrorDocs:
+      type: string
+      description: Link to the error reference entry for this code.
+      title: ErrorDocs
+    type_api-keys:ApiKeyPermissions:
+      type: object
+      properties:
+        inbox_read:
+          type: boolean
+          description: Read inbox details.
+        inbox_create:
+          type: boolean
+          description: Create new inboxes.
+        inbox_update:
+          type: boolean
+          description: Update inbox settings.
+        inbox_delete:
+          type: boolean
+          description: Delete inboxes.
+        thread_read:
+          type: boolean
+          description: Read threads.
+        thread_delete:
+          type: boolean
+          description: Delete threads.
+        message_read:
+          type: boolean
+          description: Read messages.
+        message_send:
+          type: boolean
+          description: Send messages.
+        message_update:
+          type: boolean
+          description: Update message labels.
+        label_spam_read:
+          type: boolean
+          description: Access messages labeled spam.
+        label_blocked_read:
+          type: boolean
+          description: Access messages labeled blocked.
+        label_trash_read:
+          type: boolean
+          description: Access messages labeled trash.
+        draft_read:
+          type: boolean
+          description: Read drafts.
+        draft_create:
+          type: boolean
+          description: Create drafts.
+        draft_update:
+          type: boolean
+          description: Update drafts.
+        draft_delete:
+          type: boolean
+          description: Delete drafts.
+        draft_send:
+          type: boolean
+          description: Send drafts.
+        webhook_read:
+          type: boolean
+          description: Read webhook configurations.
+        webhook_create:
+          type: boolean
+          description: Create webhooks.
+        webhook_update:
+          type: boolean
+          description: Update webhooks.
+        webhook_delete:
+          type: boolean
+          description: Delete webhooks.
+        domain_read:
+          type: boolean
+          description: Read domain details.
+        domain_create:
+          type: boolean
+          description: Create domains.
+        domain_update:
+          type: boolean
+          description: Update domains.
+        domain_delete:
+          type: boolean
+          description: Delete domains.
+        list_entry_read:
+          type: boolean
+          description: Read list entries.
+        list_entry_create:
+          type: boolean
+          description: Create list entries.
+        list_entry_delete:
+          type: boolean
+          description: Delete list entries.
+        metrics_read:
+          type: boolean
+          description: Read metrics.
+        api_key_read:
+          type: boolean
+          description: Read API keys.
+        api_key_create:
+          type: boolean
+          description: Create API keys.
+        api_key_delete:
+          type: boolean
+          description: Delete API keys.
+        pod_read:
+          type: boolean
+          description: Read pods.
+        pod_create:
+          type: boolean
+          description: Create pods.
+        pod_delete:
+          type: boolean
+          description: Delete pods.
+      description: Granular permissions for the API key. When ommitted all permissions are granted. Otherwise, only permissions set to true are granted.
+      title: ApiKeyPermissions
+    type_:ErrorResponse:
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/type_:ErrorName'
+        code:
+          $ref: '#/components/schemas/type_:ErrorCode'
+        message:
+          $ref: '#/components/schemas/type_:ErrorMessage'
+        fix:
+          $ref: '#/components/schemas/type_:ErrorFix'
+        docs:
+          $ref: '#/components/schemas/type_:ErrorDocs'
+      required:
+      - name
+      - message
+      title: ErrorResponse
+    type_api-keys:CreatedAt:
+      type: string
+      format: date-time
+      description: Time at which api key was created.
+      title: CreatedAt
+    type_api-keys:ListApiKeysResponse:
+      type: object
+      properties:
+        count:
+          $ref: '#/components/schemas/type_:Count'
+        next_page_token:
+          $ref: '#/components/schemas/type_:PageToken'
+        api_keys:
+          type: array
+          items:
+            $ref: '#/components/schemas/type_api-keys:ApiKey'
+          description: Ordered by `created_at` descending.
+      required:
+      - count
+      - api_keys
+      title: ListApiKeysResponse
+  securitySchemes:
+    Bearer:
+      type: http
+      scheme: bearer

@@ -1,0 +1,217 @@
+openapi: 3.1.0
+info:
+  title: API Reference agent inboxes > events API
+  version: 1.0.0
+servers:
+- url: https://api.agentmail.to
+  description: prod
+- url: https://x402.api.agentmail.to
+  description: prod-x402
+- url: https://mpp.api.agentmail.to
+  description: prod-mpp
+- url: https://api.agentmail.eu
+  description: eu-prod
+tags:
+- name: inboxes > events
+paths:
+  /v0/inboxes/{inbox_id}/events:
+    get:
+      operationId: list
+      summary: List Inbox Events
+      description: 'List label change events for an inbox. Returns events in reverse chronological order by default. Use for IMAP UID projection or audit logging.
+
+
+        **CLI:**
+
+        ```bash
+
+        agentmail inboxes:events list --inbox-id <inbox_id>
+
+        ```'
+      tags:
+      - inboxes > events
+      parameters:
+      - name: inbox_id
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/type_inboxes:InboxId'
+      - name: limit
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/type_:Limit'
+      - name: page_token
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/type_:PageToken'
+      - name: ascending
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/type_:Ascending'
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Response with status 200
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/type_inbox-events:ListInboxEventsResponse'
+        '404':
+          description: Error response with status 404
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/type_:ErrorResponse'
+components:
+  schemas:
+    type_:Count:
+      type: integer
+      description: Number of items returned.
+      title: Count
+    type_:ErrorFix:
+      type: string
+      description: The concrete next action that resolves the error.
+      title: ErrorFix
+    type_:ErrorMessage:
+      type: string
+      description: Error message.
+      title: ErrorMessage
+    type_:ErrorDocs:
+      type: string
+      description: Link to the error reference entry for this code.
+      title: ErrorDocs
+    type_inbox-events:ListInboxEventsResponse:
+      type: object
+      properties:
+        count:
+          $ref: '#/components/schemas/type_:Count'
+        limit:
+          $ref: '#/components/schemas/type_:Limit'
+        next_page_token:
+          $ref: '#/components/schemas/type_:PageToken'
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/type_inbox-events:InboxEvent'
+          description: Ordered by `event_id` descending.
+      required:
+      - count
+      - events
+      title: ListInboxEventsResponse
+    type_inbox-events:InboxEventId:
+      type: string
+      description: ID of event.
+      title: InboxEventId
+    type_:ErrorCode:
+      type: string
+      description: Stable, machine-readable error code in snake_case (for example, not_found or missing_permission). Branch on this rather than the message text.
+      title: ErrorCode
+    type_:ErrorResponse:
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/type_:ErrorName'
+        code:
+          $ref: '#/components/schemas/type_:ErrorCode'
+        message:
+          $ref: '#/components/schemas/type_:ErrorMessage'
+        fix:
+          $ref: '#/components/schemas/type_:ErrorFix'
+        docs:
+          $ref: '#/components/schemas/type_:ErrorDocs'
+      required:
+      - name
+      - message
+      title: ErrorResponse
+    type_:Limit:
+      type: integer
+      description: Limit of number of items returned.
+      title: Limit
+    type_inbox-events:InboxEvent:
+      type: object
+      properties:
+        organization_id:
+          $ref: '#/components/schemas/type_:OrganizationId'
+        pod_id:
+          type: string
+          description: ID of pod.
+        inbox_id:
+          $ref: '#/components/schemas/type_inboxes:InboxId'
+        event_id:
+          $ref: '#/components/schemas/type_inbox-events:InboxEventId'
+        event_type:
+          $ref: '#/components/schemas/type_inbox-events:InboxEventType'
+        message_id:
+          type: string
+          description: ID of message.
+        label:
+          type: string
+          description: Label added or removed.
+        event_at:
+          type: string
+          format: date-time
+          description: Time at which the event occurred.
+        created_at:
+          type: string
+          format: date-time
+          description: Time at which the event was recorded.
+      required:
+      - organization_id
+      - pod_id
+      - inbox_id
+      - event_id
+      - event_type
+      - message_id
+      - label
+      - event_at
+      - created_at
+      title: InboxEvent
+    type_inbox-events:InboxEventType:
+      type: string
+      enum:
+      - label.added
+      - label.removed
+      description: 'Type of inbox event. Wire format is dot.case to match the
+
+        convention used by webhook events (`message.received`,
+
+        `domain.verified`, etc. in events.yml). Pre-2026-04 these were
+
+        `label_added`/`label_removed` (snake_case). The Fern enum''s `name`
+
+        field stays uppercase-snake (Fern convention); only the wire
+
+        `value` changed.'
+      title: InboxEventType
+    type_inboxes:InboxId:
+      type: string
+      description: The ID of the inbox.
+      title: InboxId
+    type_:Ascending:
+      type: boolean
+      description: Sort in ascending temporal order.
+      title: Ascending
+    type_:PageToken:
+      type: string
+      description: Page token for pagination.
+      title: PageToken
+    type_:ErrorName:
+      type: string
+      description: Name of error.
+      title: ErrorName
+    type_:OrganizationId:
+      type: string
+      description: ID of organization.
+      title: OrganizationId
+  securitySchemes:
+    Bearer:
+      type: http
+      scheme: bearer

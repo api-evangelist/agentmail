@@ -1,0 +1,468 @@
+openapi: 3.1.0
+info:
+  title: API Reference agent inboxes > webhooks API
+  version: 1.0.0
+servers:
+- url: https://api.agentmail.to
+  description: prod
+- url: https://x402.api.agentmail.to
+  description: prod-x402
+- url: https://mpp.api.agentmail.to
+  description: prod-mpp
+- url: https://api.agentmail.eu
+  description: eu-prod
+tags:
+- name: inboxes > webhooks
+paths:
+  /v0/inboxes/{inbox_id}/webhooks:
+    get:
+      operationId: list
+      summary: List Webhooks
+      description: '**CLI:**
+
+        ```bash
+
+        agentmail inboxes:webhooks list --inbox-id <inbox_id>
+
+        ```'
+      tags:
+      - inboxes > webhooks
+      parameters:
+      - name: inbox_id
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/type_inboxes:InboxId'
+      - name: limit
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/type_:Limit'
+      - name: page_token
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/type_:PageToken'
+      - name: ascending
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/type_:Ascending'
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Response with status 200
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/type_webhooks:ListWebhooksResponse'
+    post:
+      operationId: create
+      summary: Create Webhook
+      description: 'Create a webhook scoped to this inbox.
+
+
+        **CLI:**
+
+        ```bash
+
+        agentmail inboxes:webhooks create --inbox-id <inbox_id> --url https://example.com/webhook --event-type message.received
+
+        ```'
+      tags:
+      - inboxes > webhooks
+      parameters:
+      - name: inbox_id
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/type_inboxes:InboxId'
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Response with status 200
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/type_webhooks:Webhook'
+        '400':
+          description: Error response with status 400
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/type_:ValidationErrorResponse'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/type_webhooks:CreateInboxWebhookRequest'
+  /v0/inboxes/{inbox_id}/webhooks/{webhook_id}:
+    get:
+      operationId: get
+      summary: Get Webhook
+      description: '**CLI:**
+
+        ```bash
+
+        agentmail inboxes:webhooks get --inbox-id <inbox_id> --webhook-id <webhook_id>
+
+        ```'
+      tags:
+      - inboxes > webhooks
+      parameters:
+      - name: inbox_id
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/type_inboxes:InboxId'
+      - name: webhook_id
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/type_webhooks:WebhookId'
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Response with status 200
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/type_webhooks:Webhook'
+        '404':
+          description: Error response with status 404
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/type_:ErrorResponse'
+    patch:
+      operationId: update
+      summary: Update Webhook
+      description: '**CLI:**
+
+        ```bash
+
+        agentmail inboxes:webhooks update --inbox-id <inbox_id> --webhook-id <webhook_id> --event-type message.received
+
+        ```'
+      tags:
+      - inboxes > webhooks
+      parameters:
+      - name: inbox_id
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/type_inboxes:InboxId'
+      - name: webhook_id
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/type_webhooks:WebhookId'
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Response with status 200
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/type_webhooks:Webhook'
+        '400':
+          description: Error response with status 400
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/type_:ValidationErrorResponse'
+        '404':
+          description: Error response with status 404
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/type_:ErrorResponse'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/type_webhooks:UpdateInboxWebhookRequest'
+    delete:
+      operationId: delete
+      summary: Delete Webhook
+      description: '**CLI:**
+
+        ```bash
+
+        agentmail inboxes:webhooks delete --inbox-id <inbox_id> --webhook-id <webhook_id>
+
+        ```'
+      tags:
+      - inboxes > webhooks
+      parameters:
+      - name: inbox_id
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/type_inboxes:InboxId'
+      - name: webhook_id
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/type_webhooks:WebhookId'
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+        '404':
+          description: Error response with status 404
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/type_:ErrorResponse'
+components:
+  schemas:
+    type_webhooks:ListWebhooksResponse:
+      type: object
+      properties:
+        count:
+          $ref: '#/components/schemas/type_:Count'
+        limit:
+          $ref: '#/components/schemas/type_:Limit'
+        next_page_token:
+          $ref: '#/components/schemas/type_:PageToken'
+        webhooks:
+          type: array
+          items:
+            $ref: '#/components/schemas/type_webhooks:Webhook'
+          description: Ordered by `created_at` descending.
+      required:
+      - count
+      - webhooks
+      title: ListWebhooksResponse
+    type_:Count:
+      type: integer
+      description: Number of items returned.
+      title: Count
+    type_webhooks:CreateWebhookEventTypes:
+      $ref: '#/components/schemas/type_events:EventTypes'
+      description: 'Full list of event types this webhook should receive. At least one type is required. Send every type you
+
+        want in this array (not incremental). See [Webhooks overview](https://docs.agentmail.to/webhooks-overview)
+
+        for spam, blocked, and unauthenticated events and required permissions.'
+      title: CreateWebhookEventTypes
+    type_webhooks:UpdateInboxWebhookRequest:
+      type: object
+      properties:
+        event_types:
+          $ref: '#/components/schemas/type_webhooks:UpdateWebhookEventTypes'
+      description: Update an inbox-scoped webhook. It is fixed to its inbox, so only `event_types` can change.
+      title: UpdateInboxWebhookRequest
+    type_:ErrorCode:
+      type: string
+      description: Stable, machine-readable error code in snake_case (for example, not_found or missing_permission). Branch on this rather than the message text.
+      title: ErrorCode
+    type_webhooks:UpdateWebhookEventTypes:
+      $ref: '#/components/schemas/type_events:EventTypes'
+      description: 'When you send a non-empty list, it replaces the webhook''s subscribed event types in full (the same
+
+        "set the list" behavior as create). It is not a merge or diff: include every event type you want after
+
+        the update. Sending a one-element array means the webhook will only receive that one type afterward.
+
+        Omit this field or send an empty array to leave event types unchanged. Clearing all types with an empty
+
+        list is not supported. Subscribing to `message.received.spam`, `message.received.blocked`, or
+
+        `message.received.unauthenticated` requires the matching label permission on the API key.'
+      title: UpdateWebhookEventTypes
+    type_events:EventType:
+      type: string
+      enum:
+      - message.received
+      - message.received.spam
+      - message.received.blocked
+      - message.received.unauthenticated
+      - message.sent
+      - message.delivered
+      - message.bounced
+      - message.complained
+      - message.rejected
+      - domain.verified
+      title: EventType
+    type_webhooks:Url:
+      type: string
+      description: URL of webhook endpoint.
+      title: Url
+    type_inboxes:InboxId:
+      type: string
+      description: The ID of the inbox.
+      title: InboxId
+    type_events:InboxIds:
+      type: array
+      items:
+        type: string
+      description: Inboxes for which to send events. Maximum 10 per webhook.
+      title: InboxIds
+    type_:ValidationErrorResponse:
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/type_:ErrorName'
+        code:
+          $ref: '#/components/schemas/type_:ErrorCode'
+        message:
+          $ref: '#/components/schemas/type_:ErrorMessage'
+        errors:
+          description: Validation errors. Each entry has a path and a message identifying the invalid field.
+        fix:
+          $ref: '#/components/schemas/type_:ErrorFix'
+        docs:
+          $ref: '#/components/schemas/type_:ErrorDocs'
+      required:
+      - name
+      - errors
+      title: ValidationErrorResponse
+    type_events:PodIds:
+      type: array
+      items:
+        type: string
+      description: Pods for which to send events. Maximum 10 per webhook.
+      title: PodIds
+    type_:ErrorFix:
+      type: string
+      description: The concrete next action that resolves the error.
+      title: ErrorFix
+    type_:ErrorMessage:
+      type: string
+      description: Error message.
+      title: ErrorMessage
+    type_:Limit:
+      type: integer
+      description: Limit of number of items returned.
+      title: Limit
+    type_events:EventTypes:
+      type: array
+      items:
+        $ref: '#/components/schemas/type_events:EventType'
+      description: Event types for which to send events.
+      title: EventTypes
+    type_:PageToken:
+      type: string
+      description: Page token for pagination.
+      title: PageToken
+    type_:ErrorName:
+      type: string
+      description: Name of error.
+      title: ErrorName
+    type_webhooks:CreateInboxWebhookRequest:
+      type: object
+      properties:
+        url:
+          $ref: '#/components/schemas/type_webhooks:Url'
+        event_types:
+          $ref: '#/components/schemas/type_webhooks:CreateWebhookEventTypes'
+        client_id:
+          $ref: '#/components/schemas/type_webhooks:ClientId'
+      required:
+      - url
+      - event_types
+      description: 'Create a webhook scoped to an inbox. The inbox comes from the path, so `inbox_ids` and `pod_ids`
+
+        are not accepted.'
+      title: CreateInboxWebhookRequest
+    type_:ErrorDocs:
+      type: string
+      description: Link to the error reference entry for this code.
+      title: ErrorDocs
+    type_:ErrorResponse:
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/type_:ErrorName'
+        code:
+          $ref: '#/components/schemas/type_:ErrorCode'
+        message:
+          $ref: '#/components/schemas/type_:ErrorMessage'
+        fix:
+          $ref: '#/components/schemas/type_:ErrorFix'
+        docs:
+          $ref: '#/components/schemas/type_:ErrorDocs'
+      required:
+      - name
+      - message
+      title: ErrorResponse
+    type_webhooks:WebhookId:
+      type: string
+      description: ID of webhook.
+      title: WebhookId
+    type_webhooks:Webhook:
+      type: object
+      properties:
+        webhook_id:
+          $ref: '#/components/schemas/type_webhooks:WebhookId'
+        url:
+          $ref: '#/components/schemas/type_webhooks:Url'
+        event_types:
+          $ref: '#/components/schemas/type_events:EventTypes'
+        pod_ids:
+          $ref: '#/components/schemas/type_events:PodIds'
+        inbox_ids:
+          $ref: '#/components/schemas/type_events:InboxIds'
+        secret:
+          type: string
+          description: Secret for webhook signature verification.
+        enabled:
+          type: boolean
+          description: Webhook is enabled.
+        updated_at:
+          type: string
+          format: date-time
+          description: Time at which webhook was last updated.
+        created_at:
+          type: string
+          format: date-time
+          description: Time at which webhook was created.
+        client_id:
+          $ref: '#/components/schemas/type_webhooks:ClientId'
+      required:
+      - webhook_id
+      - url
+      - secret
+      - enabled
+      - updated_at
+      - created_at
+      title: Webhook
+    type_:Ascending:
+      type: boolean
+      description: Sort in ascending temporal order.
+      title: Ascending
+    type_webhooks:ClientId:
+      type: string
+      description: Client ID of webhook.
+      title: ClientId
+  securitySchemes:
+    Bearer:
+      type: http
+      scheme: bearer

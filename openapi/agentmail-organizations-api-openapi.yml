@@ -1,0 +1,104 @@
+openapi: 3.1.0
+info:
+  title: API Reference agent organizations API
+  version: 1.0.0
+servers:
+- url: https://api.agentmail.to
+  description: prod
+- url: https://x402.api.agentmail.to
+  description: prod-x402
+- url: https://mpp.api.agentmail.to
+  description: prod-mpp
+- url: https://api.agentmail.eu
+  description: eu-prod
+tags:
+- name: organizations
+paths:
+  /v0/organizations:
+    get:
+      operationId: get
+      summary: Get Organization
+      description: 'Returns the organization for the authenticated API key (usage limits, counts, and billing metadata).
+
+
+        **CLI:**
+
+        ```bash
+
+        agentmail organizations get
+
+        ```'
+      tags:
+      - organizations
+      parameters:
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Response with status 200
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/type_organizations:Organization'
+components:
+  schemas:
+    type_organizations:Organization:
+      type: object
+      properties:
+        organization_id:
+          $ref: '#/components/schemas/type_:OrganizationId'
+        inbox_count:
+          type: integer
+          description: Current number of inboxes.
+        domain_count:
+          type: integer
+          description: Current number of domains.
+        inbox_limit:
+          type: integer
+          description: Maximum number of inboxes allowed.
+        domain_limit:
+          type: integer
+          description: Maximum number of domains allowed.
+        billing_id:
+          type: string
+          description: Provider-agnostic billing customer ID.
+        billing_type:
+          type: string
+          description: Billing provider type (e.g. "stripe").
+        billing_subscription_id:
+          type: string
+          description: Active billing subscription ID.
+        authentication_id:
+          type: string
+          description: Provider-agnostic authentication ID.
+        authentication_type:
+          type: string
+          description: Authentication provider type.
+        updated_at:
+          type: string
+          format: date-time
+          description: Time at which organization was last updated.
+        created_at:
+          type: string
+          format: date-time
+          description: Time at which organization was created.
+      required:
+      - organization_id
+      - inbox_count
+      - domain_count
+      - updated_at
+      - created_at
+      description: Organization details with usage limits and counts.
+      title: Organization
+    type_:OrganizationId:
+      type: string
+      description: ID of organization.
+      title: OrganizationId
+  securitySchemes:
+    Bearer:
+      type: http
+      scheme: bearer

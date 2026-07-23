@@ -1,0 +1,305 @@
+openapi: 3.1.0
+info:
+  title: API Reference agent pods API
+  version: 1.0.0
+servers:
+- url: https://api.agentmail.to
+  description: prod
+- url: https://x402.api.agentmail.to
+  description: prod-x402
+- url: https://mpp.api.agentmail.to
+  description: prod-mpp
+- url: https://api.agentmail.eu
+  description: eu-prod
+tags:
+- name: pods
+paths:
+  /v0/pods:
+    get:
+      operationId: list
+      summary: List Pods
+      description: '**CLI:**
+
+        ```bash
+
+        agentmail pods list
+
+        ```'
+      tags:
+      - pods
+      parameters:
+      - name: limit
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/type_:Limit'
+      - name: page_token
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/type_:PageToken'
+      - name: ascending
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/type_:Ascending'
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Response with status 200
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/type_pods:ListPodsResponse'
+    post:
+      operationId: create
+      summary: Create Pod
+      description: '**CLI:**
+
+        ```bash
+
+        agentmail pods create --client-id my-pod
+
+        ```'
+      tags:
+      - pods
+      parameters:
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Response with status 200
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/type_pods:Pod'
+        '400':
+          description: Error response with status 400
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/type_:ValidationErrorResponse'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/type_pods:CreatePodRequest'
+  /v0/pods/{pod_id}:
+    get:
+      operationId: get
+      summary: Get Pod
+      description: '**CLI:**
+
+        ```bash
+
+        agentmail pods get --pod-id <pod_id>
+
+        ```'
+      tags:
+      - pods
+      parameters:
+      - name: pod_id
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/type_pods:PodId'
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Response with status 200
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/type_pods:Pod'
+        '404':
+          description: Error response with status 404
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/type_:ErrorResponse'
+    delete:
+      operationId: delete
+      summary: Delete Pod
+      description: '**CLI:**
+
+        ```bash
+
+        agentmail pods delete --pod-id <pod_id>
+
+        ```'
+      tags:
+      - pods
+      parameters:
+      - name: pod_id
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/type_pods:PodId'
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+        '404':
+          description: Error response with status 404
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/type_:ErrorResponse'
+components:
+  schemas:
+    type_:Count:
+      type: integer
+      description: Number of items returned.
+      title: Count
+    type_pods:Pod:
+      type: object
+      properties:
+        pod_id:
+          $ref: '#/components/schemas/type_pods:PodId'
+        name:
+          $ref: '#/components/schemas/type_pods:Name'
+        updated_at:
+          type: string
+          format: date-time
+          description: Time at which pod was last updated.
+        created_at:
+          type: string
+          format: date-time
+          description: Time at which pod was created.
+        client_id:
+          $ref: '#/components/schemas/type_pods:ClientId'
+      required:
+      - pod_id
+      - name
+      - updated_at
+      - created_at
+      title: Pod
+    type_:ErrorFix:
+      type: string
+      description: The concrete next action that resolves the error.
+      title: ErrorFix
+    type_:ErrorMessage:
+      type: string
+      description: Error message.
+      title: ErrorMessage
+    type_pods:Name:
+      type: string
+      description: Name of pod.
+      title: Name
+    type_pods:ListPodsResponse:
+      type: object
+      properties:
+        count:
+          $ref: '#/components/schemas/type_:Count'
+        limit:
+          $ref: '#/components/schemas/type_:Limit'
+        next_page_token:
+          $ref: '#/components/schemas/type_:PageToken'
+        pods:
+          type: array
+          items:
+            $ref: '#/components/schemas/type_pods:Pod'
+          description: Ordered by `created_at` descending.
+      required:
+      - count
+      - pods
+      title: ListPodsResponse
+    type_:ErrorDocs:
+      type: string
+      description: Link to the error reference entry for this code.
+      title: ErrorDocs
+    type_:ErrorCode:
+      type: string
+      description: Stable, machine-readable error code in snake_case (for example, not_found or missing_permission). Branch on this rather than the message text.
+      title: ErrorCode
+    type_:ErrorResponse:
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/type_:ErrorName'
+        code:
+          $ref: '#/components/schemas/type_:ErrorCode'
+        message:
+          $ref: '#/components/schemas/type_:ErrorMessage'
+        fix:
+          $ref: '#/components/schemas/type_:ErrorFix'
+        docs:
+          $ref: '#/components/schemas/type_:ErrorDocs'
+      required:
+      - name
+      - message
+      title: ErrorResponse
+    type_pods:CreatePodRequest:
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/type_pods:Name'
+        client_id:
+          $ref: '#/components/schemas/type_pods:ClientId'
+      title: CreatePodRequest
+    type_:Limit:
+      type: integer
+      description: Limit of number of items returned.
+      title: Limit
+    type_pods:PodId:
+      type: string
+      description: ID of pod.
+      title: PodId
+    type_pods:ClientId:
+      type: string
+      description: Client ID of pod.
+      title: ClientId
+    type_:Ascending:
+      type: boolean
+      description: Sort in ascending temporal order.
+      title: Ascending
+    type_:ValidationErrorResponse:
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/type_:ErrorName'
+        code:
+          $ref: '#/components/schemas/type_:ErrorCode'
+        message:
+          $ref: '#/components/schemas/type_:ErrorMessage'
+        errors:
+          description: Validation errors. Each entry has a path and a message identifying the invalid field.
+        fix:
+          $ref: '#/components/schemas/type_:ErrorFix'
+        docs:
+          $ref: '#/components/schemas/type_:ErrorDocs'
+      required:
+      - name
+      - errors
+      title: ValidationErrorResponse
+    type_:PageToken:
+      type: string
+      description: Page token for pagination.
+      title: PageToken
+    type_:ErrorName:
+      type: string
+      description: Name of error.
+      title: ErrorName
+  securitySchemes:
+    Bearer:
+      type: http
+      scheme: bearer

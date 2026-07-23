@@ -1,0 +1,91 @@
+openapi: 3.1.0
+info:
+  title: API Reference agent auth API
+  version: 1.0.0
+servers:
+- url: https://api.agentmail.to
+  description: prod
+- url: https://x402.api.agentmail.to
+  description: prod-x402
+- url: https://mpp.api.agentmail.to
+  description: prod-mpp
+- url: https://api.agentmail.eu
+  description: eu-prod
+tags:
+- name: auth
+paths:
+  /v0/auth/me:
+    get:
+      operationId: me
+      summary: Who Am I
+      description: 'Returns the identity and scope of the authenticated credential. Useful when a client holds a pod-scoped or inbox-scoped API key and needs to discover the parent organization, pod, or inbox without prior knowledge.
+
+
+        **CLI:**
+
+        ```bash
+
+        agentmail auth me
+
+        ```'
+      tags:
+      - auth
+      parameters:
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Response with status 200
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/type_auth:Identity'
+components:
+  schemas:
+    type_:OrganizationId:
+      type: string
+      description: ID of organization.
+      title: OrganizationId
+    type_auth:ScopeType:
+      type: string
+      enum:
+      - organization
+      - pod
+      - inbox
+      description: The scope tier the authenticated credential is bound to.
+      title: ScopeType
+    type_auth:Identity:
+      type: object
+      properties:
+        scope_type:
+          $ref: '#/components/schemas/type_auth:ScopeType'
+        scope_id:
+          type: string
+          description: 'ID of the most specific scope the credential is bound to.
+
+            Equals inbox_id when scope_type is inbox, pod_id when pod, organization_id when organization.'
+        organization_id:
+          $ref: '#/components/schemas/type_:OrganizationId'
+        pod_id:
+          type: string
+          description: ID of the pod the credential is scoped to. Present when scope_type is pod or inbox.
+        inbox_id:
+          type: string
+          description: ID of the inbox the credential is scoped to. Present when scope_type is inbox.
+        api_key_id:
+          type: string
+          description: ID of the API key used to authenticate. Absent for JWT and proxy credentials.
+      required:
+      - scope_type
+      - scope_id
+      - organization_id
+      description: Identity and scope of the authenticated credential.
+      title: Identity
+  securitySchemes:
+    Bearer:
+      type: http
+      scheme: bearer
