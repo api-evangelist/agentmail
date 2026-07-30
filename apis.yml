@@ -1,8 +1,27 @@
 aid: agentmail
 name: AgentMail
-description: 'AgentMail is a company surfaced as a portfolio company of general-catalyst and added to
-  the API Evangelist network as a stub for enrichment. Sector: ai. This profile is a lead awaiting the
-  enrichment pipeline.'
+description: 'AgentMail is an API-first email platform that gives AI agents their own
+  email inboxes to autonomously send, receive, reply to, and act on email. Unlike traditional
+  transactional email APIs built for one-way notifications, AgentMail is designed for
+  two-way threaded conversations: agents create inboxes on demand, read and semantically
+  search messages, manage threads and drafts for human-in-the-loop review, apply labels
+  and allow/block lists, and react to inbound mail in real time over webhooks or WebSockets.
+  It ships a REST API (OpenAPI 3.1), an AsyncAPI 2.6 WebSocket surface, Python/Node/Go
+  SDKs, a CLI, a hosted MCP server, and IMAP/SMTP bridges, with API-key permissions,
+  idempotency, multi-tenant pods, custom domains, and SOC 2 Type I/II compliance.'
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://www.agentmail.to/logo.png
 url: https://raw.githubusercontent.com/api-evangelist/agentmail/refs/heads/main/apis.yml
 x-type: company
 x-source: general-catalyst-portfolio
@@ -14,9 +33,543 @@ modified: '2026-07-17'
 tags:
 - Company
 - Ai
-apis: []
+- Email
+- API
+- AI Agents
+- Inbox
+- Messaging
+- Webhooks
+- WebSockets
+- SMTP
+- IMAP
+- MCP
+- Agentic
+- Developer Tools
+apis:
+- aid: agentmail:agentmail-agent-api
+  name: AgentMail agent API
+  description: The agent API from AgentMail — 2 operation(s) for agent.
+  humanURL: https://docs.agentmail.to
+  baseURL: https://api.agentmail.to
+  tags:
+  - agent
+  properties:
+  - type: OpenAPI
+    url: openapi/agentmail-agent-api-openapi.yml
+  - type: AsyncAPI
+    url: asyncapi/agentmail-websockets-asyncapi.yml
+  - type: Documentation
+    url: https://docs.agentmail.to
+  - type: APIReference
+    url: https://docs.agentmail.to/api-reference
+- aid: agentmail:agentmail-api-keys-api
+  name: AgentMail api-keys API
+  description: The api-keys API from AgentMail — 2 operation(s) for api-keys.
+  humanURL: https://docs.agentmail.to
+  baseURL: https://api.agentmail.to
+  tags:
+  - api-keys
+  properties:
+  - type: OpenAPI
+    url: openapi/agentmail-api-keys-api-openapi.yml
+  - type: AsyncAPI
+    url: asyncapi/agentmail-websockets-asyncapi.yml
+  - type: Documentation
+    url: https://docs.agentmail.to
+  - type: APIReference
+    url: https://docs.agentmail.to/api-reference
+- aid: agentmail:agentmail-auth-api
+  name: AgentMail auth API
+  description: The auth API from AgentMail — 1 operation(s) for auth.
+  humanURL: https://docs.agentmail.to
+  baseURL: https://api.agentmail.to
+  tags:
+  - auth
+  properties:
+  - type: OpenAPI
+    url: openapi/agentmail-auth-api-openapi.yml
+  - type: AsyncAPI
+    url: asyncapi/agentmail-websockets-asyncapi.yml
+  - type: Documentation
+    url: https://docs.agentmail.to
+  - type: APIReference
+    url: https://docs.agentmail.to/api-reference
+- aid: agentmail:agentmail-domains-api
+  name: AgentMail domains API
+  description: The domains API from AgentMail — 4 operation(s) for domains.
+  humanURL: https://docs.agentmail.to
+  baseURL: https://api.agentmail.to
+  tags:
+  - domains
+  properties:
+  - type: OpenAPI
+    url: openapi/agentmail-domains-api-openapi.yml
+  - type: AsyncAPI
+    url: asyncapi/agentmail-websockets-asyncapi.yml
+  - type: Documentation
+    url: https://docs.agentmail.to
+  - type: APIReference
+    url: https://docs.agentmail.to/api-reference
+- aid: agentmail:agentmail-drafts-api
+  name: AgentMail drafts API
+  description: The drafts API from AgentMail — 3 operation(s) for drafts.
+  humanURL: https://docs.agentmail.to
+  baseURL: https://api.agentmail.to
+  tags:
+  - drafts
+  properties:
+  - type: OpenAPI
+    url: openapi/agentmail-drafts-api-openapi.yml
+  - type: AsyncAPI
+    url: asyncapi/agentmail-websockets-asyncapi.yml
+  - type: Documentation
+    url: https://docs.agentmail.to
+  - type: APIReference
+    url: https://docs.agentmail.to/api-reference
+- aid: agentmail:agentmail-inboxes-api-keys-api
+  name: AgentMail inboxes > api-keys API
+  description: The inboxes > api-keys API from AgentMail — 2 operation(s) for inboxes > api-keys.
+  humanURL: https://docs.agentmail.to
+  baseURL: https://api.agentmail.to
+  tags:
+  - inboxes > api-keys
+  properties:
+  - type: OpenAPI
+    url: openapi/agentmail-inboxes-api-keys-api-openapi.yml
+  - type: AsyncAPI
+    url: asyncapi/agentmail-websockets-asyncapi.yml
+  - type: Documentation
+    url: https://docs.agentmail.to
+  - type: APIReference
+    url: https://docs.agentmail.to/api-reference
+- aid: agentmail:agentmail-inboxes-api
+  name: AgentMail inboxes API
+  description: The inboxes API from AgentMail — 2 operation(s) for inboxes.
+  humanURL: https://docs.agentmail.to
+  baseURL: https://api.agentmail.to
+  tags:
+  - inboxes
+  properties:
+  - type: OpenAPI
+    url: openapi/agentmail-inboxes-api-openapi.yml
+  - type: AsyncAPI
+    url: asyncapi/agentmail-websockets-asyncapi.yml
+  - type: Documentation
+    url: https://docs.agentmail.to
+  - type: APIReference
+    url: https://docs.agentmail.to/api-reference
+- aid: agentmail:agentmail-inboxes-drafts-api
+  name: AgentMail inboxes > drafts API
+  description: The inboxes > drafts API from AgentMail — 4 operation(s) for inboxes > drafts.
+  humanURL: https://docs.agentmail.to
+  baseURL: https://api.agentmail.to
+  tags:
+  - inboxes > drafts
+  properties:
+  - type: OpenAPI
+    url: openapi/agentmail-inboxes-drafts-api-openapi.yml
+  - type: AsyncAPI
+    url: asyncapi/agentmail-websockets-asyncapi.yml
+  - type: Documentation
+    url: https://docs.agentmail.to
+  - type: APIReference
+    url: https://docs.agentmail.to/api-reference
+- aid: agentmail:agentmail-inboxes-events-api
+  name: AgentMail inboxes > events API
+  description: The inboxes > events API from AgentMail — 1 operation(s) for inboxes > events.
+  humanURL: https://docs.agentmail.to
+  baseURL: https://api.agentmail.to
+  tags:
+  - inboxes > events
+  properties:
+  - type: OpenAPI
+    url: openapi/agentmail-inboxes-events-api-openapi.yml
+  - type: AsyncAPI
+    url: asyncapi/agentmail-websockets-asyncapi.yml
+  - type: Documentation
+    url: https://docs.agentmail.to
+  - type: APIReference
+    url: https://docs.agentmail.to/api-reference
+- aid: agentmail:agentmail-inboxes-lists-api
+  name: AgentMail inboxes > lists API
+  description: The inboxes > lists API from AgentMail — 2 operation(s) for inboxes > lists.
+  humanURL: https://docs.agentmail.to
+  baseURL: https://api.agentmail.to
+  tags:
+  - inboxes > lists
+  properties:
+  - type: OpenAPI
+    url: openapi/agentmail-inboxes-lists-api-openapi.yml
+  - type: AsyncAPI
+    url: asyncapi/agentmail-websockets-asyncapi.yml
+  - type: Documentation
+    url: https://docs.agentmail.to
+  - type: APIReference
+    url: https://docs.agentmail.to/api-reference
+- aid: agentmail:agentmail-inboxes-messages-api
+  name: AgentMail inboxes > messages API
+  description: The inboxes > messages API from AgentMail — 11 operation(s) for inboxes > messages.
+  humanURL: https://docs.agentmail.to
+  baseURL: https://api.agentmail.to
+  tags:
+  - inboxes > messages
+  properties:
+  - type: OpenAPI
+    url: openapi/agentmail-inboxes-messages-api-openapi.yml
+  - type: AsyncAPI
+    url: asyncapi/agentmail-websockets-asyncapi.yml
+  - type: Documentation
+    url: https://docs.agentmail.to
+  - type: APIReference
+    url: https://docs.agentmail.to/api-reference
+- aid: agentmail:agentmail-inboxes-metrics-api
+  name: AgentMail inboxes > metrics API
+  description: The inboxes > metrics API from AgentMail — 2 operation(s) for inboxes > metrics.
+  humanURL: https://docs.agentmail.to
+  baseURL: https://api.agentmail.to
+  tags:
+  - inboxes > metrics
+  properties:
+  - type: OpenAPI
+    url: openapi/agentmail-inboxes-metrics-api-openapi.yml
+  - type: AsyncAPI
+    url: asyncapi/agentmail-websockets-asyncapi.yml
+  - type: Documentation
+    url: https://docs.agentmail.to
+  - type: APIReference
+    url: https://docs.agentmail.to/api-reference
+- aid: agentmail:agentmail-inboxes-threads-api
+  name: AgentMail inboxes > threads API
+  description: The inboxes > threads API from AgentMail — 4 operation(s) for inboxes > threads.
+  humanURL: https://docs.agentmail.to
+  baseURL: https://api.agentmail.to
+  tags:
+  - inboxes > threads
+  properties:
+  - type: OpenAPI
+    url: openapi/agentmail-inboxes-threads-api-openapi.yml
+  - type: AsyncAPI
+    url: asyncapi/agentmail-websockets-asyncapi.yml
+  - type: Documentation
+    url: https://docs.agentmail.to
+  - type: APIReference
+    url: https://docs.agentmail.to/api-reference
+- aid: agentmail:agentmail-inboxes-webhooks-api
+  name: AgentMail inboxes > webhooks API
+  description: The inboxes > webhooks API from AgentMail — 2 operation(s) for inboxes > webhooks.
+  humanURL: https://docs.agentmail.to
+  baseURL: https://api.agentmail.to
+  tags:
+  - inboxes > webhooks
+  properties:
+  - type: OpenAPI
+    url: openapi/agentmail-inboxes-webhooks-api-openapi.yml
+  - type: AsyncAPI
+    url: asyncapi/agentmail-websockets-asyncapi.yml
+  - type: Documentation
+    url: https://docs.agentmail.to
+  - type: APIReference
+    url: https://docs.agentmail.to/api-reference
+- aid: agentmail:agentmail-lists-api
+  name: AgentMail lists API
+  description: The lists API from AgentMail — 2 operation(s) for lists.
+  humanURL: https://docs.agentmail.to
+  baseURL: https://api.agentmail.to
+  tags:
+  - lists
+  properties:
+  - type: OpenAPI
+    url: openapi/agentmail-lists-api-openapi.yml
+  - type: AsyncAPI
+    url: asyncapi/agentmail-websockets-asyncapi.yml
+  - type: Documentation
+    url: https://docs.agentmail.to
+  - type: APIReference
+    url: https://docs.agentmail.to/api-reference
+- aid: agentmail:agentmail-metrics-api
+  name: AgentMail metrics API
+  description: The metrics API from AgentMail — 2 operation(s) for metrics.
+  humanURL: https://docs.agentmail.to
+  baseURL: https://api.agentmail.to
+  tags:
+  - metrics
+  properties:
+  - type: OpenAPI
+    url: openapi/agentmail-metrics-api-openapi.yml
+  - type: AsyncAPI
+    url: asyncapi/agentmail-websockets-asyncapi.yml
+  - type: Documentation
+    url: https://docs.agentmail.to
+  - type: APIReference
+    url: https://docs.agentmail.to/api-reference
+- aid: agentmail:agentmail-organizations-api
+  name: AgentMail organizations API
+  description: The organizations API from AgentMail — 1 operation(s) for organizations.
+  humanURL: https://docs.agentmail.to
+  baseURL: https://api.agentmail.to
+  tags:
+  - organizations
+  properties:
+  - type: OpenAPI
+    url: openapi/agentmail-organizations-api-openapi.yml
+  - type: AsyncAPI
+    url: asyncapi/agentmail-websockets-asyncapi.yml
+  - type: Documentation
+    url: https://docs.agentmail.to
+  - type: APIReference
+    url: https://docs.agentmail.to/api-reference
+- aid: agentmail:agentmail-pods-api-keys-api
+  name: AgentMail pods > api-keys API
+  description: The pods > api-keys API from AgentMail — 2 operation(s) for pods > api-keys.
+  humanURL: https://docs.agentmail.to
+  baseURL: https://api.agentmail.to
+  tags:
+  - pods > api-keys
+  properties:
+  - type: OpenAPI
+    url: openapi/agentmail-pods-api-keys-api-openapi.yml
+  - type: AsyncAPI
+    url: asyncapi/agentmail-websockets-asyncapi.yml
+  - type: Documentation
+    url: https://docs.agentmail.to
+  - type: APIReference
+    url: https://docs.agentmail.to/api-reference
+- aid: agentmail:agentmail-pods-api
+  name: AgentMail pods API
+  description: The pods API from AgentMail — 2 operation(s) for pods.
+  humanURL: https://docs.agentmail.to
+  baseURL: https://api.agentmail.to
+  tags:
+  - pods
+  properties:
+  - type: OpenAPI
+    url: openapi/agentmail-pods-api-openapi.yml
+  - type: AsyncAPI
+    url: asyncapi/agentmail-websockets-asyncapi.yml
+  - type: Documentation
+    url: https://docs.agentmail.to
+  - type: APIReference
+    url: https://docs.agentmail.to/api-reference
+- aid: agentmail:agentmail-pods-domains-api
+  name: AgentMail pods > domains API
+  description: The pods > domains API from AgentMail — 4 operation(s) for pods > domains.
+  humanURL: https://docs.agentmail.to
+  baseURL: https://api.agentmail.to
+  tags:
+  - pods > domains
+  properties:
+  - type: OpenAPI
+    url: openapi/agentmail-pods-domains-api-openapi.yml
+  - type: AsyncAPI
+    url: asyncapi/agentmail-websockets-asyncapi.yml
+  - type: Documentation
+    url: https://docs.agentmail.to
+  - type: APIReference
+    url: https://docs.agentmail.to/api-reference
+- aid: agentmail:agentmail-pods-drafts-api
+  name: AgentMail pods > drafts API
+  description: The pods > drafts API from AgentMail — 3 operation(s) for pods > drafts.
+  humanURL: https://docs.agentmail.to
+  baseURL: https://api.agentmail.to
+  tags:
+  - pods > drafts
+  properties:
+  - type: OpenAPI
+    url: openapi/agentmail-pods-drafts-api-openapi.yml
+  - type: AsyncAPI
+    url: asyncapi/agentmail-websockets-asyncapi.yml
+  - type: Documentation
+    url: https://docs.agentmail.to
+  - type: APIReference
+    url: https://docs.agentmail.to/api-reference
+- aid: agentmail:agentmail-pods-inboxes-api
+  name: AgentMail pods > inboxes API
+  description: The pods > inboxes API from AgentMail — 2 operation(s) for pods > inboxes.
+  humanURL: https://docs.agentmail.to
+  baseURL: https://api.agentmail.to
+  tags:
+  - pods > inboxes
+  properties:
+  - type: OpenAPI
+    url: openapi/agentmail-pods-inboxes-api-openapi.yml
+  - type: AsyncAPI
+    url: asyncapi/agentmail-websockets-asyncapi.yml
+  - type: Documentation
+    url: https://docs.agentmail.to
+  - type: APIReference
+    url: https://docs.agentmail.to/api-reference
+- aid: agentmail:agentmail-pods-lists-api
+  name: AgentMail pods > lists API
+  description: The pods > lists API from AgentMail — 2 operation(s) for pods > lists.
+  humanURL: https://docs.agentmail.to
+  baseURL: https://api.agentmail.to
+  tags:
+  - pods > lists
+  properties:
+  - type: OpenAPI
+    url: openapi/agentmail-pods-lists-api-openapi.yml
+  - type: AsyncAPI
+    url: asyncapi/agentmail-websockets-asyncapi.yml
+  - type: Documentation
+    url: https://docs.agentmail.to
+  - type: APIReference
+    url: https://docs.agentmail.to/api-reference
+- aid: agentmail:agentmail-pods-metrics-api
+  name: AgentMail pods > metrics API
+  description: The pods > metrics API from AgentMail — 2 operation(s) for pods > metrics.
+  humanURL: https://docs.agentmail.to
+  baseURL: https://api.agentmail.to
+  tags:
+  - pods > metrics
+  properties:
+  - type: OpenAPI
+    url: openapi/agentmail-pods-metrics-api-openapi.yml
+  - type: AsyncAPI
+    url: asyncapi/agentmail-websockets-asyncapi.yml
+  - type: Documentation
+    url: https://docs.agentmail.to
+  - type: APIReference
+    url: https://docs.agentmail.to/api-reference
+- aid: agentmail:agentmail-pods-threads-api
+  name: AgentMail pods > threads API
+  description: The pods > threads API from AgentMail — 4 operation(s) for pods > threads.
+  humanURL: https://docs.agentmail.to
+  baseURL: https://api.agentmail.to
+  tags:
+  - pods > threads
+  properties:
+  - type: OpenAPI
+    url: openapi/agentmail-pods-threads-api-openapi.yml
+  - type: AsyncAPI
+    url: asyncapi/agentmail-websockets-asyncapi.yml
+  - type: Documentation
+    url: https://docs.agentmail.to
+  - type: APIReference
+    url: https://docs.agentmail.to/api-reference
+- aid: agentmail:agentmail-pods-webhooks-api
+  name: AgentMail pods > webhooks API
+  description: The pods > webhooks API from AgentMail — 2 operation(s) for pods > webhooks.
+  humanURL: https://docs.agentmail.to
+  baseURL: https://api.agentmail.to
+  tags:
+  - pods > webhooks
+  properties:
+  - type: OpenAPI
+    url: openapi/agentmail-pods-webhooks-api-openapi.yml
+  - type: AsyncAPI
+    url: asyncapi/agentmail-websockets-asyncapi.yml
+  - type: Documentation
+    url: https://docs.agentmail.to
+  - type: APIReference
+    url: https://docs.agentmail.to/api-reference
+- aid: agentmail:agentmail-threads-api
+  name: AgentMail threads API
+  description: The threads API from AgentMail — 4 operation(s) for threads.
+  humanURL: https://docs.agentmail.to
+  baseURL: https://api.agentmail.to
+  tags:
+  - threads
+  properties:
+  - type: OpenAPI
+    url: openapi/agentmail-threads-api-openapi.yml
+  - type: AsyncAPI
+    url: asyncapi/agentmail-websockets-asyncapi.yml
+  - type: Documentation
+    url: https://docs.agentmail.to
+  - type: APIReference
+    url: https://docs.agentmail.to/api-reference
+- aid: agentmail:agentmail-webhooks-api
+  name: AgentMail webhooks API
+  description: The webhooks API from AgentMail — 2 operation(s) for webhooks.
+  humanURL: https://docs.agentmail.to
+  baseURL: https://api.agentmail.to
+  tags:
+  - webhooks
+  properties:
+  - type: OpenAPI
+    url: openapi/agentmail-webhooks-api-openapi.yml
+  - type: AsyncAPI
+    url: asyncapi/agentmail-websockets-asyncapi.yml
+  - type: Documentation
+    url: https://docs.agentmail.to
+  - type: APIReference
+    url: https://docs.agentmail.to/api-reference
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
+common:
+- type: DeveloperPortal
+  url: https://docs.agentmail.to
+- type: Documentation
+  url: https://docs.agentmail.to
+- type: APIReference
+  url: https://docs.agentmail.to/api-reference
+- type: GettingStarted
+  url: https://docs.agentmail.to/quickstart
+- type: Blog
+  url: https://www.agentmail.to/blog
+- type: Pricing
+  url: https://www.agentmail.to/pricing
+- type: SignUp
+  url: https://console.agentmail.to
+- type: Support
+  url: https://docs.agentmail.to/support
+- type: GitHubOrganization
+  url: https://github.com/agentmail-to
+- type: ChangeLog
+  url: https://docs.agentmail.to/changelog
+- type: OpenAPI
+  url: openapi/agentmail-openapi-original.yml
+- type: AsyncAPI
+  url: asyncapi/agentmail-websockets-asyncapi.yml
+- type: Webhooks
+  url: https://docs.agentmail.to/webhooks-overview
+- type: Overlay
+  url: overlays/agentmail-openapi-overlay.yaml
+- type: Authentication
+  url: authentication/agentmail-authentication.yml
+- type: AgenticAccess
+  url: agentic-access/agentmail-agentic-access.yml
+- type: DomainSecurity
+  url: security/agentmail-domain-security.yml
+- type: Packages
+  url: packages/agentmail-packages.yml
+- type: SDKs
+  url: packages/agentmail-packages.yml
+- type: CLI
+  url: cli/agentmail-cli.yml
+- type: MCPServer
+  url: mcp/agentmail-mcp.yml
+- type: LLMsTxt
+  url: llms/agentmail-llms.txt
+- type: WellKnown
+  url: well-known/agentmail-well-known.yml
+- type: APICatalog
+  url: well-known/agentmail-api-catalog.json
+- type: Conformance
+  url: conformance/agentmail-conformance.yml
+- type: Compliance
+  url: https://docs.agentmail.to/documentation/resources/security-privacy/soc-2-compliance
+- type: TrustCenter
+  url: security/agentmail-trust-center.yml
+- type: ErrorCatalog
+  url: errors/agentmail-error-codes.yml
+- type: Lifecycle
+  url: lifecycle/agentmail-lifecycle.yml
+- type: Conventions
+  url: conventions/agentmail-conventions.yml
+- type: Idempotency
+  url: conventions/agentmail-conventions.yml
+- type: ChangeLog
+  url: changelog/agentmail-changelog.yml
+- type: DataModel
+  url: data-model/agentmail-data-model.yml
+- type: AgentSkill
+  url: skills/_index.yml
+x-enrichment:
+  date: '2026-07-19'
+  status: backfilled
+  pass: local-v1
+  note: backfilled from .gitignore signal + verified work evidence
