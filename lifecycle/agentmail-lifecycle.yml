@@ -1,0 +1,26 @@
+generated: '2026-07-17'
+method: searched
+source: https://docs.agentmail.to (changelog, api-reference, support)
+versioning:
+  scheme: uri-path
+  current: v0
+  base_path: /v0
+  docs: https://docs.agentmail.to/api-reference
+changelog:
+  url: https://docs.agentmail.to/changelog
+  rss: https://docs.agentmail.to/changelog.rss
+  artifact: changelog/agentmail-changelog.yml
+deprecation:
+  policy_url: null
+  sunset_header: null
+  note: No formal deprecation/sunset policy published as of this pass; v0 is the only
+    version and changes are communicated via the dated changelog.
+status_page:
+  url: null
+  note: No dedicated public status page found; incidents/support handled via Discord
+    and support@agentmail.to.
+support:
+  docs: https://docs.agentmail.to/support
+  community: https://discord.gg/ZYN7f7KPjS
+  email: support@agentmail.to
+deprecated_operations: []

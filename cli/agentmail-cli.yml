@@ -1,0 +1,41 @@
+generated: '2026-07-17'
+method: searched
+source: https://docs.agentmail.to/integrations/cli
+name: agentmail
+binary: agentmail
+install:
+- method: npm
+  command: npm install -g agentmail-cli
+- method: homebrew
+  command: brew install agentmail-to/tap/agentmail
+  tap: https://github.com/agentmail-to/homebrew-tap
+auth:
+  env: AGENTMAIL_API_KEY
+  flag: --api-key
+invocation: agentmail [resource] <command> [flags...]
+subresource_syntax: 'colon syntax, e.g. inboxes:messages or inboxes:threads'
+resource_groups:
+- name: inboxes
+  commands: [create, list, update, delete]
+- name: inboxes:messages
+  commands: [send, reply, forward, list, get]
+- name: inboxes:threads
+  commands: [list, get]
+- name: drafts
+  commands: [create, list, update, delete, send]
+- name: webhooks
+  commands: [create, list, update, delete]
+- name: domains
+  commands: [create, list, verify, delete]
+- name: pods
+  commands: [create, list, delete]
+- name: agent
+  commands: [sign-up, verify]
+- name: api-keys
+  commands: [list, create, delete]
+examples:
+- agentmail inboxes list
+- agentmail inboxes create --display-name "My Inbox"
+- agentmail inboxes:messages send --inbox-id inb_xxx --to user@example.com --subject "Hello"
+    --text "Hi there"
+- agentmail webhooks create --event-type message.received --url https://example.com/webhook

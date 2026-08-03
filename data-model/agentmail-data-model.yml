@@ -1,0 +1,52 @@
+generated: '2026-07-17'
+method: derived
+source: openapi/agentmail-openapi-original.yml + https://docs.agentmail.to
+id_prefixes:
+  inbox: inb_
+  api_key: am_
+entities:
+- name: Organization
+  description: Top-level agent organization created at sign-up; owns all resources.
+- name: Pod
+  description: Multi-tenant isolation boundary grouping inboxes, domains, and data.
+- name: Inbox
+  id_prefix: inb_
+  description: API-first email account for an agent; supports custom metadata (<=256 keys).
+- name: Thread
+  description: Conversation grouping of related messages.
+- name: Message
+  description: A single email (sent or received) with sender, recipients, subject, text/html
+    body, and attachments.
+- name: Draft
+  description: Unsent message for human-in-the-loop review or scheduled sending.
+- name: Attachment
+  description: File attached to a message, thread, or draft.
+- name: Domain
+  description: Custom sending domain verified via SPF/DKIM/DMARC DNS records; supports
+    wildcard subdomains.
+- name: Webhook
+  description: Event subscription (org-, pod-, or inbox-scoped) delivering signed event
+    payloads.
+- name: Label
+  description: User- or prompt-defined tag for state, campaigns, and filtering.
+- name: ListEntry
+  description: Allowlist/blocklist entry (address or domain) controlling inbound/outbound.
+- name: ApiKey
+  id_prefix: am_
+  description: Bearer credential with fine-grained permissions; can be scoped to a pod or
+    inbox.
+relationships:
+- {from: Pod, type: has_many, to: Inbox, via: pod_id}
+- {from: Pod, type: has_many, to: Domain, via: pod_id}
+- {from: Inbox, type: has_many, to: Thread, via: inbox_id}
+- {from: Inbox, type: has_many, to: Message, via: inbox_id}
+- {from: Inbox, type: has_many, to: Draft, via: inbox_id}
+- {from: Inbox, type: has_many, to: Webhook, via: inbox_id}
+- {from: Inbox, type: has_many, to: ListEntry, via: inbox_id}
+- {from: Inbox, type: has_many, to: ApiKey, via: inbox_id}
+- {from: Thread, type: has_many, to: Message, via: thread_id}
+- {from: Message, type: has_many, to: Attachment, via: message_id}
+- {from: Message, type: belongs_to, to: Thread, via: thread_id}
+- {from: Draft, type: has_many, to: Attachment, via: draft_id}
+- {from: Domain, type: has_many, to: Inbox, via: domain}
+- {from: Pod, type: has_many, to: ApiKey, via: pod_id}

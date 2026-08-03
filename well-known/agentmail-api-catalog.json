@@ -1,0 +1,34 @@
+{
+  "linkset": [
+    {
+      "anchor": "https://api.agentmail.to/v0/",
+      "service-desc": [
+        {
+          "href": "https://www.agentmail.to/openapi.json",
+          "type": "application/json"
+        }
+      ],
+      "service-doc": [
+        {
+          "href": "https://docs.agentmail.to",
+          "type": "text/html"
+        }
+      ]
+    },
+    {
+      "anchor": "https://mcp.agentmail.to/mcp",
+      "service-doc": [
+        {
+          "href": "https://docs.agentmail.to/integrations/mcp",
+          "type": "text/html"
+        }
+      ],
+      "service-meta": [
+        {
+          "href": "https://raw.githubusercontent.com/agentmail-to/agentmail-mcp/main/server.json",
+          "type": "application/json"
+        }
+      ]
+    }
+  ]
+}

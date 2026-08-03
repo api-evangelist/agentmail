@@ -1,0 +1,49 @@
+generated: '2026-07-17'
+method: derived
+source: openapi/agentmail-openapi-original.yml + asyncapi/agentmail-websockets-asyncapi.yml
+  + https://docs.agentmail.to
+standards:
+- id: openapi-3.1
+  conforms: true
+  evidence: openapi/agentmail-openapi-original.yml declares openapi 3.1.0
+- id: asyncapi-2.6
+  conforms: true
+  evidence: asyncapi/agentmail-websockets-asyncapi.yml declares asyncapi 2.6.0
+- id: oauth2
+  conforms: false
+  evidence: Auth is HTTP Bearer API keys with per-key permissions, not OAuth2.
+- id: oidc
+  conforms: false
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: Uses a custom error envelope (name/code/message/fix/docs/errors), not
+    application/problem+json.
+- id: rfc9116-security-txt
+  conforms: false
+  evidence: No /.well-known/security.txt (404).
+- id: rfc9727-api-catalog
+  conforms: true
+  evidence: /.well-known/api-catalog returns an application/linkset+json catalog.
+- id: rfc8594-sunset-header
+  conforms: false
+- id: idempotency
+  conforms: true
+  evidence: Idempotency-Key header on sends + client_id on create operations (docs/idempotency).
+- id: cursor-pagination
+  conforms: true
+  evidence: List endpoints use page_token/next_page_token cursors.
+- id: webhook-signature-verification
+  conforms: true
+  evidence: Signed webhooks documented at docs/webhook-verification.
+- id: smtp
+  conforms: true
+  evidence: Outbound SMTP bridge documented at docs/imap-smtp.
+- id: imap
+  conforms: true
+  evidence: Inbound IMAP bridge documented at docs/imap-smtp.
+- id: spf-dkim-dmarc
+  conforms: true
+  evidence: Custom-domain email authentication (SPF/DKIM/DMARC) documented at docs/email-protocols.
+- id: soc2
+  conforms: true
+  evidence: SOC 2 Type I (July 2025) and Type II (Q1 2026); see security/agentmail-trust-center.yml.

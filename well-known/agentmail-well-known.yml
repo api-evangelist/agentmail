@@ -1,0 +1,23 @@
+generated: '2026-07-17'
+method: searched
+source: live probes of /.well-known/ on AgentMail hosts
+hosts_probed:
+- https://api.agentmail.to
+- https://www.agentmail.to
+- https://agentmail.to
+documents:
+- path: /.well-known/api-catalog
+  host: https://www.agentmail.to
+  status: 200
+  file: agentmail-api-catalog.json
+  content_type: application/linkset+json
+  note: RFC 9727 API Catalog (linkset) advertising the REST API OpenAPI, docs, and
+    the hosted MCP server (mcp.agentmail.to/mcp).
+- path: /.well-known/security.txt
+  status: 404
+- path: /.well-known/openid-configuration
+  status: 404
+- path: /.well-known/oauth-authorization-server
+  status: 404
+- path: /.well-known/ai-plugin.json
+  status: 404

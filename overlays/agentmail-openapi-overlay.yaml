@@ -1,0 +1,23 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for AgentMail
+  version: 1.0.0
+extends: openapi/agentmail-openapi-original.yml
+actions:
+- target: $.info
+  update:
+    x-apievangelist-provider: agentmail
+    x-apievangelist-category: [email, ai-agents, messaging]
+    x-apievangelist-idempotency:
+      header: Idempotency-Key
+      create_param: client_id
+      retention_hours: 24
+    x-apievangelist-error-catalog: errors/agentmail-error-codes.yml
+    x-apievangelist-conventions: conventions/agentmail-conventions.yml
+    x-apievangelist-data-model: data-model/agentmail-data-model.yml
+    x-apievangelist-async: asyncapi/agentmail-websockets-asyncapi.yml
+    x-apievangelist-mcp: https://mcp.agentmail.to/mcp
+- target: $.info
+  update:
+    x-apievangelist-compliance: [SOC 2 Type I, SOC 2 Type II]
+    x-apievangelist-realtime: [webhooks, websockets, imap, smtp]

@@ -1,0 +1,37 @@
+generated: '2026-07-17'
+method: searched
+source: 'https://docs.agentmail.to/changelog (RSS: https://docs.agentmail.to/changelog.rss)'
+scheme: dated
+current_version: v0
+window: recent
+entries:
+- date: '2026-06-25'
+  breaking: false
+  highlights: Pod- and inbox-scoped webhook endpoints (GET|POST|PATCH|DELETE /v0/pods/:pod_id/webhooks
+    and /v0/inboxes/:inbox_id/webhooks) so scoped API keys manage only their own webhooks.
+- date: '2026-06-12'
+  breaking: false
+  highlights: New cumulative usage endpoint (/v0/metrics/usage, plus pod/inbox variants)
+    returning running totals; event counts moved to a dedicated /metrics/events path.
+- date: '2026-06-08'
+  breaking: false
+  highlights: 'Subdomains: opt in per domain with subdomains_enabled and a wildcard MX
+    record to create inboxes on any subdomain on demand.'
+- date: '2026-06-03'
+  breaking: false
+  highlights: Full-text search of messages and threads (per-inbox and org-wide), ranked
+    by relevance; list endpoints gained substring filters.
+- date: '2026-05-28'
+  breaking: false
+  highlights: Inbox custom metadata (string/number/boolean, up to 256 keys) settable at
+    creation and returned on get/list/create.
+- date: '2026-03-18'
+  breaking: false
+  highlights: Inbox-scoped API keys (/v0/inboxes/:inbox_id/api-keys) for least-privilege
+    credentials restricted to a single inbox.
+- date: '2025-12-22'
+  breaking: false
+  highlights: Changelog entry (see https://docs.agentmail.to/changelog/2025/12/22).
+- date: '2025-10-28'
+  breaking: false
+  highlights: Changelog entry (see https://docs.agentmail.to/changelog/2025/10/28).

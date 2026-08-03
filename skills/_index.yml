@@ -1,0 +1,22 @@
+generated: '2026-07-17'
+method: searched
+source: https://github.com/agentmail-to/agentmail-claude-skill (official) + generated from
+  openapi/agentmail-openapi-original.yml
+skills:
+- file: agentmail-official-skill.md
+  name: agentmail (official AgentMail skill)
+  method: searched
+  source: https://github.com/agentmail-to/agentmail-claude-skill/blob/main/SKILL.md
+  api: openapi/agentmail-openapi-original.yml
+  note: Provider-published Agent Skill for Claude Code, Cursor, OpenClaw, and other assistants;
+    saved verbatim.
+- file: agentmail-send-and-reply.md
+  name: Send an email and handle the reply
+  method: generated
+  api: openapi/agentmail-openapi-original.yml
+  operations: [create, send, list, reply, create]
+- file: agentmail-human-in-the-loop-draft.md
+  name: Human-in-the-loop draft review
+  method: generated
+  api: openapi/agentmail-openapi-original.yml
+  operations: [create, list, update, send]

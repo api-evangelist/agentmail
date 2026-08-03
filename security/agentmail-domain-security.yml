@@ -1,0 +1,26 @@
+generated: '2026-07-17'
+method: probed
+source: live DNS/TLS/HTTP probes of apis.yml + OpenAPI hosts
+hosts:
+- host: api.agentmail.to
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Jan 24 23:59:59 2027 GMT
+  hsts: null
+- host: x402.api.agentmail.to
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Mar 13 23:59:59 2027 GMT
+  hsts: null
+- host: mpp.api.agentmail.to
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Sep 11 23:59:59 2026 GMT
+  hsts: null
+domains:
+- domain: agentmail.to
+  dnssec: false
+  caa: []
+  spf: false
+  dmarc: true
+  dmarc_policy: reject

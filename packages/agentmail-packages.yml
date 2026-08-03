@@ -1,0 +1,51 @@
+generated: '2026-07-17'
+method: searched
+source: https://docs.agentmail.to + npm/PyPI/pkg.go.dev registries + github.com/agentmail-to
+packages:
+- language: javascript
+  registry: npm
+  name: agentmail
+  version: 0.5.16
+  url: https://www.npmjs.com/package/agentmail
+  install: npm install agentmail
+  repo: https://github.com/agentmail-to/agentmail-node
+  official: true
+- language: python
+  registry: pypi
+  name: agentmail
+  version: 0.5.8
+  url: https://pypi.org/project/agentmail/
+  install: pip install agentmail
+  repo: https://github.com/agentmail-to/agentmail-python
+  official: true
+- language: go
+  registry: pkg.go.dev
+  name: github.com/agentmail-to/agentmail-go
+  url: https://pkg.go.dev/github.com/agentmail-to/agentmail-go
+  install: go get github.com/agentmail-to/agentmail-go
+  repo: https://github.com/agentmail-to/agentmail-go
+  official: true
+- language: javascript
+  registry: npm
+  name: agentmail-cli
+  url: https://www.npmjs.com/package/agentmail-cli
+  install: npm install -g agentmail-cli
+  repo: https://github.com/agentmail-to/agentmail-cli
+  official: true
+  kind: cli
+- language: javascript
+  registry: npm
+  name: agentmail-toolkit
+  url: https://www.npmjs.com/package/agentmail-toolkit
+  install: npm install agentmail-toolkit
+  repo: https://github.com/agentmail-to/agentmail-toolkit
+  official: true
+  note: Agent-framework toolkit (LangChain, Google ADK, OpenAI, etc.)
+- language: python
+  registry: pypi
+  name: agentmail-toolkit
+  url: https://pypi.org/project/agentmail-toolkit/
+  install: pip install agentmail-toolkit
+  repo: https://github.com/agentmail-to/agentmail-toolkit
+  official: true
+  note: Agent-framework toolkit (LangChain, Google ADK, OpenAI, etc.)

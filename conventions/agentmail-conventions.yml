@@ -1,0 +1,63 @@
+generated: '2026-07-17'
+method: searched
+source: https://docs.agentmail.to (idempotency, errors, api-reference, rate-limits)
+authentication:
+  style: bearer-api-key
+  header: 'Authorization: Bearer <api_key>'
+  key_prefix: am_
+  permissions: Fine-grained per-key permissions; keys can be scoped to a pod or a single
+    inbox to reduce blast radius.
+  ref: authentication/agentmail-authentication.yml
+idempotency:
+  supported: true
+  mechanisms:
+  - kind: header
+    header: Idempotency-Key
+    applies_to: [messages.send, messages.reply, messages.reply-all, messages.forward, drafts.send]
+    behavior: A retry with the same key returns the original message_id and thread_id and
+      sends no second email.
+    empty_key: An explicitly empty Idempotency-Key header is rejected with 400.
+    retention: Keys are scoped to the organization and expire 24 hours after the send completes,
+      after which the key can be reused.
+    conflict: A collision returns 409 conflict.
+  - kind: body-param
+    param: client_id
+    applies_to: [all create operations]
+    behavior: When a client_id is supplied on a create request and one was already completed
+      with that id, the original resource is returned instead of creating a duplicate.
+  docs: https://docs.agentmail.to/idempotency
+pagination:
+  style: cursor
+  request_params: [limit, page_token]
+  response_fields: [next_page_token, count]
+  note: List endpoints also support substring filters (sender/recipient/subject) and
+    full-text search variants.
+filtering:
+  search: Full-text search endpoints for messages and threads (per-inbox and org-wide),
+    ranked by relevance across sender, recipients, subject, and body.
+metadata:
+  supported: true
+  scope: Inbox
+  note: Custom key-value pairs (string/number/boolean), up to 256 keys per inbox, returned
+    on get/list/create.
+versioning:
+  scheme: uri-path
+  current: v0
+  base_path: /v0
+error_envelope:
+  format: custom
+  fields: [name, code, message, fix, docs, errors]
+  ref: errors/agentmail-error-codes.yml
+rate_limiting:
+  signal: HTTP 429 with Retry-After header (seconds)
+  scope: Per API key
+  guidance: Exponential backoff on 429/503/500.
+  ref: https://docs.agentmail.to/knowledge-base/rate-limits
+webhook_verification:
+  supported: true
+  note: Webhook signatures can be verified to prevent spoofed requests.
+  ref: https://docs.agentmail.to/webhook-verification
+realtime:
+  webhooks: https://docs.agentmail.to/webhooks-overview
+  websockets: https://docs.agentmail.to/websockets
+  imap_smtp: https://docs.agentmail.to/imap-smtp

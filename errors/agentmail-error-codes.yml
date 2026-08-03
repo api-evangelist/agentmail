@@ -1,0 +1,69 @@
+generated: '2026-07-17'
+method: searched
+source: https://docs.agentmail.to/errors
+format: custom-envelope
+envelope:
+  note: AgentMail uses a custom JSON error envelope (not RFC 9457 problem+json).
+  fields:
+  - name
+  - code
+  - message
+  - fix
+  - docs
+  - errors
+  errors_field: Array present on validation errors; each item has path + message.
+error_classes:
+- AuthError
+- RequestError
+- StateError
+- SendingError
+- TransientError
+errors:
+- {status: 401, code: missing_authorization, class: AuthError, meaning: No Authorization
+    header sent, fix: 'Send your API key in the Authorization: Bearer <api_key> header.'}
+- {status: 401, code: invalid_token_type, class: AuthError, meaning: A console JWT was
+    provided instead of an API key, fix: Use an API key (prefix am_), not a console token.}
+- {status: 401, code: unknown_api_key, class: AuthError, meaning: Unrecognized API key,
+    fix: Verify the full key was copied; create a new key if it was revoked.}
+- {status: 401, code: unauthorized, class: AuthError, meaning: Generic authentication
+    failure, fix: Send a valid API key in the Authorization header.}
+- {status: 403, code: missing_permission, class: AuthError, meaning: Key lacks a required
+    permission, fix: Retry with a key that has the permission, or create one.}
+- {status: 403, code: permission_escalation, class: AuthError, meaning: Cannot grant
+    permissions the key itself lacks, fix: Remove the extra permissions or use an unrestricted credential.}
+- {status: 403, code: unrestricted_key_required, class: AuthError, meaning: Cannot clear
+    or downgrade permissions, fix: Use a dashboard session or an unrestricted API key.}
+- {status: 403, code: forbidden, class: AuthError, meaning: Action not allowed by the
+    key's scope, fix: Retry with an appropriately scoped key.}
+- {status: 400, code: validation_error, class: RequestError, meaning: Field validation
+    failed, fix: Inspect the errors array and fix the identified fields.}
+- {status: 404, code: not_found, class: RequestError, meaning: Resource does not exist,
+    fix: Verify the ID; use the list endpoint to find valid IDs.}
+- {status: 422, code: unprocessable, class: RequestError, meaning: Well-formed but cannot
+    be processed, fix: Adjust per the message (e.g. add recipients).}
+- {status: 400, code: query_range_too_wide, class: RequestError, meaning: Metrics query
+    timespan too large, fix: Narrow the range or increase the bucket size.}
+- {status: 403, code: already_exists, class: StateError, meaning: Duplicate resource,
+    fix: Fetch or update the existing resource instead.}
+- {status: 403, code: resource_taken, class: StateError, meaning: Value already in use,
+    fix: Choose a different value.}
+- {status: 403, code: limit_exceeded, class: StateError, meaning: Resource quota hit,
+    fix: Remove an existing resource or contact support.}
+- {status: 403, code: domain_not_verified, class: StateError, meaning: Domain not verified,
+    fix: Add the DNS records and call the verify endpoint.}
+- {status: 409, code: conflict, class: StateError, meaning: Idempotency-Key collision,
+    fix: Wait and retry the original, or generate a new key.}
+- {status: 409, code: race_condition, class: StateError, meaning: Concurrent modification,
+    fix: Re-fetch and retry.}
+- {status: 403, code: resource_deleting, class: StateError, meaning: Resource is being
+    deleted, fix: Wait, or use a different resource.}
+- {status: 403, code: cannot_delete, class: StateError, meaning: Deletion blocked by a
+    dependency, fix: Resolve the dependent resource first.}
+- {status: 403, code: message_rejected, class: SendingError, meaning: Send failed, fix: Remove
+    blocked recipients, resolve account issues, or fix the attachment URL.}
+- {status: 429, code: rate_limit_exceeded, class: TransientError, meaning: Rate or usage
+    limit hit, fix: Honor the Retry-After header; use exponential backoff.}
+- {status: 503, code: service_unavailable, class: TransientError, meaning: Downstream
+    outage, fix: Retry after a delay with exponential backoff.}
+- {status: 500, code: internal_error, class: TransientError, meaning: Server error, fix: Retry
+    with backoff; contact support if it persists.}
