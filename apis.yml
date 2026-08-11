@@ -521,7 +521,7 @@ common:
 - type: ChangeLog
   url: https://docs.agentmail.to/changelog
 - type: OpenAPI
-  url: openapi/agentmail-openapi-original.yml
+  url: openapi/_original/agentmail-openapi-original.yml
 - type: AsyncAPI
   url: asyncapi/agentmail-websockets-asyncapi.yml
 - type: Webhooks
