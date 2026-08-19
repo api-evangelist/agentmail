@@ -1,0 +1,567 @@
+{
+  "item": [
+    {
+      "id": "313a63c0-58f5-4e2f-9f06-ff9b3a167f12",
+      "name": "drafts",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "7f5142cf-09bf-4786-9aef-089ff3f598a4",
+          "name": "List Drafts",
+          "request": {
+            "name": "List Drafts",
+            "description": {
+              "content": "**CLI:**\n```bash\nagentmail drafts list\n```",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v0",
+                "drafts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "page_token",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "labels",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "labels",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "before",
+                  "value": "<dateTime>"
+                },
+                {
+                  "disabled": false,
+                  "key": "after",
+                  "value": "<dateTime>"
+                },
+                {
+                  "disabled": false,
+                  "key": "ascending",
+                  "value": "<boolean>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "2c611ba9-7fc1-4455-9fa4-fb28143bb5ff",
+              "name": "Response with status 200",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "drafts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "2755"
+                    },
+                    {
+                      "key": "page_token",
+                      "value": "string"
+                    },
+                    {
+                      "key": "labels",
+                      "value": "string"
+                    },
+                    {
+                      "key": "labels",
+                      "value": "string"
+                    },
+                    {
+                      "key": "before",
+                      "value": "2022-01-27T10:51:59.083Z"
+                    },
+                    {
+                      "key": "after",
+                      "value": "1994-09-28T09:03:17.640Z"
+                    },
+                    {
+                      "key": "ascending",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"count\": 7406,\n  \"drafts\": [\n    {\n      \"inbox_id\": \"string\",\n      \"draft_id\": \"string\",\n      \"labels\": [\n        \"string\",\n        \"string\"\n      ],\n      \"updated_at\": \"1989-03-12T02:07:13.350Z\",\n      \"to\": [\n        \"string\",\n        \"string\"\n      ],\n      \"cc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"bcc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"subject\": \"string\",\n      \"preview\": \"string\",\n      \"attachments\": [\n        {\n          \"attachment_id\": \"string\",\n          \"size\": 2888,\n          \"filename\": \"string\",\n          \"content_type\": \"string\",\n          \"content_disposition\": \"attachment\",\n          \"content_id\": \"string\"\n        },\n        {\n          \"attachment_id\": \"string\",\n          \"size\": 8849,\n          \"filename\": \"string\",\n          \"content_type\": \"string\",\n          \"content_disposition\": \"attachment\",\n          \"content_id\": \"string\"\n        }\n      ],\n      \"in_reply_to\": \"string\",\n      \"forward_of\": \"string\",\n      \"send_status\": \"failed\",\n      \"send_at\": \"1948-10-19T17:55:13.688Z\"\n    },\n    {\n      \"inbox_id\": \"string\",\n      \"draft_id\": \"string\",\n      \"labels\": [\n        \"string\",\n        \"string\"\n      ],\n      \"updated_at\": \"1947-12-10T13:11:12.456Z\",\n      \"to\": [\n        \"string\",\n        \"string\"\n      ],\n      \"cc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"bcc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"subject\": \"string\",\n      \"preview\": \"string\",\n      \"attachments\": [\n        {\n          \"attachment_id\": \"string\",\n          \"size\": 8371,\n          \"filename\": \"string\",\n          \"content_type\": \"string\",\n          \"content_disposition\": \"inline\",\n          \"content_id\": \"string\"\n        },\n        {\n          \"attachment_id\": \"string\",\n          \"size\": 3009,\n          \"filename\": \"string\",\n          \"content_type\": \"string\",\n          \"content_disposition\": \"attachment\",\n          \"content_id\": \"string\"\n        }\n      ],\n      \"in_reply_to\": \"string\",\n      \"forward_of\": \"string\",\n      \"send_status\": \"sending\",\n      \"send_at\": \"1954-03-24T13:04:12.810Z\"\n    }\n  ],\n  \"limit\": 2933,\n  \"next_page_token\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c983858c-af51-4fd4-b7fc-3ec2772dd3a6",
+              "name": "Error response with status 404",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "drafts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "2755"
+                    },
+                    {
+                      "key": "page_token",
+                      "value": "string"
+                    },
+                    {
+                      "key": "labels",
+                      "value": "string"
+                    },
+                    {
+                      "key": "labels",
+                      "value": "string"
+                    },
+                    {
+                      "key": "before",
+                      "value": "2022-01-27T10:51:59.083Z"
+                    },
+                    {
+                      "key": "after",
+                      "value": "1994-09-28T09:03:17.640Z"
+                    },
+                    {
+                      "key": "ascending",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"string\",\n  \"message\": \"string\",\n  \"code\": \"string\",\n  \"fix\": \"string\",\n  \"docs\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a7a23572-b535-49b5-bd9a-370698fdaca9",
+          "name": "Get Draft",
+          "request": {
+            "name": "Get Draft",
+            "description": {
+              "content": "**CLI:**\n```bash\nagentmail drafts get --draft-id <draft_id>\n```",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v0",
+                "drafts",
+                ":draft_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "draft_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "2766f0de-844b-4224-81a0-0f541a52a27a",
+              "name": "Response with status 200",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "drafts",
+                    ":draft_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "draft_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"inbox_id\": \"string\",\n  \"draft_id\": \"string\",\n  \"labels\": [\n    \"string\",\n    \"string\"\n  ],\n  \"updated_at\": \"1952-01-23T20:46:25.461Z\",\n  \"created_at\": \"2022-03-13T01:12:09.625Z\",\n  \"client_id\": \"string\",\n  \"reply_to\": [\n    \"string\",\n    \"string\"\n  ],\n  \"to\": [\n    \"string\",\n    \"string\"\n  ],\n  \"cc\": [\n    \"string\",\n    \"string\"\n  ],\n  \"bcc\": [\n    \"string\",\n    \"string\"\n  ],\n  \"subject\": \"string\",\n  \"preview\": \"string\",\n  \"text\": \"string\",\n  \"html\": \"string\",\n  \"attachments\": [\n    {\n      \"attachment_id\": \"string\",\n      \"size\": 377,\n      \"filename\": \"string\",\n      \"content_type\": \"string\",\n      \"content_disposition\": \"attachment\",\n      \"content_id\": \"string\"\n    },\n    {\n      \"attachment_id\": \"string\",\n      \"size\": 2502,\n      \"filename\": \"string\",\n      \"content_type\": \"string\",\n      \"content_disposition\": \"inline\",\n      \"content_id\": \"string\"\n    }\n  ],\n  \"in_reply_to\": \"string\",\n  \"forward_of\": \"string\",\n  \"references\": [\n    \"string\",\n    \"string\"\n  ],\n  \"send_status\": \"sending\",\n  \"send_at\": \"2026-03-17T19:09:06.433Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "785e5d28-1a40-45d4-b1ff-c3a896c6a24f",
+              "name": "Error response with status 404",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "drafts",
+                    ":draft_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "draft_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"string\",\n  \"message\": \"string\",\n  \"code\": \"string\",\n  \"fix\": \"string\",\n  \"docs\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "44f87e94-1e5a-4b99-bdd0-9e685150a8b7",
+          "name": "Get Attachment",
+          "request": {
+            "name": "Get Attachment",
+            "description": {
+              "content": "**CLI:**\n```bash\nagentmail drafts get-attachment --draft-id <draft_id> --attachment-id <attachment_id>\n```",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v0",
+                "drafts",
+                ":draft_id",
+                "attachments",
+                ":attachment_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "draft_id",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "attachment_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e6492028-0725-4d10-a69e-c75d3021fc98",
+              "name": "Response with status 200",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "drafts",
+                    ":draft_id",
+                    "attachments",
+                    ":attachment_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "draft_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "attachment_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"attachment_id\": \"string\",\n  \"size\": 9111,\n  \"download_url\": \"string\",\n  \"expires_at\": \"1955-12-06T14:26:41.005Z\",\n  \"filename\": \"string\",\n  \"content_type\": \"string\",\n  \"content_disposition\": \"attachment\",\n  \"content_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f9af70e8-aed4-4279-8d54-723353eea10a",
+              "name": "Error response with status 404",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "drafts",
+                    ":draft_id",
+                    "attachments",
+                    ":attachment_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "draft_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "attachment_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"string\",\n  \"message\": \"string\",\n  \"code\": \"string\",\n  \"fix\": \"string\",\n  \"docs\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.agentmail.to",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "cbd1c8c2-3dfb-47e1-8002-9c132b19da82",
+    "name": "API Reference agent drafts API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

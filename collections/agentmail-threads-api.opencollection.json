@@ -1,0 +1,254 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "API Reference agent threads API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "threads",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Threads",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.agentmail.to/v0/threads",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "page_token",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "labels",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "before",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "ascending",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "include_spam",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "include_blocked",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "include_unauthenticated",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "include_trash",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "senders",
+                "value": "",
+                "type": "query",
+                "description": "Filter to threads whose senders contain this value (substring match). Repeatable; all values must match."
+              },
+              {
+                "name": "recipients",
+                "value": "",
+                "type": "query",
+                "description": "Filter to threads whose recipients contain this value (substring match). Repeatable; all values must match."
+              },
+              {
+                "name": "subject",
+                "value": "",
+                "type": "query",
+                "description": "Filter to threads whose subject contains this value (substring match). Repeatable; all values must match."
+              }
+            ]
+          },
+          "docs": "Lists threads, most recent first. Pass `senders`, `recipients`, or\n`subject` to filter by substring. Filtered requests are served by\nsearch, which caps `limit` at 100. For relevance-ranked full-text\nsearch across senders, recipients, subject, and message body, use\n`Search Threads`.\n\n**CLI:**\n```bash\nagentmail threads list\n```"
+        },
+        {
+          "info": {
+            "name": "Search Threads",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.agentmail.to/v0/threads/search",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "q",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "page_token",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "before",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Full-text search across threads in the organization, ranked by\nrelevance. The query is matched against senders, recipients, and\nsubject (substring) and the message body (tokenized full text). Spam,\ntrash, blocked, and unauthenticated threads are always excluded.\n`limit` cannot exceed 100."
+        },
+        {
+          "info": {
+            "name": "Get Thread",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.agentmail.to/v0/threads/:thread_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "thread_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "**CLI:**\n```bash\nagentmail threads get --thread-id <thread_id>\n```"
+        },
+        {
+          "info": {
+            "name": "Update Thread",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.agentmail.to/v0/threads/:thread_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "thread_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates thread labels. Cannot add or remove system labels (sent, received, bounced, etc.). Rejects requests with a `422` for threads with 100 or more messages."
+        },
+        {
+          "info": {
+            "name": "Delete Thread",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.agentmail.to/v0/threads/:thread_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "thread_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Permanently deletes a thread and all of its messages.\n\n**CLI:**\n```bash\nagentmail threads delete --thread-id <thread_id>\n```"
+        },
+        {
+          "info": {
+            "name": "Get Attachment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.agentmail.to/v0/threads/:thread_id/attachments/:attachment_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "thread_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "attachment_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "**CLI:**\n```bash\nagentmail threads get-attachment --thread-id <thread_id> --attachment-id <attachment_id>\n```"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

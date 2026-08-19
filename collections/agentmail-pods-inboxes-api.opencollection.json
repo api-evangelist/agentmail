@@ -1,0 +1,176 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "API Reference agent pods > inboxes API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "pods > inboxes",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Inboxes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.agentmail.to/v0/pods/:pod_id/inboxes",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "pod_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "page_token",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "ascending",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "**CLI:**\n```bash\nagentmail pods:inboxes list --pod-id <pod_id>\n```"
+        },
+        {
+          "info": {
+            "name": "Create Inbox",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.agentmail.to/v0/pods/:pod_id/inboxes",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "pod_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "**CLI:**\n```bash\nagentmail pods:inboxes create --pod-id <pod_id> --username myagent --domain example.com\n```"
+        },
+        {
+          "info": {
+            "name": "Get Inbox",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.agentmail.to/v0/pods/:pod_id/inboxes/:inbox_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "pod_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "inbox_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "**CLI:**\n```bash\nagentmail pods:inboxes get --pod-id <pod_id> --inbox-id <inbox_id>\n```"
+        },
+        {
+          "info": {
+            "name": "Update Inbox",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.agentmail.to/v0/pods/:pod_id/inboxes/:inbox_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "pod_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "inbox_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "**CLI:**\n```bash\nagentmail pods:inboxes update --pod-id <pod_id> --inbox-id <inbox_id>\n```"
+        },
+        {
+          "info": {
+            "name": "Delete Inbox",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.agentmail.to/v0/pods/:pod_id/inboxes/:inbox_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "pod_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "inbox_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "**CLI:**\n```bash\nagentmail pods:inboxes delete --pod-id <pod_id> --inbox-id <inbox_id>\n```"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

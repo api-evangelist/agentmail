@@ -1,0 +1,258 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "API Reference agent inboxes > drafts API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "inboxes > drafts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Drafts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.agentmail.to/v0/inboxes/:inbox_id/drafts",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "inbox_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "page_token",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "labels",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "before",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "ascending",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "**CLI:**\n```bash\nagentmail inboxes:drafts list --inbox-id <inbox_id>\n```"
+        },
+        {
+          "info": {
+            "name": "Create Draft",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.agentmail.to/v0/inboxes/:inbox_id/drafts",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "inbox_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a draft. Supply `in_reply_to` to create a reply draft (with\n`reply_all` to address the whole thread), whose recipients, subject, and\nthreading are derived from the referenced message, or `forward_of` to\ncreate a forward draft, which derives the subject, threading, and\nforwarded content from the source but keeps recipients caller-supplied.\n\n**CLI:**\n```bash\nagentmail inboxes:drafts create --inbox-id <inbox_id> --to recipient@example.com --subject \"Draft subject\" --text \"Draft body\"\n```"
+        },
+        {
+          "info": {
+            "name": "Get Draft",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.agentmail.to/v0/inboxes/:inbox_id/drafts/:draft_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "inbox_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "draft_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "**CLI:**\n```bash\nagentmail inboxes:drafts get --inbox-id <inbox_id> --draft-id <draft_id>\n```"
+        },
+        {
+          "info": {
+            "name": "Update Draft",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.agentmail.to/v0/inboxes/:inbox_id/drafts/:draft_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "inbox_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "draft_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Edit fields on an existing draft. Passing `null` clears a field (or `[]`\nfor a recipient field); `send_at: null` un-schedules a scheduled draft.\nA draft that is already being sent cannot be edited.\n\n**CLI:**\n```bash\nagentmail inboxes:drafts update --inbox-id <inbox_id> --draft-id <draft_id> --subject \"Updated subject\"\n```"
+        },
+        {
+          "info": {
+            "name": "Delete Draft",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.agentmail.to/v0/inboxes/:inbox_id/drafts/:draft_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "inbox_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "draft_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "**CLI:**\n```bash\nagentmail inboxes:drafts delete --inbox-id <inbox_id> --draft-id <draft_id>\n```"
+        },
+        {
+          "info": {
+            "name": "Get Attachment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.agentmail.to/v0/inboxes/:inbox_id/drafts/:draft_id/attachments/:attachment_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "inbox_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "draft_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "attachment_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "**CLI:**\n```bash\nagentmail inboxes:drafts get-attachment --inbox-id <inbox_id> --draft-id <draft_id> --attachment-id <attachment_id>\n```"
+        },
+        {
+          "info": {
+            "name": "Send Draft",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.agentmail.to/v0/inboxes/:inbox_id/drafts/:draft_id/send",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "inbox_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "draft_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "**CLI:**\n```bash\nagentmail inboxes:drafts send --inbox-id <inbox_id> --draft-id <draft_id>\n```"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

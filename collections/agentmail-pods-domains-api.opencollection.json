@@ -1,0 +1,234 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "API Reference agent pods > domains API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "pods > domains",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Domains",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.agentmail.to/v0/pods/:pod_id/domains",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "pod_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "page_token",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "ascending",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "**CLI:**\n```bash\nagentmail pods:domains list --pod-id <pod_id>\n```"
+        },
+        {
+          "info": {
+            "name": "Create Domain",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.agentmail.to/v0/pods/:pod_id/domains",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "pod_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "**CLI:**\n```bash\nagentmail pods:domains create --pod-id <pod_id> --domain example.com\n```"
+        },
+        {
+          "info": {
+            "name": "Get Domain",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.agentmail.to/v0/pods/:pod_id/domains/:domain_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "pod_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "domain_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "**CLI:**\n```bash\nagentmail pods:domains get --pod-id <pod_id> --domain-id <domain_id>\n```"
+        },
+        {
+          "info": {
+            "name": "Update Domain",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.agentmail.to/v0/pods/:pod_id/domains/:domain_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "pod_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "domain_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "**CLI:**\n```bash\nagentmail pods:domains update --pod-id <pod_id> --domain-id <domain_id>\n```"
+        },
+        {
+          "info": {
+            "name": "Delete Domain",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.agentmail.to/v0/pods/:pod_id/domains/:domain_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "pod_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "domain_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "**CLI:**\n```bash\nagentmail pods:domains delete --pod-id <pod_id> --domain-id <domain_id>\n```"
+        },
+        {
+          "info": {
+            "name": "Get Zone File",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.agentmail.to/v0/pods/:pod_id/domains/:domain_id/zone-file",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "pod_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "domain_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "**CLI:**\n```bash\nagentmail pods:domains get-zone-file --pod-id <pod_id> --domain-id <domain_id>\n```"
+        },
+        {
+          "info": {
+            "name": "Verify Domain",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.agentmail.to/v0/pods/:pod_id/domains/:domain_id/verify",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "pod_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "domain_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "**CLI:**\n```bash\nagentmail pods:domains verify --pod-id <pod_id> --domain-id <domain_id>\n```"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

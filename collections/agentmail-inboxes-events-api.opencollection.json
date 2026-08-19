@@ -1,0 +1,57 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "API Reference agent inboxes > events API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "inboxes > events",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Inbox Events",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.agentmail.to/v0/inboxes/:inbox_id/events",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "inbox_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "page_token",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "ascending",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "List label change events for an inbox. Returns events in reverse chronological order by default. Use for IMAP UID projection or audit logging.\n\n**CLI:**\n```bash\nagentmail inboxes:events list --inbox-id <inbox_id>\n```"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

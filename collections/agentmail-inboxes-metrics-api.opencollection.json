@@ -1,0 +1,126 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "API Reference agent inboxes > metrics API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "inboxes > metrics",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Query Events",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.agentmail.to/v0/inboxes/:inbox_id/metrics/events",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "inbox_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "event_types",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "start",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "end",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "period",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "descending",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Counts of email events (sent, delivered, bounced, etc.) over time for\nthe inbox. Defaults to the last 24 hours; `start` must be within the\nlast 90 days, and a future `end` is clamped to now. Omit `period` for\nindividual event counts, or set it to sum counts into buckets of that\nmany seconds.\n\n**CLI:**\n```bash\nagentmail inboxes:metrics query --inbox-id <inbox_id>\n```"
+        },
+        {
+          "info": {
+            "name": "Query Usage",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.agentmail.to/v0/inboxes/:inbox_id/metrics/usage",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "inbox_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "usage_types",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "start",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "end",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "period",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "descending",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Cumulative usage series for the inbox. Each point is the running total\nof the usage type at that timestamp, not the change within the bucket.\nInbox-scoped queries carry `storage_bytes`, `message_count`, and\n`thread_count`; requested types that don't apply to the scope are\nignored. Defaults to the last 24 hours; `start` must be within the\nlast 90 days, and a future `end` is clamped to now. The range divided\nby `period` must not exceed 1000 buckets."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

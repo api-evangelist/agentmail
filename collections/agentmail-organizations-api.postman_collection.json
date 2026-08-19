@@ -1,0 +1,110 @@
+{
+  "item": [
+    {
+      "id": "01158331-881a-454e-a865-effa1d748053",
+      "name": "organizations",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "36086ab7-fff1-4852-a05c-2d3c01724df7",
+          "name": "Get Organization",
+          "request": {
+            "name": "Get Organization",
+            "description": {
+              "content": "Returns the organization for the authenticated API key (usage limits, counts, and billing metadata).\n\n**CLI:**\n```bash\nagentmail organizations get\n```",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v0",
+                "organizations"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "35e0d84a-5a27-4a31-b33b-7835081733ce",
+              "name": "Response with status 200",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "organizations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"organization_id\": \"string\",\n  \"inbox_count\": 3780,\n  \"domain_count\": 4684,\n  \"updated_at\": \"1999-11-03T10:43:52.413Z\",\n  \"created_at\": \"1982-06-17T17:24:25.791Z\",\n  \"inbox_limit\": 2793,\n  \"domain_limit\": 6760,\n  \"billing_id\": \"string\",\n  \"billing_type\": \"string\",\n  \"billing_subscription_id\": \"string\",\n  \"authentication_id\": \"string\",\n  \"authentication_type\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.agentmail.to",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "30994beb-cc75-4b74-9f9a-b3025287c263",
+    "name": "API Reference agent organizations API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,1592 @@
+{
+  "item": [
+    {
+      "id": "73a604f0-3182-48c8-a1a1-47ac3ea79c9f",
+      "name": "inboxes > threads",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "97b34273-c28f-4ff6-b7c6-56c31aaee5fc",
+          "name": "List Threads",
+          "request": {
+            "name": "List Threads",
+            "description": {
+              "content": "Lists threads in the inbox, most recent first. Pass `senders`,\n`recipients`, or `subject` to filter by substring. Filtered requests are\nserved by search, which caps `limit` at 100. For relevance-ranked\nfull-text search, use `Search Threads`.\n\n**CLI:**\n```bash\nagentmail inboxes:threads list --inbox-id <inbox_id>\n```",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v0",
+                "inboxes",
+                ":inbox_id",
+                "threads"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "page_token",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "labels",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "labels",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "before",
+                  "value": "<dateTime>"
+                },
+                {
+                  "disabled": false,
+                  "key": "after",
+                  "value": "<dateTime>"
+                },
+                {
+                  "disabled": false,
+                  "key": "ascending",
+                  "value": "<boolean>"
+                },
+                {
+                  "disabled": false,
+                  "key": "include_spam",
+                  "value": "<boolean>"
+                },
+                {
+                  "disabled": false,
+                  "key": "include_blocked",
+                  "value": "<boolean>"
+                },
+                {
+                  "disabled": false,
+                  "key": "include_unauthenticated",
+                  "value": "<boolean>"
+                },
+                {
+                  "disabled": false,
+                  "key": "include_trash",
+                  "value": "<boolean>"
+                },
+                {
+                  "disabled": false,
+                  "key": "senders",
+                  "value": "<string>",
+                  "description": "Filter to threads whose senders contain this value (substring match). Repeatable; all values must match."
+                },
+                {
+                  "disabled": false,
+                  "key": "senders",
+                  "value": "<string>",
+                  "description": "Filter to threads whose senders contain this value (substring match). Repeatable; all values must match."
+                },
+                {
+                  "disabled": false,
+                  "key": "recipients",
+                  "value": "<string>",
+                  "description": "Filter to threads whose recipients contain this value (substring match). Repeatable; all values must match."
+                },
+                {
+                  "disabled": false,
+                  "key": "recipients",
+                  "value": "<string>",
+                  "description": "Filter to threads whose recipients contain this value (substring match). Repeatable; all values must match."
+                },
+                {
+                  "disabled": false,
+                  "key": "subject",
+                  "value": "<string>",
+                  "description": "Filter to threads whose subject contains this value (substring match). Repeatable; all values must match."
+                },
+                {
+                  "disabled": false,
+                  "key": "subject",
+                  "value": "<string>",
+                  "description": "Filter to threads whose subject contains this value (substring match). Repeatable; all values must match."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "inbox_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0bdb4c4e-a01c-41c3-a621-0437cc1eb414",
+              "name": "Response with status 200",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "inboxes",
+                    ":inbox_id",
+                    "threads"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "2339"
+                    },
+                    {
+                      "key": "page_token",
+                      "value": "string"
+                    },
+                    {
+                      "key": "labels",
+                      "value": "string"
+                    },
+                    {
+                      "key": "labels",
+                      "value": "string"
+                    },
+                    {
+                      "key": "before",
+                      "value": "1980-12-19T17:12:32.874Z"
+                    },
+                    {
+                      "key": "after",
+                      "value": "1950-02-03T09:04:53.779Z"
+                    },
+                    {
+                      "key": "ascending",
+                      "value": "true"
+                    },
+                    {
+                      "key": "include_spam",
+                      "value": "false"
+                    },
+                    {
+                      "key": "include_blocked",
+                      "value": "false"
+                    },
+                    {
+                      "key": "include_unauthenticated",
+                      "value": "false"
+                    },
+                    {
+                      "key": "include_trash",
+                      "value": "false"
+                    },
+                    {
+                      "key": "senders",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "senders",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "recipients",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "recipients",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "subject",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "subject",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "inbox_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"count\": 1834,\n  \"threads\": [\n    {\n      \"inbox_id\": \"string\",\n      \"thread_id\": \"string\",\n      \"labels\": [\n        \"string\",\n        \"string\"\n      ],\n      \"timestamp\": \"1973-06-14T22:58:43.245Z\",\n      \"senders\": [\n        \"string\",\n        \"string\"\n      ],\n      \"recipients\": [\n        \"string\",\n        \"string\"\n      ],\n      \"last_message_id\": \"string\",\n      \"message_count\": 7247,\n      \"size\": 6155,\n      \"updated_at\": \"1996-02-16T03:25:32.252Z\",\n      \"created_at\": \"1992-10-25T20:59:23.844Z\",\n      \"received_timestamp\": \"2007-03-05T14:17:06.317Z\",\n      \"sent_timestamp\": \"1983-06-17T02:29:24.820Z\",\n      \"subject\": \"string\",\n      \"preview\": \"string\",\n      \"attachments\": [\n        {\n          \"attachment_id\": \"string\",\n          \"size\": 3745,\n          \"filename\": \"string\",\n          \"content_type\": \"string\",\n          \"content_disposition\": \"attachment\",\n          \"content_id\": \"string\"\n        },\n        {\n          \"attachment_id\": \"string\",\n          \"size\": 7162,\n          \"filename\": \"string\",\n          \"content_type\": \"string\",\n          \"content_disposition\": \"inline\",\n          \"content_id\": \"string\"\n        }\n      ]\n    },\n    {\n      \"inbox_id\": \"string\",\n      \"thread_id\": \"string\",\n      \"labels\": [\n        \"string\",\n        \"string\"\n      ],\n      \"timestamp\": \"1953-03-18T18:15:10.337Z\",\n      \"senders\": [\n        \"string\",\n        \"string\"\n      ],\n      \"recipients\": [\n        \"string\",\n        \"string\"\n      ],\n      \"last_message_id\": \"string\",\n      \"message_count\": 8546,\n      \"size\": 9214,\n      \"updated_at\": \"2002-08-29T16:40:01.038Z\",\n      \"created_at\": \"2020-11-17T20:22:02.307Z\",\n      \"received_timestamp\": \"1954-08-23T23:47:24.171Z\",\n      \"sent_timestamp\": \"2022-06-25T08:21:35.468Z\",\n      \"subject\": \"string\",\n      \"preview\": \"string\",\n      \"attachments\": [\n        {\n          \"attachment_id\": \"string\",\n          \"size\": 9286,\n          \"filename\": \"string\",\n          \"content_type\": \"string\",\n          \"content_disposition\": \"inline\",\n          \"content_id\": \"string\"\n        },\n        {\n          \"attachment_id\": \"string\",\n          \"size\": 5294,\n          \"filename\": \"string\",\n          \"content_type\": \"string\",\n          \"content_disposition\": \"inline\",\n          \"content_id\": \"string\"\n        }\n      ]\n    }\n  ],\n  \"limit\": 1821,\n  \"next_page_token\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6ad5686f-b9d2-4550-8bd8-53f305770454",
+              "name": "Error response with status 404",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "inboxes",
+                    ":inbox_id",
+                    "threads"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "2339"
+                    },
+                    {
+                      "key": "page_token",
+                      "value": "string"
+                    },
+                    {
+                      "key": "labels",
+                      "value": "string"
+                    },
+                    {
+                      "key": "labels",
+                      "value": "string"
+                    },
+                    {
+                      "key": "before",
+                      "value": "1980-12-19T17:12:32.874Z"
+                    },
+                    {
+                      "key": "after",
+                      "value": "1950-02-03T09:04:53.779Z"
+                    },
+                    {
+                      "key": "ascending",
+                      "value": "true"
+                    },
+                    {
+                      "key": "include_spam",
+                      "value": "false"
+                    },
+                    {
+                      "key": "include_blocked",
+                      "value": "false"
+                    },
+                    {
+                      "key": "include_unauthenticated",
+                      "value": "true"
+                    },
+                    {
+                      "key": "include_trash",
+                      "value": "false"
+                    },
+                    {
+                      "key": "senders",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "senders",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "recipients",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "recipients",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "subject",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "subject",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "inbox_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"string\",\n  \"message\": \"string\",\n  \"code\": \"string\",\n  \"fix\": \"string\",\n  \"docs\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e1950b3b-38fb-4235-9603-2f54d1d20e27",
+          "name": "Search Threads",
+          "request": {
+            "name": "Search Threads",
+            "description": {
+              "content": "Full-text search across threads in the inbox, ranked by relevance. The\nquery is matched against senders, recipients, and subject (substring)\nand the message body (tokenized full text). Spam, trash, blocked, and\nunauthenticated threads are always excluded. `limit` cannot exceed 100.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v0",
+                "inboxes",
+                ":inbox_id",
+                "threads",
+                "search"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "q",
+                  "value": "<string>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "page_token",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "before",
+                  "value": "<dateTime>"
+                },
+                {
+                  "disabled": false,
+                  "key": "after",
+                  "value": "<dateTime>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "inbox_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "116299a5-46f5-4175-8425-cbe9b113316c",
+              "name": "Response with status 200",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "inboxes",
+                    ":inbox_id",
+                    "threads",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "string"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "2339"
+                    },
+                    {
+                      "key": "page_token",
+                      "value": "string"
+                    },
+                    {
+                      "key": "before",
+                      "value": "1980-12-19T17:12:32.874Z"
+                    },
+                    {
+                      "key": "after",
+                      "value": "1950-02-03T09:04:53.779Z"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "inbox_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"count\": 2332,\n  \"threads\": [\n    {\n      \"inbox_id\": \"string\",\n      \"thread_id\": \"string\",\n      \"labels\": [\n        \"string\",\n        \"string\"\n      ],\n      \"timestamp\": \"2005-01-06T14:20:07.145Z\",\n      \"senders\": [\n        \"string\",\n        \"string\"\n      ],\n      \"recipients\": [\n        \"string\",\n        \"string\"\n      ],\n      \"last_message_id\": \"string\",\n      \"message_count\": 5082,\n      \"size\": 8980,\n      \"updated_at\": \"1987-04-21T21:50:10.250Z\",\n      \"created_at\": \"1946-12-02T10:16:36.834Z\",\n      \"received_timestamp\": \"2007-02-03T04:58:51.402Z\",\n      \"sent_timestamp\": \"1947-06-12T12:32:29.740Z\",\n      \"subject\": \"string\",\n      \"preview\": \"string\",\n      \"attachments\": [\n        {\n          \"attachment_id\": \"string\",\n          \"size\": 1218,\n          \"filename\": \"string\",\n          \"content_type\": \"string\",\n          \"content_disposition\": \"inline\",\n          \"content_id\": \"string\"\n        },\n        {\n          \"attachment_id\": \"string\",\n          \"size\": 3251,\n          \"filename\": \"string\",\n          \"content_type\": \"string\",\n          \"content_disposition\": \"attachment\",\n          \"content_id\": \"string\"\n        }\n      ],\n      \"highlights\": {\n        \"from\": [\n          \"string\",\n          \"string\"\n        ],\n        \"recipients\": [\n          \"string\",\n          \"string\"\n        ],\n        \"subject\": [\n          \"string\",\n          \"string\"\n        ],\n        \"text\": [\n          \"string\",\n          \"string\"\n        ]\n      }\n    },\n    {\n      \"inbox_id\": \"string\",\n      \"thread_id\": \"string\",\n      \"labels\": [\n        \"string\",\n        \"string\"\n      ],\n      \"timestamp\": \"2013-03-27T18:49:21.196Z\",\n      \"senders\": [\n        \"string\",\n        \"string\"\n      ],\n      \"recipients\": [\n        \"string\",\n        \"string\"\n      ],\n      \"last_message_id\": \"string\",\n      \"message_count\": 9441,\n      \"size\": 9290,\n      \"updated_at\": \"2016-04-09T19:07:33.836Z\",\n      \"created_at\": \"1961-11-24T23:01:11.003Z\",\n      \"received_timestamp\": \"2006-09-20T07:08:17.329Z\",\n      \"sent_timestamp\": \"1997-09-28T20:01:47.988Z\",\n      \"subject\": \"string\",\n      \"preview\": \"string\",\n      \"attachments\": [\n        {\n          \"attachment_id\": \"string\",\n          \"size\": 7601,\n          \"filename\": \"string\",\n          \"content_type\": \"string\",\n          \"content_disposition\": \"attachment\",\n          \"content_id\": \"string\"\n        },\n        {\n          \"attachment_id\": \"string\",\n          \"size\": 446,\n          \"filename\": \"string\",\n          \"content_type\": \"string\",\n          \"content_disposition\": \"attachment\",\n          \"content_id\": \"string\"\n        }\n      ],\n      \"highlights\": {\n        \"from\": [\n          \"string\",\n          \"string\"\n        ],\n        \"recipients\": [\n          \"string\",\n          \"string\"\n        ],\n        \"subject\": [\n          \"string\",\n          \"string\"\n        ],\n        \"text\": [\n          \"string\",\n          \"string\"\n        ]\n      }\n    }\n  ],\n  \"limit\": 423,\n  \"next_page_token\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fbd1607c-a5f6-4ac1-8eec-fb5a139acfcb",
+              "name": "Error response with status 400",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "inboxes",
+                    ":inbox_id",
+                    "threads",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "string"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "2339"
+                    },
+                    {
+                      "key": "page_token",
+                      "value": "string"
+                    },
+                    {
+                      "key": "before",
+                      "value": "1980-12-19T17:12:32.874Z"
+                    },
+                    {
+                      "key": "after",
+                      "value": "1950-02-03T09:04:53.779Z"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "inbox_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"string\",\n  \"errors\": {},\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"fix\": \"string\",\n  \"docs\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4022252a-7615-4540-ac1e-98dd2695e7e8",
+              "name": "Error response with status 404",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "inboxes",
+                    ":inbox_id",
+                    "threads",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "string"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "2339"
+                    },
+                    {
+                      "key": "page_token",
+                      "value": "string"
+                    },
+                    {
+                      "key": "before",
+                      "value": "1980-12-19T17:12:32.874Z"
+                    },
+                    {
+                      "key": "after",
+                      "value": "1950-02-03T09:04:53.779Z"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "inbox_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"string\",\n  \"message\": \"string\",\n  \"code\": \"string\",\n  \"fix\": \"string\",\n  \"docs\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f5584901-9225-4852-b57e-5d9e486e9160",
+          "name": "Get Thread",
+          "request": {
+            "name": "Get Thread",
+            "description": {
+              "content": "**CLI:**\n```bash\nagentmail inboxes:threads get --inbox-id <inbox_id> --thread-id <thread_id>\n```",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v0",
+                "inboxes",
+                ":inbox_id",
+                "threads",
+                ":thread_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "inbox_id",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "thread_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "01cbfc63-f014-492e-9bc3-c94da0efc19e",
+              "name": "Response with status 200",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "inboxes",
+                    ":inbox_id",
+                    "threads",
+                    ":thread_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "inbox_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "thread_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"inbox_id\": \"string\",\n  \"thread_id\": \"string\",\n  \"labels\": [\n    \"string\",\n    \"string\"\n  ],\n  \"timestamp\": \"2008-04-26T05:35:12.506Z\",\n  \"senders\": [\n    \"string\",\n    \"string\"\n  ],\n  \"recipients\": [\n    \"string\",\n    \"string\"\n  ],\n  \"last_message_id\": \"string\",\n  \"message_count\": 8211,\n  \"size\": 6821,\n  \"updated_at\": \"1987-06-05T07:00:00.241Z\",\n  \"created_at\": \"2002-02-05T10:47:15.176Z\",\n  \"messages\": [\n    {\n      \"inbox_id\": \"string\",\n      \"thread_id\": \"string\",\n      \"message_id\": \"string\",\n      \"labels\": [\n        \"string\",\n        \"string\"\n      ],\n      \"timestamp\": \"2017-12-27T22:25:23.380Z\",\n      \"from\": \"string\",\n      \"to\": [\n        \"string\",\n        \"string\"\n      ],\n      \"size\": 5338,\n      \"updated_at\": \"1996-05-24T13:31:33.703Z\",\n      \"created_at\": \"2021-09-10T23:45:17.324Z\",\n      \"reply_to\": [\n        \"string\",\n        \"string\"\n      ],\n      \"cc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"bcc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"subject\": \"string\",\n      \"preview\": \"string\",\n      \"text\": \"string\",\n      \"html\": \"string\",\n      \"extracted_text\": \"string\",\n      \"extracted_html\": \"string\",\n      \"attachments\": [\n        {\n          \"attachment_id\": \"string\",\n          \"size\": 6710,\n          \"filename\": \"string\",\n          \"content_type\": \"string\",\n          \"content_disposition\": \"inline\",\n          \"content_id\": \"string\"\n        },\n        {\n          \"attachment_id\": \"string\",\n          \"size\": 1722,\n          \"filename\": \"string\",\n          \"content_type\": \"string\",\n          \"content_disposition\": \"inline\",\n          \"content_id\": \"string\"\n        }\n      ],\n      \"in_reply_to\": \"string\",\n      \"references\": [\n        \"string\",\n        \"string\"\n      ],\n      \"headers\": {\n        \"key_0\": \"string\"\n      }\n    },\n    {\n      \"inbox_id\": \"string\",\n      \"thread_id\": \"string\",\n      \"message_id\": \"string\",\n      \"labels\": [\n        \"string\",\n        \"string\"\n      ],\n      \"timestamp\": \"1951-03-04T20:36:05.361Z\",\n      \"from\": \"string\",\n      \"to\": [\n        \"string\",\n        \"string\"\n      ],\n      \"size\": 8786,\n      \"updated_at\": \"1988-04-29T02:55:19.706Z\",\n      \"created_at\": \"1961-03-03T16:09:04.862Z\",\n      \"reply_to\": [\n        \"string\",\n        \"string\"\n      ],\n      \"cc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"bcc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"subject\": \"string\",\n      \"preview\": \"string\",\n      \"text\": \"string\",\n      \"html\": \"string\",\n      \"extracted_text\": \"string\",\n      \"extracted_html\": \"string\",\n      \"attachments\": [\n        {\n          \"attachment_id\": \"string\",\n          \"size\": 7175,\n          \"filename\": \"string\",\n          \"content_type\": \"string\",\n          \"content_disposition\": \"inline\",\n          \"content_id\": \"string\"\n        },\n        {\n          \"attachment_id\": \"string\",\n          \"size\": 6135,\n          \"filename\": \"string\",\n          \"content_type\": \"string\",\n          \"content_disposition\": \"attachment\",\n          \"content_id\": \"string\"\n        }\n      ],\n      \"in_reply_to\": \"string\",\n      \"references\": [\n        \"string\",\n        \"string\"\n      ],\n      \"headers\": {\n        \"key_0\": \"string\"\n      }\n    }\n  ],\n  \"received_timestamp\": \"1949-05-07T23:14:52.414Z\",\n  \"sent_timestamp\": \"1966-07-30T20:55:25.544Z\",\n  \"subject\": \"string\",\n  \"preview\": \"string\",\n  \"attachments\": [\n    {\n      \"attachment_id\": \"string\",\n      \"size\": 4858,\n      \"filename\": \"string\",\n      \"content_type\": \"string\",\n      \"content_disposition\": \"inline\",\n      \"content_id\": \"string\"\n    },\n    {\n      \"attachment_id\": \"string\",\n      \"size\": 4237,\n      \"filename\": \"string\",\n      \"content_type\": \"string\",\n      \"content_disposition\": \"attachment\",\n      \"content_id\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ba277686-0034-4458-bf53-96bbf5b293d7",
+              "name": "Error response with status 404",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "inboxes",
+                    ":inbox_id",
+                    "threads",
+                    ":thread_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "inbox_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "thread_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"string\",\n  \"message\": \"string\",\n  \"code\": \"string\",\n  \"fix\": \"string\",\n  \"docs\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ea446972-c028-445d-84ba-7463b0bdfbdd",
+          "name": "Update Thread",
+          "request": {
+            "name": "Update Thread",
+            "description": {
+              "content": "Updates thread labels. Cannot add or remove system labels (sent, received, bounced, etc.). Rejects requests with a `422` for threads with 100 or more messages.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v0",
+                "inboxes",
+                ":inbox_id",
+                "threads",
+                ":thread_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "inbox_id",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "thread_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"add_labels\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"remove_labels\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "caf8eece-456a-4b0b-a27f-db4025bcf6f2",
+              "name": "Response with status 200",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "inboxes",
+                    ":inbox_id",
+                    "threads",
+                    ":thread_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "inbox_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "thread_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"add_labels\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"remove_labels\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"thread_id\": \"string\",\n  \"labels\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "28a134ad-1e55-4a8c-9b16-6d2cb347f02f",
+              "name": "Error response with status 400",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "inboxes",
+                    ":inbox_id",
+                    "threads",
+                    ":thread_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "inbox_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "thread_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"add_labels\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"remove_labels\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"string\",\n  \"errors\": {},\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"fix\": \"string\",\n  \"docs\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "503a699f-4026-4d1a-8b27-5b602b3a75e5",
+              "name": "Error response with status 404",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "inboxes",
+                    ":inbox_id",
+                    "threads",
+                    ":thread_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "inbox_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "thread_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"add_labels\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"remove_labels\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"string\",\n  \"message\": \"string\",\n  \"code\": \"string\",\n  \"fix\": \"string\",\n  \"docs\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9026de13-1f87-4780-825a-2fa80f257761",
+              "name": "Error response with status 422",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "inboxes",
+                    ":inbox_id",
+                    "threads",
+                    ":thread_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "inbox_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "thread_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"add_labels\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"remove_labels\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"string\",\n  \"message\": \"string\",\n  \"code\": \"string\",\n  \"fix\": \"string\",\n  \"docs\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "20423637-8dc5-4117-9506-9baf409eaff0",
+          "name": "Delete Thread",
+          "request": {
+            "name": "Delete Thread",
+            "description": {
+              "content": "Permanently deletes a thread and all of its messages.\n\n**CLI:**\n```bash\nagentmail inboxes:threads delete --inbox-id <inbox_id> --thread-id <thread_id>\n```",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v0",
+                "inboxes",
+                ":inbox_id",
+                "threads",
+                ":thread_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "inbox_id",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "thread_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "7ff8bd5a-e24b-4dd9-aa98-80c53cca84ec",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "inboxes",
+                    ":inbox_id",
+                    "threads",
+                    ":thread_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "inbox_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "thread_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "c2fcb0c1-09a5-46bc-a70c-550072dd1edc",
+              "name": "Error response with status 404",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "inboxes",
+                    ":inbox_id",
+                    "threads",
+                    ":thread_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "inbox_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "thread_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"string\",\n  \"message\": \"string\",\n  \"code\": \"string\",\n  \"fix\": \"string\",\n  \"docs\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "768683b8-4dfb-471c-9679-341f24b998e5",
+          "name": "Get Attachment",
+          "request": {
+            "name": "Get Attachment",
+            "description": {
+              "content": "**CLI:**\n```bash\nagentmail inboxes:threads get-attachment --inbox-id <inbox_id> --thread-id <thread_id> --attachment-id <attachment_id>\n```",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v0",
+                "inboxes",
+                ":inbox_id",
+                "threads",
+                ":thread_id",
+                "attachments",
+                ":attachment_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "inbox_id",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "thread_id",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "attachment_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c1ef316c-11d1-412b-a7d5-c48b92782004",
+              "name": "Response with status 200",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "inboxes",
+                    ":inbox_id",
+                    "threads",
+                    ":thread_id",
+                    "attachments",
+                    ":attachment_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "inbox_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "thread_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "attachment_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"attachment_id\": \"string\",\n  \"size\": 2179,\n  \"download_url\": \"string\",\n  \"expires_at\": \"2015-06-25T05:24:19.555Z\",\n  \"filename\": \"string\",\n  \"content_type\": \"string\",\n  \"content_disposition\": \"inline\",\n  \"content_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "691ba879-2db1-4860-a5df-d36497d23fba",
+              "name": "Error response with status 404",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "inboxes",
+                    ":inbox_id",
+                    "threads",
+                    ":thread_id",
+                    "attachments",
+                    ":attachment_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "inbox_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "thread_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "attachment_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"string\",\n  \"message\": \"string\",\n  \"code\": \"string\",\n  \"fix\": \"string\",\n  \"docs\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.agentmail.to",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "1a1883be-035b-4881-b502-2552624efac0",
+    "name": "API Reference agent inboxes > threads API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

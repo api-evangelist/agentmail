@@ -1,0 +1,54 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "API Reference agent API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "agent",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Sign Up",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.agentmail.to/v0/agent/sign-up",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new agent organization with an inbox and API key. This endpoint is for signing up for the first time. If you've already signed up, you're all set — just use your existing API key.\n\nA 6-digit OTP is sent to the human's email for verification.\n\nThis endpoint is idempotent. Calling it again with the same `human_email` will rotate the API key and resend the OTP if expired.\n\nThe returned API key has limited permissions until the organization is verified via the verify endpoint.\n\n**CLI:**\n```"
+        },
+        {
+          "info": {
+            "name": "Verify",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.agentmail.to/v0/agent/verify",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Verify an agent organization using the 6-digit OTP sent to the human's email during sign-up.\n\nOn success, the organization is upgraded from `agent_unverified` to `agent_verified`, the send allowlist is removed, and free plan entitlements are applied.\n\nThe OTP expires after 24 hours and allows a maximum of 10 attempts. If you run into any difficulties receiving the OTP code, you can also create an account on [console.agentmail.to](https://console.agentmail.to) using the human email address you pr"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

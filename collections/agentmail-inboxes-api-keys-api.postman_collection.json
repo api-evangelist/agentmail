@@ -1,0 +1,620 @@
+{
+  "item": [
+    {
+      "id": "d01db560-21e4-4faf-b4de-3f70a772a4ed",
+      "name": "inboxes > api-keys",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "c2c24915-1f25-498f-b3e4-4806efd0954a",
+          "name": "List API Keys",
+          "request": {
+            "name": "List API Keys",
+            "description": {
+              "content": "**CLI:**\n```bash\nagentmail inboxes:api-keys list --inbox-id <inbox_id>\n```",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v0",
+                "inboxes",
+                ":inbox_id",
+                "api-keys"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "page_token",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "inbox_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ef83345e-cd98-4084-bea6-a8e7beaa62df",
+              "name": "Response with status 200",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "inboxes",
+                    ":inbox_id",
+                    "api-keys"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "9600"
+                    },
+                    {
+                      "key": "page_token",
+                      "value": "string"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "inbox_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"count\": 223,\n  \"api_keys\": [\n    {\n      \"api_key_id\": \"string\",\n      \"prefix\": \"string\",\n      \"name\": \"string\",\n      \"created_at\": \"1957-12-24T04:23:34.120Z\",\n      \"pod_id\": \"string\",\n      \"inbox_id\": \"string\",\n      \"used_at\": \"2001-03-08T09:42:07.836Z\",\n      \"permissions\": {\n        \"inbox_read\": true,\n        \"inbox_create\": false,\n        \"inbox_update\": false,\n        \"inbox_delete\": false,\n        \"thread_read\": false,\n        \"thread_delete\": true,\n        \"message_read\": true,\n        \"message_send\": true,\n        \"message_update\": false,\n        \"label_spam_read\": true,\n        \"label_blocked_read\": false,\n        \"label_trash_read\": true,\n        \"draft_read\": true,\n        \"draft_create\": true,\n        \"draft_update\": false,\n        \"draft_delete\": true,\n        \"draft_send\": false,\n        \"webhook_read\": false,\n        \"webhook_create\": true,\n        \"webhook_update\": false,\n        \"webhook_delete\": false,\n        \"domain_read\": false,\n        \"domain_create\": false,\n        \"domain_update\": false,\n        \"domain_delete\": true,\n        \"list_entry_read\": true,\n        \"list_entry_create\": false,\n        \"list_entry_delete\": false,\n        \"metrics_read\": false,\n        \"api_key_read\": true,\n        \"api_key_create\": true,\n        \"api_key_delete\": false,\n        \"pod_read\": true,\n        \"pod_create\": true,\n        \"pod_delete\": true\n      }\n    },\n    {\n      \"api_key_id\": \"string\",\n      \"prefix\": \"string\",\n      \"name\": \"string\",\n      \"created_at\": \"1968-07-02T10:00:58.864Z\",\n      \"pod_id\": \"string\",\n      \"inbox_id\": \"string\",\n      \"used_at\": \"1981-10-08T20:04:11.136Z\",\n      \"permissions\": {\n        \"inbox_read\": false,\n        \"inbox_create\": true,\n        \"inbox_update\": false,\n        \"inbox_delete\": true,\n        \"thread_read\": false,\n        \"thread_delete\": false,\n        \"message_read\": false,\n        \"message_send\": true,\n        \"message_update\": true,\n        \"label_spam_read\": true,\n        \"label_blocked_read\": true,\n        \"label_trash_read\": true,\n        \"draft_read\": true,\n        \"draft_create\": true,\n        \"draft_update\": true,\n        \"draft_delete\": true,\n        \"draft_send\": false,\n        \"webhook_read\": true,\n        \"webhook_create\": true,\n        \"webhook_update\": false,\n        \"webhook_delete\": true,\n        \"domain_read\": false,\n        \"domain_create\": false,\n        \"domain_update\": false,\n        \"domain_delete\": true,\n        \"list_entry_read\": false,\n        \"list_entry_create\": true,\n        \"list_entry_delete\": false,\n        \"metrics_read\": true,\n        \"api_key_read\": true,\n        \"api_key_create\": false,\n        \"api_key_delete\": false,\n        \"pod_read\": true,\n        \"pod_create\": false,\n        \"pod_delete\": true\n      }\n    }\n  ],\n  \"next_page_token\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8e6f7913-498b-43b4-9cf3-69264a4cafbf",
+              "name": "Error response with status 404",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "inboxes",
+                    ":inbox_id",
+                    "api-keys"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "9600"
+                    },
+                    {
+                      "key": "page_token",
+                      "value": "string"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "inbox_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"string\",\n  \"message\": \"string\",\n  \"code\": \"string\",\n  \"fix\": \"string\",\n  \"docs\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "46eb9cef-9385-458c-9e53-b9d94a9a21c4",
+          "name": "Create API Key",
+          "request": {
+            "name": "Create API Key",
+            "description": {
+              "content": "**CLI:**\n```bash\nagentmail inboxes:api-keys create --inbox-id <inbox_id> --name \"My Key\"\n```",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v0",
+                "inboxes",
+                ":inbox_id",
+                "api-keys"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "inbox_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"permissions\": {\n    \"inbox_read\": \"<boolean>\",\n    \"inbox_create\": \"<boolean>\",\n    \"inbox_update\": \"<boolean>\",\n    \"inbox_delete\": \"<boolean>\",\n    \"thread_read\": \"<boolean>\",\n    \"thread_delete\": \"<boolean>\",\n    \"message_read\": \"<boolean>\",\n    \"message_send\": \"<boolean>\",\n    \"message_update\": \"<boolean>\",\n    \"label_spam_read\": \"<boolean>\",\n    \"label_blocked_read\": \"<boolean>\",\n    \"label_trash_read\": \"<boolean>\",\n    \"draft_read\": \"<boolean>\",\n    \"draft_create\": \"<boolean>\",\n    \"draft_update\": \"<boolean>\",\n    \"draft_delete\": \"<boolean>\",\n    \"draft_send\": \"<boolean>\",\n    \"webhook_read\": \"<boolean>\",\n    \"webhook_create\": \"<boolean>\",\n    \"webhook_update\": \"<boolean>\",\n    \"webhook_delete\": \"<boolean>\",\n    \"domain_read\": \"<boolean>\",\n    \"domain_create\": \"<boolean>\",\n    \"domain_update\": \"<boolean>\",\n    \"domain_delete\": \"<boolean>\",\n    \"list_entry_read\": \"<boolean>\",\n    \"list_entry_create\": \"<boolean>\",\n    \"list_entry_delete\": \"<boolean>\",\n    \"metrics_read\": \"<boolean>\",\n    \"api_key_read\": \"<boolean>\",\n    \"api_key_create\": \"<boolean>\",\n    \"api_key_delete\": \"<boolean>\",\n    \"pod_read\": \"<boolean>\",\n    \"pod_create\": \"<boolean>\",\n    \"pod_delete\": \"<boolean>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "d4c1d1a1-49a4-42fb-b5e4-c5fcdb075aec",
+              "name": "Response with status 200",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "inboxes",
+                    ":inbox_id",
+                    "api-keys"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "inbox_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"string\",\n  \"permissions\": {\n    \"inbox_read\": false,\n    \"inbox_create\": true,\n    \"inbox_update\": true,\n    \"inbox_delete\": false,\n    \"thread_read\": false,\n    \"thread_delete\": true,\n    \"message_read\": false,\n    \"message_send\": false,\n    \"message_update\": false,\n    \"label_spam_read\": false,\n    \"label_blocked_read\": true,\n    \"label_trash_read\": false,\n    \"draft_read\": true,\n    \"draft_create\": false,\n    \"draft_update\": true,\n    \"draft_delete\": false,\n    \"draft_send\": false,\n    \"webhook_read\": false,\n    \"webhook_create\": false,\n    \"webhook_update\": true,\n    \"webhook_delete\": false,\n    \"domain_read\": false,\n    \"domain_create\": false,\n    \"domain_update\": false,\n    \"domain_delete\": true,\n    \"list_entry_read\": false,\n    \"list_entry_create\": false,\n    \"list_entry_delete\": false,\n    \"metrics_read\": false,\n    \"api_key_read\": true,\n    \"api_key_create\": false,\n    \"api_key_delete\": false,\n    \"pod_read\": false,\n    \"pod_create\": false,\n    \"pod_delete\": true\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"api_key_id\": \"string\",\n  \"api_key\": \"string\",\n  \"prefix\": \"string\",\n  \"name\": \"string\",\n  \"created_at\": \"1956-06-06T02:41:56.689Z\",\n  \"pod_id\": \"string\",\n  \"inbox_id\": \"string\",\n  \"permissions\": {\n    \"inbox_read\": true,\n    \"inbox_create\": true,\n    \"inbox_update\": false,\n    \"inbox_delete\": true,\n    \"thread_read\": true,\n    \"thread_delete\": false,\n    \"message_read\": false,\n    \"message_send\": true,\n    \"message_update\": false,\n    \"label_spam_read\": false,\n    \"label_blocked_read\": true,\n    \"label_trash_read\": true,\n    \"draft_read\": false,\n    \"draft_create\": true,\n    \"draft_update\": false,\n    \"draft_delete\": true,\n    \"draft_send\": false,\n    \"webhook_read\": false,\n    \"webhook_create\": true,\n    \"webhook_update\": false,\n    \"webhook_delete\": true,\n    \"domain_read\": true,\n    \"domain_create\": false,\n    \"domain_update\": true,\n    \"domain_delete\": false,\n    \"list_entry_read\": false,\n    \"list_entry_create\": true,\n    \"list_entry_delete\": true,\n    \"metrics_read\": false,\n    \"api_key_read\": true,\n    \"api_key_create\": true,\n    \"api_key_delete\": false,\n    \"pod_read\": false,\n    \"pod_create\": false,\n    \"pod_delete\": true\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "206ca15d-42b8-4361-9477-4d69d06fc005",
+              "name": "Error response with status 400",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "inboxes",
+                    ":inbox_id",
+                    "api-keys"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "inbox_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"string\",\n  \"permissions\": {\n    \"inbox_read\": false,\n    \"inbox_create\": true,\n    \"inbox_update\": true,\n    \"inbox_delete\": false,\n    \"thread_read\": false,\n    \"thread_delete\": true,\n    \"message_read\": false,\n    \"message_send\": false,\n    \"message_update\": false,\n    \"label_spam_read\": false,\n    \"label_blocked_read\": true,\n    \"label_trash_read\": false,\n    \"draft_read\": true,\n    \"draft_create\": false,\n    \"draft_update\": true,\n    \"draft_delete\": false,\n    \"draft_send\": false,\n    \"webhook_read\": false,\n    \"webhook_create\": false,\n    \"webhook_update\": true,\n    \"webhook_delete\": false,\n    \"domain_read\": false,\n    \"domain_create\": false,\n    \"domain_update\": false,\n    \"domain_delete\": true,\n    \"list_entry_read\": false,\n    \"list_entry_create\": false,\n    \"list_entry_delete\": false,\n    \"metrics_read\": false,\n    \"api_key_read\": true,\n    \"api_key_create\": false,\n    \"api_key_delete\": false,\n    \"pod_read\": false,\n    \"pod_create\": false,\n    \"pod_delete\": true\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"string\",\n  \"errors\": {},\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"fix\": \"string\",\n  \"docs\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "09011962-3a0f-4695-8c64-cd131216e03e",
+              "name": "Error response with status 404",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "inboxes",
+                    ":inbox_id",
+                    "api-keys"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "inbox_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"string\",\n  \"permissions\": {\n    \"inbox_read\": false,\n    \"inbox_create\": true,\n    \"inbox_update\": true,\n    \"inbox_delete\": false,\n    \"thread_read\": false,\n    \"thread_delete\": true,\n    \"message_read\": false,\n    \"message_send\": false,\n    \"message_update\": false,\n    \"label_spam_read\": false,\n    \"label_blocked_read\": true,\n    \"label_trash_read\": false,\n    \"draft_read\": true,\n    \"draft_create\": false,\n    \"draft_update\": true,\n    \"draft_delete\": false,\n    \"draft_send\": false,\n    \"webhook_read\": false,\n    \"webhook_create\": false,\n    \"webhook_update\": true,\n    \"webhook_delete\": false,\n    \"domain_read\": false,\n    \"domain_create\": false,\n    \"domain_update\": false,\n    \"domain_delete\": true,\n    \"list_entry_read\": false,\n    \"list_entry_create\": false,\n    \"list_entry_delete\": false,\n    \"metrics_read\": false,\n    \"api_key_read\": true,\n    \"api_key_create\": false,\n    \"api_key_delete\": false,\n    \"pod_read\": false,\n    \"pod_create\": false,\n    \"pod_delete\": true\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"string\",\n  \"message\": \"string\",\n  \"code\": \"string\",\n  \"fix\": \"string\",\n  \"docs\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8c50317a-8a95-4ba9-9c8e-30a421a2d531",
+          "name": "Delete API Key",
+          "request": {
+            "name": "Delete API Key",
+            "description": {
+              "content": "**CLI:**\n```bash\nagentmail inboxes:api-keys delete --inbox-id <inbox_id> --api-key-id <api_key_id>\n```",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v0",
+                "inboxes",
+                ":inbox_id",
+                "api-keys",
+                ":api_key_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "inbox_id",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "api_key_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "7cb6a578-4c39-42a4-955b-aa496c1f989d",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "inboxes",
+                    ":inbox_id",
+                    "api-keys",
+                    ":api_key_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "inbox_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "api_key_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "1d0f16c7-7b6f-49bc-bd3a-f9ef748ab338",
+              "name": "Error response with status 404",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "inboxes",
+                    ":inbox_id",
+                    "api-keys",
+                    ":api_key_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "inbox_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "api_key_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"string\",\n  \"message\": \"string\",\n  \"code\": \"string\",\n  \"fix\": \"string\",\n  \"docs\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.agentmail.to",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "3bad5205-eb29-4508-834d-2d10c70f0a76",
+    "name": "API Reference agent inboxes > api-keys API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

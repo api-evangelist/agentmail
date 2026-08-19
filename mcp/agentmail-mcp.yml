@@ -6,8 +6,8 @@ registry_name: to.agentmail/agentmail
 server:
   name: AgentMail
   version: 1.0.1
-  description: 'Email inboxes for AI agents: send, receive, reply, search, and manage
-    threaded email over MCP.'
+  description: 'Email inboxes for AI agents: send, receive, reply, search, and manage threaded email over
+    MCP.'
   transport: streamable-http
   url: https://mcp.agentmail.to/mcp
   website: https://agentmail.to
@@ -18,5 +18,12 @@ docs_mcp:
   note: A separate docs-search MCP server is published for AI coding assistants.
   url: https://docs.agentmail.to/_mcp/server
 capabilities:
-  summary: Inbox, message, thread, draft, and webhook management for agentic email
-    workflows, backed by the REST API (openapi/agentmail-openapi-original.yml).
+  summary: Inbox, message, thread, draft, and webhook management for agentic email workflows, backed by
+    the REST API (openapi/agentmail-openapi-original.yml).
+deployment:
+  mode: remote
+  endpoint: https://mcp.agentmail.to/mcp
+  verified: probed
+  probe: gated
+  checked: '2026-08-12'
+  source: catalog MCP census

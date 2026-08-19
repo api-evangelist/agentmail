@@ -1,0 +1,466 @@
+{
+  "item": [
+    {
+      "id": "fc6af3df-2e91-4ac2-9500-a3b7b13fb796",
+      "name": "metrics",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "efc1c091-1701-453f-8f77-bae2127b5382",
+          "name": "Query Events",
+          "request": {
+            "name": "Query Events",
+            "description": {
+              "content": "Counts of email events (sent, delivered, bounced, etc.) over time for\nthe organization. Defaults to the last 24 hours; `start` must be within\nthe last 90 days, and a future `end` is clamped to now. Omit `period`\nfor individual event counts, or set it to sum counts into buckets of\nthat many seconds.\n\n**CLI:**\n```bash\nagentmail metrics list\n```",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v0",
+                "metrics",
+                "events"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "event_types",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "event_types",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "start",
+                  "value": "<dateTime>"
+                },
+                {
+                  "disabled": false,
+                  "key": "end",
+                  "value": "<dateTime>"
+                },
+                {
+                  "disabled": false,
+                  "key": "period",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "descending",
+                  "value": "<boolean>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d7bba8ef-ab34-4e77-913a-afa8a78bf9ab",
+              "name": "Response with status 200",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "metrics",
+                    "events"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "event_types",
+                      "value": "message.received.unauthenticated"
+                    },
+                    {
+                      "key": "event_types",
+                      "value": "message.rejected"
+                    },
+                    {
+                      "key": "start",
+                      "value": "1953-06-29T20:36:35.178Z"
+                    },
+                    {
+                      "key": "end",
+                      "value": "2011-12-29T04:31:44.120Z"
+                    },
+                    {
+                      "key": "period",
+                      "value": "1175"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "6747"
+                    },
+                    {
+                      "key": "descending",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key_0\": [\n    {\n      \"timestamp\": \"1967-11-10T05:19:38.944Z\",\n      \"count\": 6710\n    },\n    {\n      \"timestamp\": \"1969-05-26T23:11:32.161Z\",\n      \"count\": 2947\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6ac5f9d2-f958-4fd4-8370-b9ff782a09d3",
+              "name": "Error response with status 400",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "metrics",
+                    "events"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "event_types",
+                      "value": "message.received.unauthenticated"
+                    },
+                    {
+                      "key": "event_types",
+                      "value": "message.rejected"
+                    },
+                    {
+                      "key": "start",
+                      "value": "1953-06-29T20:36:35.178Z"
+                    },
+                    {
+                      "key": "end",
+                      "value": "2011-12-29T04:31:44.120Z"
+                    },
+                    {
+                      "key": "period",
+                      "value": "1175"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "6747"
+                    },
+                    {
+                      "key": "descending",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"string\",\n  \"errors\": {},\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"fix\": \"string\",\n  \"docs\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4ae43bb5-a9bc-4656-afbf-132959d32155",
+          "name": "Query Usage",
+          "request": {
+            "name": "Query Usage",
+            "description": {
+              "content": "Cumulative usage series for the organization. Each point is the running\ntotal of the usage type at that timestamp, not the change within the\nbucket. Defaults to the last 24 hours; `start` must be within the last\n90 days, and a future `end` is clamped to now. The range divided by\n`period` must not exceed 1000 buckets.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v0",
+                "metrics",
+                "usage"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "usage_types",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "usage_types",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "start",
+                  "value": "<dateTime>"
+                },
+                {
+                  "disabled": false,
+                  "key": "end",
+                  "value": "<dateTime>"
+                },
+                {
+                  "disabled": false,
+                  "key": "period",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "descending",
+                  "value": "<boolean>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "da26add0-f22b-4d1d-be75-64e6a70eb9d1",
+              "name": "Response with status 200",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "metrics",
+                    "usage"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "usage_types",
+                      "value": "domain_count"
+                    },
+                    {
+                      "key": "usage_types",
+                      "value": "storage_bytes"
+                    },
+                    {
+                      "key": "start",
+                      "value": "1953-06-29T20:36:35.178Z"
+                    },
+                    {
+                      "key": "end",
+                      "value": "2011-12-29T04:31:44.120Z"
+                    },
+                    {
+                      "key": "period",
+                      "value": "1175"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "6747"
+                    },
+                    {
+                      "key": "descending",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key_0\": [\n    {\n      \"timestamp\": \"1968-07-19T08:18:45.869Z\",\n      \"value\": 177\n    },\n    {\n      \"timestamp\": \"1967-08-21T19:51:53.698Z\",\n      \"value\": 1807\n    }\n  ],\n  \"key_1\": [\n    {\n      \"timestamp\": \"2004-04-12T12:14:26.036Z\",\n      \"value\": 6810\n    },\n    {\n      \"timestamp\": \"1955-03-27T18:44:42.464Z\",\n      \"value\": 3688\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1b15893c-a308-463b-aff9-4025d3000c42",
+              "name": "Error response with status 400",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "metrics",
+                    "usage"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "usage_types",
+                      "value": "domain_count"
+                    },
+                    {
+                      "key": "usage_types",
+                      "value": "storage_bytes"
+                    },
+                    {
+                      "key": "start",
+                      "value": "1953-06-29T20:36:35.178Z"
+                    },
+                    {
+                      "key": "end",
+                      "value": "2011-12-29T04:31:44.120Z"
+                    },
+                    {
+                      "key": "period",
+                      "value": "1175"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "6747"
+                    },
+                    {
+                      "key": "descending",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"string\",\n  \"errors\": {},\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"fix\": \"string\",\n  \"docs\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.agentmail.to",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "973662a4-7c5d-4832-b23d-8d103e4dd858",
+    "name": "API Reference agent metrics API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

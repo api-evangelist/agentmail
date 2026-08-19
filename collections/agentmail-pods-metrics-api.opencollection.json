@@ -1,0 +1,126 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "API Reference agent pods > metrics API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "pods > metrics",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Query Events",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.agentmail.to/v0/pods/:pod_id/metrics/events",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "pod_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "event_types",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "start",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "end",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "period",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "descending",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Counts of email events (sent, delivered, bounced, etc.) over time for\nthe pod. Defaults to the last 24 hours; `start` must be within the last\n90 days, and a future `end` is clamped to now. Omit `period` for\nindividual event counts, or set it to sum counts into buckets of that\nmany seconds.\n\n**CLI:**\n```bash\nagentmail pods:metrics query --pod-id <pod_id>\n```"
+        },
+        {
+          "info": {
+            "name": "Query Usage",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.agentmail.to/v0/pods/:pod_id/metrics/usage",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "pod_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "usage_types",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "start",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "end",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "period",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "descending",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Cumulative usage series for the pod. Each point is the running total of\nthe usage type at that timestamp, not the change within the bucket.\nPod-scoped queries carry every usage type except `pod_count`; requested\ntypes that don't apply to the scope are ignored. Defaults to the last\n24 hours; `start` must be within the last 90 days, and a future `end`\nis clamped to now. The range divided by `period` must not exceed 1000\nbuckets."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

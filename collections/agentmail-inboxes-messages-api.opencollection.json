@@ -1,0 +1,496 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "API Reference agent inboxes > messages API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "inboxes > messages",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Messages",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.agentmail.to/v0/inboxes/:inbox_id/messages",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "inbox_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "page_token",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "labels",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "before",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "ascending",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "include_spam",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "include_blocked",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "include_unauthenticated",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "include_trash",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "from",
+                "value": "",
+                "type": "query",
+                "description": "Filter to messages whose sender contains this value (substring match). Repeatable; all values must match."
+              },
+              {
+                "name": "to",
+                "value": "",
+                "type": "query",
+                "description": "Filter to messages whose recipients (to, cc, or bcc) contain this value (substring match). Repeatable; all values must match."
+              },
+              {
+                "name": "subject",
+                "value": "",
+                "type": "query",
+                "description": "Filter to messages whose subject contains this value (substring match). Repeatable; all values must match."
+              }
+            ]
+          },
+          "docs": "Lists messages in the inbox, most recent first. Pass `from`, `to`, or\n`subject` to filter by substring. Filtered requests are served by\nsearch, which caps `limit` at 100. For relevance-ranked full-text\nsearch across sender, recipients, subject, and message body, use\n`Search Messages`.\n\n**CLI:**\n```bash\nagentmail inboxes:messages list --inbox-id <inbox_id>\n```"
+        },
+        {
+          "info": {
+            "name": "Search Messages",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.agentmail.to/v0/inboxes/:inbox_id/messages/search",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "inbox_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "q",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "page_token",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "before",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Full-text search across messages in the inbox, ranked by relevance. The\nquery is matched against the sender, recipients, and subject (substring)\nand the message body (tokenized full text). Spam, trash, blocked, and\nunauthenticated messages are always excluded. `limit` cannot exceed 100."
+        },
+        {
+          "info": {
+            "name": "Get Message",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.agentmail.to/v0/inboxes/:inbox_id/messages/:message_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "inbox_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "message_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "**CLI:**\n```bash\nagentmail inboxes:messages get --inbox-id <inbox_id> --message-id <message_id>\n```"
+        },
+        {
+          "info": {
+            "name": "Update Message",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.agentmail.to/v0/inboxes/:inbox_id/messages/:message_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "inbox_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "message_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "**CLI:**\n```bash\nagentmail inboxes:messages update --inbox-id <inbox_id> --message-id <message_id> --add-label read --remove-label unread\n```"
+        },
+        {
+          "info": {
+            "name": "Delete Message",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.agentmail.to/v0/inboxes/:inbox_id/messages/:message_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "inbox_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "message_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Permanently deletes a message.\n\n**CLI:**\n```bash\nagentmail inboxes:messages delete --inbox-id <inbox_id> --message-id <message_id>\n```"
+        },
+        {
+          "info": {
+            "name": "Batch Get Messages",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.agentmail.to/v0/inboxes/:inbox_id/messages/batch-get",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "inbox_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Fetch metadata for up to 500 messages in one request. Missing or\nrestricted IDs are silently omitted; compare `count` against `limit`\nto detect misses.\n\n**CLI:**\n```bash\nagentmail inboxes:messages batch-get --inbox-id <inbox_id> --message-id <id1> --message-id <id2>\n```"
+        },
+        {
+          "info": {
+            "name": "Batch Update Messages",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.agentmail.to/v0/inboxes/:inbox_id/messages/batch-update",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "inbox_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Apply one label change to up to 50 messages in a single request. The\nsame add_labels and remove_labels apply to every message id, and at\nleast one of them must be provided. The update is atomic: either all\nresolved messages are updated or none are. Missing or restricted ids\nare silently excluded; compare `count` against `limit` to detect\nexclusions.\n\n**CLI:**\n```bash\nagentmail inboxes:messages batch-update --inbox-id <inbox_id> --message-id <id1> --message-id <id2> --add-label read --remove-labe"
+        },
+        {
+          "info": {
+            "name": "Get Attachment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.agentmail.to/v0/inboxes/:inbox_id/messages/:message_id/attachments/:attachment_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "inbox_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "message_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "attachment_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "**CLI:**\n```bash\nagentmail inboxes:messages get-attachment --inbox-id <inbox_id> --message-id <message_id> --attachment-id <attachment_id>\n```"
+        },
+        {
+          "info": {
+            "name": "Get Raw Message",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.agentmail.to/v0/inboxes/:inbox_id/messages/:message_id/raw",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "inbox_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "message_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "**CLI:**\n```bash\nagentmail inboxes:messages get-raw --inbox-id <inbox_id> --message-id <message_id>\n```"
+        },
+        {
+          "info": {
+            "name": "Send Message",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.agentmail.to/v0/inboxes/:inbox_id/messages/send",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "inbox_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "**CLI:**\n```bash\nagentmail inboxes:messages send --inbox-id <inbox_id> --to recipient@example.com --subject \"Hello\" --text \"Body\"\n```"
+        },
+        {
+          "info": {
+            "name": "Reply To Message",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.agentmail.to/v0/inboxes/:inbox_id/messages/:message_id/reply",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "inbox_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "message_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "**CLI:**\n```bash\nagentmail inboxes:messages reply --inbox-id <inbox_id> --message-id <message_id> --text \"Reply text\"\n```"
+        },
+        {
+          "info": {
+            "name": "Reply All Message",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.agentmail.to/v0/inboxes/:inbox_id/messages/:message_id/reply-all",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "inbox_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "message_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "**CLI:**\n```bash\nagentmail inboxes:messages reply-all --inbox-id <inbox_id> --message-id <message_id> --text \"Reply text\"\n```"
+        },
+        {
+          "info": {
+            "name": "Forward Message",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.agentmail.to/v0/inboxes/:inbox_id/messages/:message_id/forward",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "inbox_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "message_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "**CLI:**\n```bash\nagentmail inboxes:messages forward --inbox-id <inbox_id> --message-id <message_id> --to recipient@example.com\n```"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

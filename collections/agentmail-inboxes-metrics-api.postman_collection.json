@@ -1,0 +1,526 @@
+{
+  "item": [
+    {
+      "id": "9d9ec71b-7f41-42d0-a82b-217c388df2c4",
+      "name": "inboxes > metrics",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "199a0ba5-ce2a-475c-9cce-8fac6f59942a",
+          "name": "Query Events",
+          "request": {
+            "name": "Query Events",
+            "description": {
+              "content": "Counts of email events (sent, delivered, bounced, etc.) over time for\nthe inbox. Defaults to the last 24 hours; `start` must be within the\nlast 90 days, and a future `end` is clamped to now. Omit `period` for\nindividual event counts, or set it to sum counts into buckets of that\nmany seconds.\n\n**CLI:**\n```bash\nagentmail inboxes:metrics query --inbox-id <inbox_id>\n```",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v0",
+                "inboxes",
+                ":inbox_id",
+                "metrics",
+                "events"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "event_types",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "event_types",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "start",
+                  "value": "<dateTime>"
+                },
+                {
+                  "disabled": false,
+                  "key": "end",
+                  "value": "<dateTime>"
+                },
+                {
+                  "disabled": false,
+                  "key": "period",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "descending",
+                  "value": "<boolean>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "inbox_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "634f3a28-fa21-43aa-b855-c9a36b08395e",
+              "name": "Response with status 200",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "inboxes",
+                    ":inbox_id",
+                    "metrics",
+                    "events"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "event_types",
+                      "value": "message.complained"
+                    },
+                    {
+                      "key": "event_types",
+                      "value": "message.received.unauthenticated"
+                    },
+                    {
+                      "key": "start",
+                      "value": "1955-04-19T05:27:09.509Z"
+                    },
+                    {
+                      "key": "end",
+                      "value": "1959-08-25T16:23:12.786Z"
+                    },
+                    {
+                      "key": "period",
+                      "value": "2325"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "3837"
+                    },
+                    {
+                      "key": "descending",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "inbox_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key_0\": [\n    {\n      \"timestamp\": \"1961-12-03T00:48:11.336Z\",\n      \"count\": 1818\n    },\n    {\n      \"timestamp\": \"1961-04-29T17:21:32.757Z\",\n      \"count\": 5747\n    }\n  ],\n  \"key_1\": [\n    {\n      \"timestamp\": \"1982-02-07T06:49:59.709Z\",\n      \"count\": 8698\n    },\n    {\n      \"timestamp\": \"1958-09-04T21:42:17.722Z\",\n      \"count\": 3410\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "be7a80d3-682d-4d33-96d2-804db116dd07",
+              "name": "Error response with status 400",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "inboxes",
+                    ":inbox_id",
+                    "metrics",
+                    "events"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "event_types",
+                      "value": "message.complained"
+                    },
+                    {
+                      "key": "event_types",
+                      "value": "message.received.unauthenticated"
+                    },
+                    {
+                      "key": "start",
+                      "value": "1955-04-19T05:27:09.509Z"
+                    },
+                    {
+                      "key": "end",
+                      "value": "1959-08-25T16:23:12.786Z"
+                    },
+                    {
+                      "key": "period",
+                      "value": "2325"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "3837"
+                    },
+                    {
+                      "key": "descending",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "inbox_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"string\",\n  \"errors\": {},\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"fix\": \"string\",\n  \"docs\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "654280e8-82f3-4839-81bd-5b276486b2a6",
+          "name": "Query Usage",
+          "request": {
+            "name": "Query Usage",
+            "description": {
+              "content": "Cumulative usage series for the inbox. Each point is the running total\nof the usage type at that timestamp, not the change within the bucket.\nInbox-scoped queries carry `storage_bytes`, `message_count`, and\n`thread_count`; requested types that don't apply to the scope are\nignored. Defaults to the last 24 hours; `start` must be within the\nlast 90 days, and a future `end` is clamped to now. The range divided\nby `period` must not exceed 1000 buckets.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v0",
+                "inboxes",
+                ":inbox_id",
+                "metrics",
+                "usage"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "usage_types",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "usage_types",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "start",
+                  "value": "<dateTime>"
+                },
+                {
+                  "disabled": false,
+                  "key": "end",
+                  "value": "<dateTime>"
+                },
+                {
+                  "disabled": false,
+                  "key": "period",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "descending",
+                  "value": "<boolean>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "inbox_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c5b232b1-589e-4d4b-b13d-657222902d36",
+              "name": "Response with status 200",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "inboxes",
+                    ":inbox_id",
+                    "metrics",
+                    "usage"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "usage_types",
+                      "value": "message_count"
+                    },
+                    {
+                      "key": "usage_types",
+                      "value": "message_count"
+                    },
+                    {
+                      "key": "start",
+                      "value": "1955-04-19T05:27:09.509Z"
+                    },
+                    {
+                      "key": "end",
+                      "value": "1959-08-25T16:23:12.786Z"
+                    },
+                    {
+                      "key": "period",
+                      "value": "2325"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "3837"
+                    },
+                    {
+                      "key": "descending",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "inbox_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key_0\": [\n    {\n      \"timestamp\": \"1954-11-27T18:53:01.373Z\",\n      \"value\": 8903\n    },\n    {\n      \"timestamp\": \"1997-07-14T17:37:03.211Z\",\n      \"value\": 3521\n    }\n  ],\n  \"key_1\": [\n    {\n      \"timestamp\": \"2015-07-25T13:59:51.680Z\",\n      \"value\": 3581\n    },\n    {\n      \"timestamp\": \"1951-04-21T08:34:55.563Z\",\n      \"value\": 2035\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c71318e9-8bdf-45bd-8cb5-c8b0a63e701b",
+              "name": "Error response with status 400",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "inboxes",
+                    ":inbox_id",
+                    "metrics",
+                    "usage"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "usage_types",
+                      "value": "message_count"
+                    },
+                    {
+                      "key": "usage_types",
+                      "value": "message_count"
+                    },
+                    {
+                      "key": "start",
+                      "value": "1955-04-19T05:27:09.509Z"
+                    },
+                    {
+                      "key": "end",
+                      "value": "1959-08-25T16:23:12.786Z"
+                    },
+                    {
+                      "key": "period",
+                      "value": "2325"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "3837"
+                    },
+                    {
+                      "key": "descending",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "inbox_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"string\",\n  \"errors\": {},\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"fix\": \"string\",\n  \"docs\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.agentmail.to",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "03d2b02f-0397-45c0-ade3-beeb019bf9a2",
+    "name": "API Reference agent inboxes > metrics API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

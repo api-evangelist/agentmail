@@ -1,0 +1,620 @@
+{
+  "item": [
+    {
+      "id": "f2dc7f2f-35e9-4b04-87c1-02192c04a89d",
+      "name": "pods > api-keys",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "64aae107-d2f1-440d-8e0c-f0d55af6afb7",
+          "name": "List API Keys",
+          "request": {
+            "name": "List API Keys",
+            "description": {
+              "content": "**CLI:**\n```bash\nagentmail pods:api-keys list --pod-id <pod_id>\n```",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v0",
+                "pods",
+                ":pod_id",
+                "api-keys"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "page_token",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "pod_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "33c1b9da-b787-4c8b-9911-93e7683dc307",
+              "name": "Response with status 200",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "pods",
+                    ":pod_id",
+                    "api-keys"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "9484"
+                    },
+                    {
+                      "key": "page_token",
+                      "value": "string"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "pod_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"count\": 2847,\n  \"api_keys\": [\n    {\n      \"api_key_id\": \"string\",\n      \"prefix\": \"string\",\n      \"name\": \"string\",\n      \"created_at\": \"1976-07-12T03:40:11.600Z\",\n      \"pod_id\": \"string\",\n      \"inbox_id\": \"string\",\n      \"used_at\": \"2016-08-29T21:13:29.075Z\",\n      \"permissions\": {\n        \"inbox_read\": true,\n        \"inbox_create\": true,\n        \"inbox_update\": true,\n        \"inbox_delete\": true,\n        \"thread_read\": true,\n        \"thread_delete\": true,\n        \"message_read\": true,\n        \"message_send\": false,\n        \"message_update\": false,\n        \"label_spam_read\": true,\n        \"label_blocked_read\": false,\n        \"label_trash_read\": false,\n        \"draft_read\": true,\n        \"draft_create\": false,\n        \"draft_update\": true,\n        \"draft_delete\": false,\n        \"draft_send\": false,\n        \"webhook_read\": true,\n        \"webhook_create\": true,\n        \"webhook_update\": true,\n        \"webhook_delete\": false,\n        \"domain_read\": true,\n        \"domain_create\": true,\n        \"domain_update\": false,\n        \"domain_delete\": false,\n        \"list_entry_read\": true,\n        \"list_entry_create\": false,\n        \"list_entry_delete\": false,\n        \"metrics_read\": false,\n        \"api_key_read\": false,\n        \"api_key_create\": false,\n        \"api_key_delete\": true,\n        \"pod_read\": true,\n        \"pod_create\": false,\n        \"pod_delete\": false\n      }\n    },\n    {\n      \"api_key_id\": \"string\",\n      \"prefix\": \"string\",\n      \"name\": \"string\",\n      \"created_at\": \"1986-02-24T22:55:18.826Z\",\n      \"pod_id\": \"string\",\n      \"inbox_id\": \"string\",\n      \"used_at\": \"2011-01-26T08:13:15.606Z\",\n      \"permissions\": {\n        \"inbox_read\": false,\n        \"inbox_create\": true,\n        \"inbox_update\": false,\n        \"inbox_delete\": true,\n        \"thread_read\": false,\n        \"thread_delete\": false,\n        \"message_read\": false,\n        \"message_send\": false,\n        \"message_update\": true,\n        \"label_spam_read\": false,\n        \"label_blocked_read\": true,\n        \"label_trash_read\": false,\n        \"draft_read\": false,\n        \"draft_create\": true,\n        \"draft_update\": false,\n        \"draft_delete\": false,\n        \"draft_send\": false,\n        \"webhook_read\": true,\n        \"webhook_create\": true,\n        \"webhook_update\": false,\n        \"webhook_delete\": false,\n        \"domain_read\": false,\n        \"domain_create\": false,\n        \"domain_update\": true,\n        \"domain_delete\": false,\n        \"list_entry_read\": false,\n        \"list_entry_create\": true,\n        \"list_entry_delete\": true,\n        \"metrics_read\": true,\n        \"api_key_read\": true,\n        \"api_key_create\": true,\n        \"api_key_delete\": true,\n        \"pod_read\": true,\n        \"pod_create\": false,\n        \"pod_delete\": true\n      }\n    }\n  ],\n  \"next_page_token\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6f0d9af8-50c6-4560-b4c2-78764bee83dd",
+              "name": "Error response with status 404",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "pods",
+                    ":pod_id",
+                    "api-keys"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "9484"
+                    },
+                    {
+                      "key": "page_token",
+                      "value": "string"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "pod_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"string\",\n  \"message\": \"string\",\n  \"code\": \"string\",\n  \"fix\": \"string\",\n  \"docs\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "56aeb066-6c12-4539-b5ed-11c467209c13",
+          "name": "Create API Key",
+          "request": {
+            "name": "Create API Key",
+            "description": {
+              "content": "**CLI:**\n```bash\nagentmail pods:api-keys create --pod-id <pod_id> --name \"My Key\"\n```",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v0",
+                "pods",
+                ":pod_id",
+                "api-keys"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "pod_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"permissions\": {\n    \"inbox_read\": \"<boolean>\",\n    \"inbox_create\": \"<boolean>\",\n    \"inbox_update\": \"<boolean>\",\n    \"inbox_delete\": \"<boolean>\",\n    \"thread_read\": \"<boolean>\",\n    \"thread_delete\": \"<boolean>\",\n    \"message_read\": \"<boolean>\",\n    \"message_send\": \"<boolean>\",\n    \"message_update\": \"<boolean>\",\n    \"label_spam_read\": \"<boolean>\",\n    \"label_blocked_read\": \"<boolean>\",\n    \"label_trash_read\": \"<boolean>\",\n    \"draft_read\": \"<boolean>\",\n    \"draft_create\": \"<boolean>\",\n    \"draft_update\": \"<boolean>\",\n    \"draft_delete\": \"<boolean>\",\n    \"draft_send\": \"<boolean>\",\n    \"webhook_read\": \"<boolean>\",\n    \"webhook_create\": \"<boolean>\",\n    \"webhook_update\": \"<boolean>\",\n    \"webhook_delete\": \"<boolean>\",\n    \"domain_read\": \"<boolean>\",\n    \"domain_create\": \"<boolean>\",\n    \"domain_update\": \"<boolean>\",\n    \"domain_delete\": \"<boolean>\",\n    \"list_entry_read\": \"<boolean>\",\n    \"list_entry_create\": \"<boolean>\",\n    \"list_entry_delete\": \"<boolean>\",\n    \"metrics_read\": \"<boolean>\",\n    \"api_key_read\": \"<boolean>\",\n    \"api_key_create\": \"<boolean>\",\n    \"api_key_delete\": \"<boolean>\",\n    \"pod_read\": \"<boolean>\",\n    \"pod_create\": \"<boolean>\",\n    \"pod_delete\": \"<boolean>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "4a735a17-1fd0-4a98-8555-44c3f36a30d4",
+              "name": "Response with status 200",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "pods",
+                    ":pod_id",
+                    "api-keys"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "pod_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"string\",\n  \"permissions\": {\n    \"inbox_read\": true,\n    \"inbox_create\": false,\n    \"inbox_update\": true,\n    \"inbox_delete\": false,\n    \"thread_read\": true,\n    \"thread_delete\": false,\n    \"message_read\": true,\n    \"message_send\": true,\n    \"message_update\": true,\n    \"label_spam_read\": false,\n    \"label_blocked_read\": false,\n    \"label_trash_read\": true,\n    \"draft_read\": false,\n    \"draft_create\": false,\n    \"draft_update\": true,\n    \"draft_delete\": true,\n    \"draft_send\": false,\n    \"webhook_read\": false,\n    \"webhook_create\": false,\n    \"webhook_update\": false,\n    \"webhook_delete\": true,\n    \"domain_read\": false,\n    \"domain_create\": false,\n    \"domain_update\": false,\n    \"domain_delete\": true,\n    \"list_entry_read\": false,\n    \"list_entry_create\": true,\n    \"list_entry_delete\": false,\n    \"metrics_read\": false,\n    \"api_key_read\": false,\n    \"api_key_create\": false,\n    \"api_key_delete\": false,\n    \"pod_read\": false,\n    \"pod_create\": true,\n    \"pod_delete\": false\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"api_key_id\": \"string\",\n  \"api_key\": \"string\",\n  \"prefix\": \"string\",\n  \"name\": \"string\",\n  \"created_at\": \"2025-06-10T15:13:45.076Z\",\n  \"pod_id\": \"string\",\n  \"inbox_id\": \"string\",\n  \"permissions\": {\n    \"inbox_read\": true,\n    \"inbox_create\": true,\n    \"inbox_update\": true,\n    \"inbox_delete\": false,\n    \"thread_read\": true,\n    \"thread_delete\": false,\n    \"message_read\": true,\n    \"message_send\": true,\n    \"message_update\": false,\n    \"label_spam_read\": false,\n    \"label_blocked_read\": false,\n    \"label_trash_read\": false,\n    \"draft_read\": true,\n    \"draft_create\": false,\n    \"draft_update\": true,\n    \"draft_delete\": true,\n    \"draft_send\": true,\n    \"webhook_read\": false,\n    \"webhook_create\": false,\n    \"webhook_update\": true,\n    \"webhook_delete\": false,\n    \"domain_read\": false,\n    \"domain_create\": false,\n    \"domain_update\": true,\n    \"domain_delete\": false,\n    \"list_entry_read\": true,\n    \"list_entry_create\": false,\n    \"list_entry_delete\": false,\n    \"metrics_read\": false,\n    \"api_key_read\": false,\n    \"api_key_create\": false,\n    \"api_key_delete\": false,\n    \"pod_read\": false,\n    \"pod_create\": false,\n    \"pod_delete\": true\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dda98f30-bfd0-4d41-8833-ea70701c2668",
+              "name": "Error response with status 400",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "pods",
+                    ":pod_id",
+                    "api-keys"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "pod_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"string\",\n  \"permissions\": {\n    \"inbox_read\": true,\n    \"inbox_create\": false,\n    \"inbox_update\": true,\n    \"inbox_delete\": false,\n    \"thread_read\": true,\n    \"thread_delete\": false,\n    \"message_read\": true,\n    \"message_send\": true,\n    \"message_update\": true,\n    \"label_spam_read\": false,\n    \"label_blocked_read\": false,\n    \"label_trash_read\": true,\n    \"draft_read\": false,\n    \"draft_create\": false,\n    \"draft_update\": true,\n    \"draft_delete\": true,\n    \"draft_send\": false,\n    \"webhook_read\": false,\n    \"webhook_create\": false,\n    \"webhook_update\": false,\n    \"webhook_delete\": true,\n    \"domain_read\": false,\n    \"domain_create\": false,\n    \"domain_update\": false,\n    \"domain_delete\": true,\n    \"list_entry_read\": false,\n    \"list_entry_create\": true,\n    \"list_entry_delete\": false,\n    \"metrics_read\": false,\n    \"api_key_read\": false,\n    \"api_key_create\": false,\n    \"api_key_delete\": false,\n    \"pod_read\": false,\n    \"pod_create\": true,\n    \"pod_delete\": false\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"string\",\n  \"errors\": {},\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"fix\": \"string\",\n  \"docs\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2ef9fc54-1ea5-41ba-94f8-d0da2452f71d",
+              "name": "Error response with status 404",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "pods",
+                    ":pod_id",
+                    "api-keys"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "pod_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"string\",\n  \"permissions\": {\n    \"inbox_read\": true,\n    \"inbox_create\": false,\n    \"inbox_update\": true,\n    \"inbox_delete\": false,\n    \"thread_read\": true,\n    \"thread_delete\": false,\n    \"message_read\": true,\n    \"message_send\": true,\n    \"message_update\": true,\n    \"label_spam_read\": false,\n    \"label_blocked_read\": false,\n    \"label_trash_read\": true,\n    \"draft_read\": false,\n    \"draft_create\": false,\n    \"draft_update\": true,\n    \"draft_delete\": true,\n    \"draft_send\": false,\n    \"webhook_read\": false,\n    \"webhook_create\": false,\n    \"webhook_update\": false,\n    \"webhook_delete\": true,\n    \"domain_read\": false,\n    \"domain_create\": false,\n    \"domain_update\": false,\n    \"domain_delete\": true,\n    \"list_entry_read\": false,\n    \"list_entry_create\": true,\n    \"list_entry_delete\": false,\n    \"metrics_read\": false,\n    \"api_key_read\": false,\n    \"api_key_create\": false,\n    \"api_key_delete\": false,\n    \"pod_read\": false,\n    \"pod_create\": true,\n    \"pod_delete\": false\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"string\",\n  \"message\": \"string\",\n  \"code\": \"string\",\n  \"fix\": \"string\",\n  \"docs\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a4cde76b-9637-433f-b9d6-b4e6ce47839a",
+          "name": "Delete API Key",
+          "request": {
+            "name": "Delete API Key",
+            "description": {
+              "content": "**CLI:**\n```bash\nagentmail pods:api-keys delete --pod-id <pod_id> --api-key-id <api_key_id>\n```",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v0",
+                "pods",
+                ":pod_id",
+                "api-keys",
+                ":api_key_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "pod_id",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "api_key_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "2defdc15-d92a-4ed7-9910-92b9b2e8828b",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "pods",
+                    ":pod_id",
+                    "api-keys",
+                    ":api_key_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "pod_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "api_key_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "f60b2a60-70f0-439f-ad5d-9bd7b299d43f",
+              "name": "Error response with status 404",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "pods",
+                    ":pod_id",
+                    "api-keys",
+                    ":api_key_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "pod_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "api_key_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"string\",\n  \"message\": \"string\",\n  \"code\": \"string\",\n  \"fix\": \"string\",\n  \"docs\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.agentmail.to",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "1ec51534-5d8e-49a4-b2ff-68ea9b6bb146",
+    "name": "API Reference agent pods > api-keys API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

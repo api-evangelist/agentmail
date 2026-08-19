@@ -1,0 +1,526 @@
+{
+  "item": [
+    {
+      "id": "cf98f45a-e4ee-420f-90a2-0d21f3f1bbbf",
+      "name": "pods > metrics",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "e7fb0529-9a09-405d-9e10-ea502d7f51cd",
+          "name": "Query Events",
+          "request": {
+            "name": "Query Events",
+            "description": {
+              "content": "Counts of email events (sent, delivered, bounced, etc.) over time for\nthe pod. Defaults to the last 24 hours; `start` must be within the last\n90 days, and a future `end` is clamped to now. Omit `period` for\nindividual event counts, or set it to sum counts into buckets of that\nmany seconds.\n\n**CLI:**\n```bash\nagentmail pods:metrics query --pod-id <pod_id>\n```",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v0",
+                "pods",
+                ":pod_id",
+                "metrics",
+                "events"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "event_types",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "event_types",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "start",
+                  "value": "<dateTime>"
+                },
+                {
+                  "disabled": false,
+                  "key": "end",
+                  "value": "<dateTime>"
+                },
+                {
+                  "disabled": false,
+                  "key": "period",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "descending",
+                  "value": "<boolean>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "pod_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "cdf7d7bd-3f59-4954-91ca-563714397834",
+              "name": "Response with status 200",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "pods",
+                    ":pod_id",
+                    "metrics",
+                    "events"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "event_types",
+                      "value": "message.complained"
+                    },
+                    {
+                      "key": "event_types",
+                      "value": "message.received.blocked"
+                    },
+                    {
+                      "key": "start",
+                      "value": "2005-11-20T01:58:08.532Z"
+                    },
+                    {
+                      "key": "end",
+                      "value": "1985-04-26T16:54:23.539Z"
+                    },
+                    {
+                      "key": "period",
+                      "value": "5481"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "3933"
+                    },
+                    {
+                      "key": "descending",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "pod_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key_0\": [\n    {\n      \"timestamp\": \"2021-10-01T04:01:16.706Z\",\n      \"count\": 3224\n    },\n    {\n      \"timestamp\": \"1989-03-02T11:22:02.916Z\",\n      \"count\": 1233\n    }\n  ],\n  \"key_1\": [\n    {\n      \"timestamp\": \"1968-12-01T23:38:29.023Z\",\n      \"count\": 599\n    },\n    {\n      \"timestamp\": \"2009-03-30T09:37:28.785Z\",\n      \"count\": 9352\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9779cf1d-46bc-4d13-8d06-37226e817c04",
+              "name": "Error response with status 400",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "pods",
+                    ":pod_id",
+                    "metrics",
+                    "events"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "event_types",
+                      "value": "message.complained"
+                    },
+                    {
+                      "key": "event_types",
+                      "value": "message.received.blocked"
+                    },
+                    {
+                      "key": "start",
+                      "value": "2005-11-20T01:58:08.532Z"
+                    },
+                    {
+                      "key": "end",
+                      "value": "1985-04-26T16:54:23.539Z"
+                    },
+                    {
+                      "key": "period",
+                      "value": "5481"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "3933"
+                    },
+                    {
+                      "key": "descending",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "pod_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"string\",\n  \"errors\": {},\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"fix\": \"string\",\n  \"docs\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "639ff288-2f21-4ef1-8324-416dc7ad79a1",
+          "name": "Query Usage",
+          "request": {
+            "name": "Query Usage",
+            "description": {
+              "content": "Cumulative usage series for the pod. Each point is the running total of\nthe usage type at that timestamp, not the change within the bucket.\nPod-scoped queries carry every usage type except `pod_count`; requested\ntypes that don't apply to the scope are ignored. Defaults to the last\n24 hours; `start` must be within the last 90 days, and a future `end`\nis clamped to now. The range divided by `period` must not exceed 1000\nbuckets.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v0",
+                "pods",
+                ":pod_id",
+                "metrics",
+                "usage"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "usage_types",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "usage_types",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "start",
+                  "value": "<dateTime>"
+                },
+                {
+                  "disabled": false,
+                  "key": "end",
+                  "value": "<dateTime>"
+                },
+                {
+                  "disabled": false,
+                  "key": "period",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "descending",
+                  "value": "<boolean>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "pod_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "631a0d61-cc91-46c6-b684-7169ffe0df52",
+              "name": "Response with status 200",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "pods",
+                    ":pod_id",
+                    "metrics",
+                    "usage"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "usage_types",
+                      "value": "inbox_count"
+                    },
+                    {
+                      "key": "usage_types",
+                      "value": "thread_count"
+                    },
+                    {
+                      "key": "start",
+                      "value": "2005-11-20T01:58:08.532Z"
+                    },
+                    {
+                      "key": "end",
+                      "value": "1985-04-26T16:54:23.539Z"
+                    },
+                    {
+                      "key": "period",
+                      "value": "5481"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "3933"
+                    },
+                    {
+                      "key": "descending",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "pod_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key_0\": [\n    {\n      \"timestamp\": \"1974-08-02T21:28:11.517Z\",\n      \"value\": 4587\n    },\n    {\n      \"timestamp\": \"1953-04-20T12:07:17.279Z\",\n      \"value\": 1936\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0cc3cfc0-1cdd-4617-a777-ad8d9c415f03",
+              "name": "Error response with status 400",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "pods",
+                    ":pod_id",
+                    "metrics",
+                    "usage"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "usage_types",
+                      "value": "inbox_count"
+                    },
+                    {
+                      "key": "usage_types",
+                      "value": "thread_count"
+                    },
+                    {
+                      "key": "start",
+                      "value": "2005-11-20T01:58:08.532Z"
+                    },
+                    {
+                      "key": "end",
+                      "value": "1985-04-26T16:54:23.539Z"
+                    },
+                    {
+                      "key": "period",
+                      "value": "5481"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "3933"
+                    },
+                    {
+                      "key": "descending",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "pod_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"string\",\n  \"errors\": {},\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"fix\": \"string\",\n  \"docs\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.agentmail.to",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "2f8f42cd-6e52-4738-b6be-c3a45eed49f6",
+    "name": "API Reference agent pods > metrics API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,116 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "API Reference agent metrics API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "metrics",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Query Events",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.agentmail.to/v0/metrics/events",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "event_types",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "start",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "end",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "period",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "descending",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Counts of email events (sent, delivered, bounced, etc.) over time for\nthe organization. Defaults to the last 24 hours; `start` must be within\nthe last 90 days, and a future `end` is clamped to now. Omit `period`\nfor individual event counts, or set it to sum counts into buckets of\nthat many seconds.\n\n**CLI:**\n```bash\nagentmail metrics list\n```"
+        },
+        {
+          "info": {
+            "name": "Query Usage",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.agentmail.to/v0/metrics/usage",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "usage_types",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "start",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "end",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "period",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "descending",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Cumulative usage series for the organization. Each point is the running\ntotal of the usage type at that timestamp, not the change within the\nbucket. Defaults to the last 24 hours; `start` must be within the last\n90 days, and a future `end` is clamped to now. The range divided by\n`period` must not exceed 1000 buckets."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
