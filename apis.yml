@@ -32,6 +32,20 @@ created: '2026-07-17'
 modified: '2026-07-17'
 tags:
 - Company
+- Artificial Intelligence
+- Email
+- AI Agents
+- Inbox
+- Messaging
+- Webhook
+- WebSockets
+- SMTP
+- IMAP
+- MCP
+- Agentic
+- Developer Tools
+tags_raw:
+- Company
 - Ai
 - Email
 - API
@@ -52,6 +66,8 @@ apis:
   humanURL: https://docs.agentmail.to
   baseURL: https://api.agentmail.to
   tags:
+  - Agents
+  tags_raw:
   - agent
   properties:
   - type: OpenAPI
@@ -68,6 +84,8 @@ apis:
   humanURL: https://docs.agentmail.to
   baseURL: https://api.agentmail.to
   tags:
+  - APIKeys
+  tags_raw:
   - api-keys
   properties:
   - type: OpenAPI
@@ -84,6 +102,8 @@ apis:
   humanURL: https://docs.agentmail.to
   baseURL: https://api.agentmail.to
   tags:
+  - Authentication
+  tags_raw:
   - auth
   properties:
   - type: OpenAPI
@@ -100,6 +120,8 @@ apis:
   humanURL: https://docs.agentmail.to
   baseURL: https://api.agentmail.to
   tags:
+  - Domains
+  tags_raw:
   - domains
   properties:
   - type: OpenAPI
@@ -116,6 +138,8 @@ apis:
   humanURL: https://docs.agentmail.to
   baseURL: https://api.agentmail.to
   tags:
+  - Drafts
+  tags_raw:
   - drafts
   properties:
   - type: OpenAPI
@@ -148,6 +172,8 @@ apis:
   humanURL: https://docs.agentmail.to
   baseURL: https://api.agentmail.to
   tags:
+  - Inboxes
+  tags_raw:
   - inboxes
   properties:
   - type: OpenAPI
@@ -276,6 +302,8 @@ apis:
   humanURL: https://docs.agentmail.to
   baseURL: https://api.agentmail.to
   tags:
+  - List
+  tags_raw:
   - lists
   properties:
   - type: OpenAPI
@@ -292,6 +320,8 @@ apis:
   humanURL: https://docs.agentmail.to
   baseURL: https://api.agentmail.to
   tags:
+  - Metrics
+  tags_raw:
   - metrics
   properties:
   - type: OpenAPI
@@ -308,6 +338,8 @@ apis:
   humanURL: https://docs.agentmail.to
   baseURL: https://api.agentmail.to
   tags:
+  - Organization
+  tags_raw:
   - organizations
   properties:
   - type: OpenAPI
@@ -340,6 +372,8 @@ apis:
   humanURL: https://docs.agentmail.to
   baseURL: https://api.agentmail.to
   tags:
+  - Pods
+  tags_raw:
   - pods
   properties:
   - type: OpenAPI
@@ -468,6 +502,8 @@ apis:
   humanURL: https://docs.agentmail.to
   baseURL: https://api.agentmail.to
   tags:
+  - Threads
+  tags_raw:
   - threads
   properties:
   - type: OpenAPI
@@ -484,6 +520,8 @@ apis:
   humanURL: https://docs.agentmail.to
   baseURL: https://api.agentmail.to
   tags:
+  - Webhook
+  tags_raw:
   - webhooks
   properties:
   - type: OpenAPI
