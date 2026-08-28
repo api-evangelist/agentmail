@@ -9,6 +9,18 @@ description: 'AgentMail is an API-first email platform that gives AI agents thei
   It ships a REST API (OpenAPI 3.1), an AsyncAPI 2.6 WebSocket surface, Python/Node/Go
   SDKs, a CLI, a hosted MCP server, and IMAP/SMTP bridges, with API-key permissions,
   idempotency, multi-tenant pods, custom domains, and SOC 2 Type I/II compliance.'
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: unknown
   onboarding: self-serve
