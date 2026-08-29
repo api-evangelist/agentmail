@@ -560,6 +560,9 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: CapabilityMap
+  url: capabilities/agentmail-capability-edges.yml
+  name: AgentMail Business Capability Map
 - type: DeveloperPortal
   url: https://docs.agentmail.to
 - type: Documentation
