@@ -544,6 +544,16 @@ apis:
     url: https://docs.agentmail.to
   - type: APIReference
     url: https://docs.agentmail.to/api-reference
+- aid: agentmail:agentmail-api-reference-api
+  name: AgentMail API Reference API
+  description: The API Reference API from AgentMail — 0 operation(s) for api reference.
+  humanURL: https://docs.agentmail.to
+  baseURL: https://api.agentmail.to
+  tags:
+  - API Reference
+  properties:
+  - type: OpenAPI
+    url: openapi/agentmail-api-reference-api-openapi.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com

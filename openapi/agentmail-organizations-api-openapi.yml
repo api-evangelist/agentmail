@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: API Reference agent organizations API
+  title: Reference Organizations API
   version: 1.0.0
 servers:
 - url: https://api.agentmail.to
@@ -43,14 +43,18 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/type_organizations:Organization'
+                $ref: '#/components/schemas/type_organizations_Organization'
 components:
   schemas:
-    type_organizations:Organization:
+    type__OrganizationId:
+      type: string
+      description: ID of organization.
+      title: OrganizationId
+    type_organizations_Organization:
       type: object
       properties:
         organization_id:
-          $ref: '#/components/schemas/type_:OrganizationId'
+          $ref: '#/components/schemas/type__OrganizationId'
         inbox_count:
           type: integer
           description: Current number of inboxes.
@@ -94,10 +98,6 @@ components:
       - created_at
       description: Organization details with usage limits and counts.
       title: Organization
-    type_:OrganizationId:
-      type: string
-      description: ID of organization.
-      title: OrganizationId
   securitySchemes:
     Bearer:
       type: http

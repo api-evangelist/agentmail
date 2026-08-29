@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: API Reference agent auth API
+  title: Reference Auth API
   version: 1.0.0
 servers:
 - url: https://api.agentmail.to
@@ -43,14 +43,14 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/type_auth:Identity'
+                $ref: '#/components/schemas/type_auth_Identity'
 components:
   schemas:
-    type_:OrganizationId:
+    type__OrganizationId:
       type: string
       description: ID of organization.
       title: OrganizationId
-    type_auth:ScopeType:
+    type_auth_ScopeType:
       type: string
       enum:
       - organization
@@ -58,18 +58,18 @@ components:
       - inbox
       description: The scope tier the authenticated credential is bound to.
       title: ScopeType
-    type_auth:Identity:
+    type_auth_Identity:
       type: object
       properties:
         scope_type:
-          $ref: '#/components/schemas/type_auth:ScopeType'
+          $ref: '#/components/schemas/type_auth_ScopeType'
         scope_id:
           type: string
           description: 'ID of the most specific scope the credential is bound to.
 
             Equals inbox_id when scope_type is inbox, pod_id when pod, organization_id when organization.'
         organization_id:
-          $ref: '#/components/schemas/type_:OrganizationId'
+          $ref: '#/components/schemas/type__OrganizationId'
         pod_id:
           type: string
           description: ID of the pod the credential is scoped to. Present when scope_type is pod or inbox.

@@ -1,0 +1,1000 @@
+openapi: 3.2.0
+info:
+  title: API Reference API
+  version: 1.0.0
+servers:
+- url: https://api.agentmail.to
+  description: prod
+- url: https://x402.api.agentmail.to
+  description: prod-x402
+- url: https://mpp.api.agentmail.to
+  description: prod-mpp
+- url: https://api.agentmail.eu
+  description: eu-prod
+tags:
+- name: API Reference
+paths: {}
+webhooks:
+  message-received:
+    post:
+      operationId: message-received
+      summary: Message Received
+      parameters:
+      - name: svix-id
+        in: header
+        required: true
+        schema:
+          $ref: '#/components/schemas/type_webhooks_events_SvixId'
+      - name: svix-signature
+        in: header
+        required: true
+        schema:
+          $ref: '#/components/schemas/type_webhooks_events_SvixSignature'
+      - name: svix-timestamp
+        in: header
+        required: true
+        schema:
+          $ref: '#/components/schemas/type_webhooks_events_SvixTimestamp'
+      responses:
+        '200':
+          description: Webhook received successfully
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/type_events_MessageReceivedEvent'
+      tags:
+      - API Reference
+  message-sent:
+    post:
+      operationId: message-sent
+      summary: Message Sent
+      parameters:
+      - name: svix-id
+        in: header
+        required: true
+        schema:
+          $ref: '#/components/schemas/type_webhooks_events_SvixId'
+      - name: svix-signature
+        in: header
+        required: true
+        schema:
+          $ref: '#/components/schemas/type_webhooks_events_SvixSignature'
+      - name: svix-timestamp
+        in: header
+        required: true
+        schema:
+          $ref: '#/components/schemas/type_webhooks_events_SvixTimestamp'
+      responses:
+        '200':
+          description: Webhook received successfully
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/type_events_MessageSentEvent'
+      tags:
+      - API Reference
+  message-delivered:
+    post:
+      operationId: message-delivered
+      summary: Message Delivered
+      parameters:
+      - name: svix-id
+        in: header
+        required: true
+        schema:
+          $ref: '#/components/schemas/type_webhooks_events_SvixId'
+      - name: svix-signature
+        in: header
+        required: true
+        schema:
+          $ref: '#/components/schemas/type_webhooks_events_SvixSignature'
+      - name: svix-timestamp
+        in: header
+        required: true
+        schema:
+          $ref: '#/components/schemas/type_webhooks_events_SvixTimestamp'
+      responses:
+        '200':
+          description: Webhook received successfully
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/type_events_MessageDeliveredEvent'
+      tags:
+      - API Reference
+  message-bounced:
+    post:
+      operationId: message-bounced
+      summary: Message Bounced
+      parameters:
+      - name: svix-id
+        in: header
+        required: true
+        schema:
+          $ref: '#/components/schemas/type_webhooks_events_SvixId'
+      - name: svix-signature
+        in: header
+        required: true
+        schema:
+          $ref: '#/components/schemas/type_webhooks_events_SvixSignature'
+      - name: svix-timestamp
+        in: header
+        required: true
+        schema:
+          $ref: '#/components/schemas/type_webhooks_events_SvixTimestamp'
+      responses:
+        '200':
+          description: Webhook received successfully
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/type_events_MessageBouncedEvent'
+      tags:
+      - API Reference
+  message-complained:
+    post:
+      operationId: message-complained
+      summary: Message Complained
+      parameters:
+      - name: svix-id
+        in: header
+        required: true
+        schema:
+          $ref: '#/components/schemas/type_webhooks_events_SvixId'
+      - name: svix-signature
+        in: header
+        required: true
+        schema:
+          $ref: '#/components/schemas/type_webhooks_events_SvixSignature'
+      - name: svix-timestamp
+        in: header
+        required: true
+        schema:
+          $ref: '#/components/schemas/type_webhooks_events_SvixTimestamp'
+      responses:
+        '200':
+          description: Webhook received successfully
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/type_events_MessageComplainedEvent'
+      tags:
+      - API Reference
+  message-rejected:
+    post:
+      operationId: message-rejected
+      summary: Message Rejected
+      parameters:
+      - name: svix-id
+        in: header
+        required: true
+        schema:
+          $ref: '#/components/schemas/type_webhooks_events_SvixId'
+      - name: svix-signature
+        in: header
+        required: true
+        schema:
+          $ref: '#/components/schemas/type_webhooks_events_SvixSignature'
+      - name: svix-timestamp
+        in: header
+        required: true
+        schema:
+          $ref: '#/components/schemas/type_webhooks_events_SvixTimestamp'
+      responses:
+        '200':
+          description: Webhook received successfully
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/type_events_MessageRejectedEvent'
+      tags:
+      - API Reference
+  domain-verified:
+    post:
+      operationId: domain-verified
+      summary: Domain Verified
+      parameters:
+      - name: svix-id
+        in: header
+        required: true
+        schema:
+          $ref: '#/components/schemas/type_webhooks_events_SvixId'
+      - name: svix-signature
+        in: header
+        required: true
+        schema:
+          $ref: '#/components/schemas/type_webhooks_events_SvixSignature'
+      - name: svix-timestamp
+        in: header
+        required: true
+        schema:
+          $ref: '#/components/schemas/type_webhooks_events_SvixTimestamp'
+      responses:
+        '200':
+          description: Webhook received successfully
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/type_events_DomainVerifiedEvent'
+      tags:
+      - API Reference
+components:
+  schemas:
+    type_threads_ThreadItem:
+      type: object
+      properties:
+        inbox_id:
+          $ref: '#/components/schemas/type_inboxes_InboxId'
+        thread_id:
+          $ref: '#/components/schemas/type_threads_ThreadId'
+        labels:
+          $ref: '#/components/schemas/type_threads_ThreadLabels'
+        timestamp:
+          $ref: '#/components/schemas/type_threads_ThreadTimestamp'
+        received_timestamp:
+          $ref: '#/components/schemas/type_threads_ThreadReceivedTimestamp'
+        sent_timestamp:
+          $ref: '#/components/schemas/type_threads_ThreadSentTimestamp'
+        senders:
+          $ref: '#/components/schemas/type_threads_ThreadSenders'
+        recipients:
+          $ref: '#/components/schemas/type_threads_ThreadRecipients'
+        subject:
+          $ref: '#/components/schemas/type_threads_ThreadSubject'
+        preview:
+          $ref: '#/components/schemas/type_threads_ThreadPreview'
+        attachments:
+          $ref: '#/components/schemas/type_threads_ThreadAttachments'
+        last_message_id:
+          $ref: '#/components/schemas/type_threads_ThreadLastMessageId'
+        message_count:
+          $ref: '#/components/schemas/type_threads_ThreadMessageCount'
+        size:
+          $ref: '#/components/schemas/type_threads_ThreadSize'
+        updated_at:
+          $ref: '#/components/schemas/type_threads_ThreadUpdatedAt'
+        created_at:
+          $ref: '#/components/schemas/type_threads_ThreadCreatedAt'
+      required:
+      - inbox_id
+      - thread_id
+      - labels
+      - timestamp
+      - senders
+      - recipients
+      - last_message_id
+      - message_count
+      - size
+      - updated_at
+      - created_at
+      title: ThreadItem
+    type_domains_RecordStatus:
+      type: string
+      enum:
+      - MISSING
+      - INVALID
+      - VALID
+      title: RecordStatus
+    type_messages_MessageSize:
+      type: integer
+      description: Size of message in bytes.
+      title: MessageSize
+    type_threads_ThreadReceivedTimestamp:
+      type: string
+      format: date-time
+      description: Timestamp of last received message.
+      title: ThreadReceivedTimestamp
+    type_attachments_AttachmentId:
+      type: string
+      description: ID of attachment.
+      title: AttachmentId
+    type_attachments_AttachmentSize:
+      type: integer
+      description: Size of attachment in bytes.
+      title: AttachmentSize
+    type_events_MessageDeliveredEvent:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - event
+        event_type:
+          type: string
+          enum:
+          - message.delivered
+        event_id:
+          $ref: '#/components/schemas/type_events_EventId'
+        delivery:
+          $ref: '#/components/schemas/type_events_Delivery'
+      required:
+      - type
+      - event_type
+      - event_id
+      - delivery
+      title: MessageDeliveredEvent
+    type_attachments_Attachment:
+      type: object
+      properties:
+        attachment_id:
+          $ref: '#/components/schemas/type_attachments_AttachmentId'
+        filename:
+          $ref: '#/components/schemas/type_attachments_AttachmentFilename'
+        size:
+          $ref: '#/components/schemas/type_attachments_AttachmentSize'
+        content_type:
+          $ref: '#/components/schemas/type_attachments_AttachmentContentType'
+        content_disposition:
+          $ref: '#/components/schemas/type_attachments_AttachmentContentDisposition'
+        content_id:
+          $ref: '#/components/schemas/type_attachments_AttachmentContentId'
+      required:
+      - attachment_id
+      - size
+      title: Attachment
+    type_messages_MessageHeaders:
+      type: object
+      additionalProperties:
+        type: string
+      description: Headers in message.
+      title: MessageHeaders
+    type_messages_MessageLabels:
+      type: array
+      items:
+        type: string
+      description: Labels of message.
+      title: MessageLabels
+    type_messages_MessageCreatedAt:
+      type: string
+      format: date-time
+      description: Time at which message was created.
+      title: MessageCreatedAt
+    type_threads_ThreadSubject:
+      type: string
+      description: Subject of thread.
+      title: ThreadSubject
+    type_domains_VerificationStatus:
+      type: string
+      enum:
+      - NOT_STARTED
+      - PENDING
+      - INVALID
+      - FAILED
+      - VERIFYING
+      - VERIFIED
+      title: VerificationStatus
+    type_webhooks_events_SvixTimestamp:
+      type: string
+      format: date-time
+      description: Timestamp of webhook message.
+      title: SvixTimestamp
+    type_threads_ThreadSize:
+      type: integer
+      description: Size of thread in bytes.
+      title: ThreadSize
+    type_events_MessageComplainedEvent:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - event
+        event_type:
+          type: string
+          enum:
+          - message.complained
+        event_id:
+          $ref: '#/components/schemas/type_events_EventId'
+        complaint:
+          $ref: '#/components/schemas/type_events_Complaint'
+      required:
+      - type
+      - event_type
+      - event_id
+      - complaint
+      title: MessageComplainedEvent
+    type_threads_ThreadTimestamp:
+      type: string
+      format: date-time
+      description: Timestamp of last sent or received message.
+      title: ThreadTimestamp
+    type_messages_MessageUpdatedAt:
+      type: string
+      format: date-time
+      description: Time at which message was last updated.
+      title: MessageUpdatedAt
+    type_events_Send:
+      type: object
+      properties:
+        inbox_id:
+          $ref: '#/components/schemas/type_inboxes_InboxId'
+        thread_id:
+          $ref: '#/components/schemas/type_threads_ThreadId'
+        message_id:
+          $ref: '#/components/schemas/type_messages_MessageId'
+        timestamp:
+          $ref: '#/components/schemas/type_events_Timestamp'
+        recipients:
+          type: array
+          items:
+            type: string
+          description: Sent recipients.
+      required:
+      - inbox_id
+      - thread_id
+      - message_id
+      - timestamp
+      - recipients
+      title: Send
+    type_events_DomainVerifiedEvent:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - event
+        event_type:
+          type: string
+          enum:
+          - domain.verified
+        event_id:
+          $ref: '#/components/schemas/type_events_EventId'
+        domain:
+          $ref: '#/components/schemas/type_domains_Domain'
+      required:
+      - type
+      - event_type
+      - event_id
+      - domain
+      title: DomainVerifiedEvent
+    type_domains_VerificationRecord:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/type_domains_RecordType'
+          description: The type of the DNS record.
+        name:
+          type: string
+          description: The name or host of the record.
+        value:
+          type: string
+          description: The value of the record.
+        status:
+          $ref: '#/components/schemas/type_domains_RecordStatus'
+          description: The verification status of this specific record.
+        priority:
+          type: integer
+          description: The priority of the MX record.
+      required:
+      - type
+      - name
+      - value
+      - status
+      title: VerificationRecord
+    type_webhooks_events_SvixId:
+      type: string
+      description: ID of webhook message.
+      title: SvixId
+    type_events_MessageRejectedEvent:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - event
+        event_type:
+          type: string
+          enum:
+          - message.rejected
+        event_id:
+          $ref: '#/components/schemas/type_events_EventId'
+        reject:
+          $ref: '#/components/schemas/type_events_Reject'
+      required:
+      - type
+      - event_type
+      - event_id
+      - reject
+      title: MessageRejectedEvent
+    type_threads_ThreadLabels:
+      type: array
+      items:
+        type: string
+      description: Labels of thread.
+      title: ThreadLabels
+    type_messages_MessageAttachments:
+      type: array
+      items:
+        $ref: '#/components/schemas/type_attachments_Attachment'
+      description: Attachments in message.
+      title: MessageAttachments
+    type_events_MessageReceivedEvent:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - event
+        event_type:
+          $ref: '#/components/schemas/type_events_MessageReceivedEventType'
+        event_id:
+          $ref: '#/components/schemas/type_events_EventId'
+        message:
+          $ref: '#/components/schemas/type_messages_Message'
+        thread:
+          $ref: '#/components/schemas/type_threads_ThreadItem'
+      required:
+      - type
+      - event_type
+      - event_id
+      - message
+      - thread
+      description: A message was received. Spam, blocked, and unauthenticated received-message events use the same payload shape with different `event_type` values.
+      title: MessageReceivedEvent
+    type_events_Complaint:
+      type: object
+      properties:
+        inbox_id:
+          $ref: '#/components/schemas/type_inboxes_InboxId'
+        thread_id:
+          $ref: '#/components/schemas/type_threads_ThreadId'
+        message_id:
+          $ref: '#/components/schemas/type_messages_MessageId'
+        timestamp:
+          $ref: '#/components/schemas/type_events_Timestamp'
+        type:
+          type: string
+          description: Complaint type.
+        sub_type:
+          type: string
+          description: Complaint sub-type.
+        recipients:
+          type: array
+          items:
+            type: string
+          description: Complained recipients.
+      required:
+      - inbox_id
+      - thread_id
+      - message_id
+      - timestamp
+      - type
+      - sub_type
+      - recipients
+      title: Complaint
+    type_attachments_AttachmentContentId:
+      type: string
+      description: Content ID of attachment.
+      title: AttachmentContentId
+    type_threads_ThreadAttachments:
+      type: array
+      items:
+        $ref: '#/components/schemas/type_attachments_Attachment'
+      description: Attachments in thread.
+      title: ThreadAttachments
+    type_domains_DomainId:
+      type: string
+      description: The ID of the domain.
+      title: DomainId
+    type_messages_MessageText:
+      type: string
+      description: Plain text body of message.
+      title: MessageText
+    type_messages_MessageCc:
+      type: array
+      items:
+        type: string
+      description: Addresses of CC recipients. In format `username@domain.com` or `Display Name <username@domain.com>`.
+      title: MessageCc
+    type_messages_MessageId:
+      type: string
+      description: ID of message.
+      title: MessageId
+    type_threads_ThreadUpdatedAt:
+      type: string
+      format: date-time
+      description: Time at which thread was last updated.
+      title: ThreadUpdatedAt
+    type_events_MessageSentEvent:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - event
+        event_type:
+          type: string
+          enum:
+          - message.sent
+        event_id:
+          $ref: '#/components/schemas/type_events_EventId'
+        send:
+          $ref: '#/components/schemas/type_events_Send'
+      required:
+      - type
+      - event_type
+      - event_id
+      - send
+      title: MessageSentEvent
+    type_messages_MessageTimestamp:
+      type: string
+      format: date-time
+      description: Time at which message was sent or drafted.
+      title: MessageTimestamp
+    type_events_Delivery:
+      type: object
+      properties:
+        inbox_id:
+          $ref: '#/components/schemas/type_inboxes_InboxId'
+        thread_id:
+          $ref: '#/components/schemas/type_threads_ThreadId'
+        message_id:
+          $ref: '#/components/schemas/type_messages_MessageId'
+        timestamp:
+          $ref: '#/components/schemas/type_events_Timestamp'
+        recipients:
+          type: array
+          items:
+            type: string
+          description: Delivered recipients.
+      required:
+      - inbox_id
+      - thread_id
+      - message_id
+      - timestamp
+      - recipients
+      title: Delivery
+    type_events_Timestamp:
+      type: string
+      format: date-time
+      description: Timestamp of event.
+      title: Timestamp
+    type_domains_DomainName:
+      type: string
+      description: The name of the domain (e.g., `example.com`).
+      title: DomainName
+    type_messages_MessageSubject:
+      type: string
+      description: Subject of message.
+      title: MessageSubject
+    type_domains_SubdomainsEnabled:
+      type: boolean
+      description: 'Allow inboxes on any subdomain of this domain. Adds a required wildcard MX
+
+        record (`*.<domain>`) to `records`.'
+      title: SubdomainsEnabled
+    type_messages_MessageTo:
+      type: array
+      items:
+        type: string
+      description: Addresses of recipients. In format `username@domain.com` or `Display Name <username@domain.com>`.
+      title: MessageTo
+    type_events_Recipient:
+      type: object
+      properties:
+        address:
+          type: string
+          description: Recipient address.
+        status:
+          type: string
+          description: Recipient status.
+      required:
+      - address
+      - status
+      title: Recipient
+    type_events_Reject:
+      type: object
+      properties:
+        inbox_id:
+          $ref: '#/components/schemas/type_inboxes_InboxId'
+        thread_id:
+          $ref: '#/components/schemas/type_threads_ThreadId'
+        message_id:
+          $ref: '#/components/schemas/type_messages_MessageId'
+        timestamp:
+          $ref: '#/components/schemas/type_events_Timestamp'
+        reason:
+          type: string
+          description: Reject reason.
+      required:
+      - inbox_id
+      - thread_id
+      - message_id
+      - timestamp
+      - reason
+      title: Reject
+    type_threads_ThreadRecipients:
+      type: array
+      items:
+        type: string
+      description: Recipients in thread. In format `username@domain.com` or `Display Name <username@domain.com>`.
+      title: ThreadRecipients
+    type_webhooks_events_SvixSignature:
+      type: string
+      description: Signature of webhook message.
+      title: SvixSignature
+    type_events_EventId:
+      type: string
+      description: ID of event.
+      title: EventId
+    type_domains_FeedbackEnabled:
+      type: boolean
+      description: Bounce and complaint notifications are sent to your inboxes.
+      title: FeedbackEnabled
+    type_domains_RecordType:
+      type: string
+      enum:
+      - TXT
+      - CNAME
+      - MX
+      title: RecordType
+    type_events_MessageReceivedEventType:
+      type: string
+      enum:
+      - message.received
+      - message.received.spam
+      - message.received.blocked
+      - message.received.unauthenticated
+      title: MessageReceivedEventType
+    type_events_MessageBouncedEvent:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - event
+        event_type:
+          type: string
+          enum:
+          - message.bounced
+        event_id:
+          $ref: '#/components/schemas/type_events_EventId'
+        bounce:
+          $ref: '#/components/schemas/type_events_Bounce'
+      required:
+      - type
+      - event_type
+      - event_id
+      - bounce
+      title: MessageBouncedEvent
+    type_messages_MessagePreview:
+      type: string
+      description: Text preview of message.
+      title: MessagePreview
+    type_messages_MessageFrom:
+      type: string
+      description: Address of sender. In format `username@domain.com` or `Display Name <username@domain.com>`.
+      title: MessageFrom
+    type_messages_MessageBcc:
+      type: array
+      items:
+        type: string
+      description: Addresses of BCC recipients. In format `username@domain.com` or `Display Name <username@domain.com>`.
+      title: MessageBcc
+    type_domains_Domain:
+      type: object
+      properties:
+        pod_id:
+          $ref: '#/components/schemas/type_pods_PodId'
+        domain_id:
+          $ref: '#/components/schemas/type_domains_DomainId'
+        domain:
+          $ref: '#/components/schemas/type_domains_DomainName'
+        status:
+          $ref: '#/components/schemas/type_domains_Status'
+        feedback_enabled:
+          $ref: '#/components/schemas/type_domains_FeedbackEnabled'
+        subdomains_enabled:
+          $ref: '#/components/schemas/type_domains_SubdomainsEnabled'
+        records:
+          type: array
+          items:
+            $ref: '#/components/schemas/type_domains_VerificationRecord'
+          description: 'A list of DNS records required to verify the domain. Includes a
+
+            wildcard MX record (`*.<domain>`) when `subdomains_enabled` is true.'
+        client_id:
+          $ref: '#/components/schemas/type_domains_ClientId'
+        updated_at:
+          type: string
+          format: date-time
+          description: Time at which the domain was last updated.
+        created_at:
+          type: string
+          format: date-time
+          description: Time at which the domain was created.
+      required:
+      - domain_id
+      - domain
+      - status
+      - feedback_enabled
+      - subdomains_enabled
+      - records
+      - updated_at
+      - created_at
+      title: Domain
+    type_events_Bounce:
+      type: object
+      properties:
+        inbox_id:
+          $ref: '#/components/schemas/type_inboxes_InboxId'
+        thread_id:
+          $ref: '#/components/schemas/type_threads_ThreadId'
+        message_id:
+          $ref: '#/components/schemas/type_messages_MessageId'
+        timestamp:
+          $ref: '#/components/schemas/type_events_Timestamp'
+        type:
+          type: string
+          description: Bounce type.
+        sub_type:
+          type: string
+          description: Bounce sub-type.
+        recipients:
+          type: array
+          items:
+            $ref: '#/components/schemas/type_events_Recipient'
+          description: Bounced recipients.
+      required:
+      - inbox_id
+      - thread_id
+      - message_id
+      - timestamp
+      - type
+      - sub_type
+      - recipients
+      title: Bounce
+    type_threads_ThreadMessageCount:
+      type: integer
+      description: Number of messages in thread.
+      title: ThreadMessageCount
+    type_messages_MessageInReplyTo:
+      type: string
+      description: ID of message being replied to.
+      title: MessageInReplyTo
+    type_messages_MessageReferences:
+      type: array
+      items:
+        type: string
+      description: IDs of previous messages in thread.
+      title: MessageReferences
+    type_domains_Status:
+      $ref: '#/components/schemas/type_domains_VerificationStatus'
+      description: The verification status of the domain.
+      title: Status
+    type_threads_ThreadSenders:
+      type: array
+      items:
+        type: string
+      description: Senders in thread. In format `username@domain.com` or `Display Name <username@domain.com>`.
+      title: ThreadSenders
+    type_attachments_AttachmentContentDisposition:
+      type: string
+      enum:
+      - inline
+      - attachment
+      description: Content disposition of attachment.
+      title: AttachmentContentDisposition
+    type_inboxes_InboxId:
+      type: string
+      description: The ID of the inbox.
+      title: InboxId
+    type_messages_Message:
+      type: object
+      properties:
+        inbox_id:
+          $ref: '#/components/schemas/type_inboxes_InboxId'
+        thread_id:
+          $ref: '#/components/schemas/type_threads_ThreadId'
+        message_id:
+          $ref: '#/components/schemas/type_messages_MessageId'
+        labels:
+          $ref: '#/components/schemas/type_messages_MessageLabels'
+        timestamp:
+          $ref: '#/components/schemas/type_messages_MessageTimestamp'
+        from:
+          $ref: '#/components/schemas/type_messages_MessageFrom'
+        reply_to:
+          type: array
+          items:
+            type: string
+          description: Reply-to addresses. In format `username@domain.com` or `Display Name <username@domain.com>`.
+        to:
+          $ref: '#/components/schemas/type_messages_MessageTo'
+        cc:
+          $ref: '#/components/schemas/type_messages_MessageCc'
+        bcc:
+          $ref: '#/components/schemas/type_messages_MessageBcc'
+        subject:
+          $ref: '#/components/schemas/type_messages_MessageSubject'
+        preview:
+          $ref: '#/components/schemas/type_messages_MessagePreview'
+        text:
+          $ref: '#/components/schemas/type_messages_MessageText'
+        html:
+          $ref: '#/components/schemas/type_messages_MessageHtml'
+        extracted_text:
+          type: string
+          description: Extracted new text content.
+        extracted_html:
+          type: string
+          description: Extracted new HTML content.
+        attachments:
+          $ref: '#/components/schemas/type_messages_MessageAttachments'
+        in_reply_to:
+          $ref: '#/components/schemas/type_messages_MessageInReplyTo'
+        references:
+          $ref: '#/components/schemas/type_messages_MessageReferences'
+        headers:
+          $ref: '#/components/schemas/type_messages_MessageHeaders'
+        size:
+          $ref: '#/components/schemas/type_messages_MessageSize'
+        updated_at:
+          $ref: '#/components/schemas/type_messages_MessageUpdatedAt'
+        created_at:
+          $ref: '#/components/schemas/type_messages_MessageCreatedAt'
+      required:
+      - inbox_id
+      - thread_id
+      - message_id
+      - labels
+      - timestamp
+      - from
+      - to
+      - size
+      - updated_at
+      - created_at
+      title: Message
+    type_threads_ThreadPreview:
+      type: string
+      description: Text preview of last message in thread.
+      title: ThreadPreview
+    type_attachments_AttachmentContentType:
+      type: string
+      description: Content type of attachment.
+      title: AttachmentContentType
+    type_threads_ThreadSentTimestamp:
+      type: string
+      format: date-time
+      description: Timestamp of last sent message.
+      title: ThreadSentTimestamp
+    type_threads_ThreadCreatedAt:
+      type: string
+      format: date-time
+      description: Time at which thread was created.
+      title: ThreadCreatedAt
+    type_pods_PodId:
+      type: string
+      description: ID of pod.
+      title: PodId
+    type_messages_MessageHtml:
+      type: string
+      description: HTML body of message.
+      title: MessageHtml
+    type_threads_ThreadLastMessageId:
+      type: string
+      description: ID of last message in thread.
+      title: ThreadLastMessageId
+    type_domains_ClientId:
+      type: string
+      description: Client ID of domain.
+      title: ClientId
+    type_attachments_AttachmentFilename:
+      type: string
+      description: Filename of attachment.
+      title: AttachmentFilename
+    type_threads_ThreadId:
+      type: string
+      description: ID of thread.
+      title: ThreadId
+  securitySchemes:
+    Bearer:
+      type: http
+      scheme: bearer

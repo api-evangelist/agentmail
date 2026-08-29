@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: API Reference agent inboxes > lists API
+  title: Reference inboxes > lists API
   version: 1.0.0
 servers:
 - url: https://api.agentmail.to
@@ -32,27 +32,27 @@ paths:
         in: path
         required: true
         schema:
-          $ref: '#/components/schemas/type_inboxes:InboxId'
+          $ref: '#/components/schemas/type_inboxes_InboxId'
       - name: direction
         in: path
         required: true
         schema:
-          $ref: '#/components/schemas/type_lists:Direction'
+          $ref: '#/components/schemas/type_lists_Direction'
       - name: type
         in: path
         required: true
         schema:
-          $ref: '#/components/schemas/type_lists:ListType'
+          $ref: '#/components/schemas/type_lists_ListType'
       - name: limit
         in: query
         required: false
         schema:
-          $ref: '#/components/schemas/type_:Limit'
+          $ref: '#/components/schemas/type__Limit'
       - name: page_token
         in: query
         required: false
         schema:
-          $ref: '#/components/schemas/type_:PageToken'
+          $ref: '#/components/schemas/type__PageToken'
       - name: Authorization
         in: header
         description: Bearer authentication
@@ -65,7 +65,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/type_lists:PodListListEntriesResponse'
+                $ref: '#/components/schemas/type_lists_PodListListEntriesResponse'
     post:
       operationId: create
       summary: Create List Entry
@@ -83,17 +83,17 @@ paths:
         in: path
         required: true
         schema:
-          $ref: '#/components/schemas/type_inboxes:InboxId'
+          $ref: '#/components/schemas/type_inboxes_InboxId'
       - name: direction
         in: path
         required: true
         schema:
-          $ref: '#/components/schemas/type_lists:Direction'
+          $ref: '#/components/schemas/type_lists_Direction'
       - name: type
         in: path
         required: true
         schema:
-          $ref: '#/components/schemas/type_lists:ListType'
+          $ref: '#/components/schemas/type_lists_ListType'
       - name: Authorization
         in: header
         description: Bearer authentication
@@ -106,18 +106,18 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/type_lists:PodListEntry'
+                $ref: '#/components/schemas/type_lists_PodListEntry'
         '400':
           description: Error response with status 400
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/type_:ValidationErrorResponse'
+                $ref: '#/components/schemas/type__ValidationErrorResponse'
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/type_lists:CreateListEntryRequest'
+              $ref: '#/components/schemas/type_lists_CreateListEntryRequest'
   /v0/inboxes/{inbox_id}/lists/{direction}/{type}/{entry}:
     get:
       operationId: get
@@ -136,17 +136,17 @@ paths:
         in: path
         required: true
         schema:
-          $ref: '#/components/schemas/type_inboxes:InboxId'
+          $ref: '#/components/schemas/type_inboxes_InboxId'
       - name: direction
         in: path
         required: true
         schema:
-          $ref: '#/components/schemas/type_lists:Direction'
+          $ref: '#/components/schemas/type_lists_Direction'
       - name: type
         in: path
         required: true
         schema:
-          $ref: '#/components/schemas/type_lists:ListType'
+          $ref: '#/components/schemas/type_lists_ListType'
       - name: entry
         in: path
         description: Email address or domain.
@@ -165,13 +165,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/type_lists:PodListEntry'
+                $ref: '#/components/schemas/type_lists_PodListEntry'
         '404':
           description: Error response with status 404
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/type_:ErrorResponse'
+                $ref: '#/components/schemas/type__ErrorResponse'
     delete:
       operationId: delete
       summary: Delete List Entry
@@ -189,17 +189,17 @@ paths:
         in: path
         required: true
         schema:
-          $ref: '#/components/schemas/type_inboxes:InboxId'
+          $ref: '#/components/schemas/type_inboxes_InboxId'
       - name: direction
         in: path
         required: true
         schema:
-          $ref: '#/components/schemas/type_lists:Direction'
+          $ref: '#/components/schemas/type_lists_Direction'
       - name: type
         in: path
         required: true
         schema:
-          $ref: '#/components/schemas/type_lists:ListType'
+          $ref: '#/components/schemas/type_lists_ListType'
       - name: entry
         in: path
         description: Email address or domain.
@@ -220,99 +220,143 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/type_:ErrorResponse'
+                $ref: '#/components/schemas/type__ErrorResponse'
 components:
   schemas:
-    type_:Count:
-      type: integer
-      description: Number of items returned.
-      title: Count
-    type_:ErrorFix:
+    type__ErrorFix:
       type: string
       description: The concrete next action that resolves the error.
       title: ErrorFix
-    type_:ErrorMessage:
+    type_lists_Direction:
       type: string
-      description: Error message.
-      title: ErrorMessage
-    type_lists:ListType:
+      enum:
+      - send
+      - receive
+      - reply
+      description: Direction of list entry.
+      title: Direction
+    type__PageToken:
+      type: string
+      description: Page token for pagination.
+      title: PageToken
+    type_lists_ListType:
       type: string
       enum:
       - allow
       - block
       description: Type of list entry.
       title: ListType
-    type_lists:PodListListEntriesResponse:
+    type_lists_CreateListEntryRequest:
+      type: object
+      properties:
+        entry:
+          type: string
+          description: Email address or domain to add.
+        reason:
+          type: string
+          description: Reason for adding the entry.
+      required:
+      - entry
+      title: CreateListEntryRequest
+    type__Count:
+      type: integer
+      description: Number of items returned.
+      title: Count
+    type__ErrorMessage:
+      type: string
+      description: Error message.
+      title: ErrorMessage
+    type__ErrorCode:
+      type: string
+      description: Stable, machine-readable error code in snake_case (for example, not_found or missing_permission). Branch on this rather than the message text.
+      title: ErrorCode
+    type__ValidationErrorResponse:
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/type__ErrorName'
+        code:
+          $ref: '#/components/schemas/type__ErrorCode'
+        message:
+          $ref: '#/components/schemas/type__ErrorMessage'
+        errors:
+          description: Validation errors. Each entry has a path and a message identifying the invalid field.
+        fix:
+          $ref: '#/components/schemas/type__ErrorFix'
+        docs:
+          $ref: '#/components/schemas/type__ErrorDocs'
+      required:
+      - name
+      - errors
+      title: ValidationErrorResponse
+    type_inboxes_InboxId:
+      type: string
+      description: The ID of the inbox.
+      title: InboxId
+    type_lists_PodListListEntriesResponse:
       type: object
       properties:
         count:
-          $ref: '#/components/schemas/type_:Count'
+          $ref: '#/components/schemas/type__Count'
         limit:
-          $ref: '#/components/schemas/type_:Limit'
+          $ref: '#/components/schemas/type__Limit'
         next_page_token:
-          $ref: '#/components/schemas/type_:PageToken'
+          $ref: '#/components/schemas/type__PageToken'
         entries:
           type: array
           items:
-            $ref: '#/components/schemas/type_lists:PodListEntry'
+            $ref: '#/components/schemas/type_lists_PodListEntry'
           description: Ordered by entry ascending.
       required:
       - count
       - entries
       title: PodListListEntriesResponse
-    type_:ErrorDocs:
+    type__Limit:
+      type: integer
+      description: Limit of number of items returned.
+      title: Limit
+    type__ErrorName:
       type: string
-      description: Link to the error reference entry for this code.
-      title: ErrorDocs
-    type_inboxes:InboxId:
-      type: string
-      description: The ID of the inbox.
-      title: InboxId
-    type_lists:EntryType:
-      type: string
-      enum:
-      - email
-      - domain
-      description: Whether the entry is an email address or domain.
-      title: EntryType
-    type_:ErrorCode:
-      type: string
-      description: Stable, machine-readable error code in snake_case (for example, not_found or missing_permission). Branch on this rather than the message text.
-      title: ErrorCode
-    type_:ErrorResponse:
+      description: Name of error.
+      title: ErrorName
+    type__ErrorResponse:
       type: object
       properties:
         name:
-          $ref: '#/components/schemas/type_:ErrorName'
+          $ref: '#/components/schemas/type__ErrorName'
         code:
-          $ref: '#/components/schemas/type_:ErrorCode'
+          $ref: '#/components/schemas/type__ErrorCode'
         message:
-          $ref: '#/components/schemas/type_:ErrorMessage'
+          $ref: '#/components/schemas/type__ErrorMessage'
         fix:
-          $ref: '#/components/schemas/type_:ErrorFix'
+          $ref: '#/components/schemas/type__ErrorFix'
         docs:
-          $ref: '#/components/schemas/type_:ErrorDocs'
+          $ref: '#/components/schemas/type__ErrorDocs'
       required:
       - name
       - message
       title: ErrorResponse
-    type_lists:PodListEntry:
+    type__OrganizationId:
+      type: string
+      description: ID of organization.
+      title: OrganizationId
+    type_lists_PodListEntry:
       type: object
       properties:
         entry:
           type: string
           description: Email address or domain of list entry.
         organization_id:
-          $ref: '#/components/schemas/type_:OrganizationId'
+          $ref: '#/components/schemas/type__OrganizationId'
         reason:
           type: string
           description: Reason for adding the entry.
         direction:
-          $ref: '#/components/schemas/type_lists:Direction'
+          $ref: '#/components/schemas/type_lists_Direction'
         list_type:
-          $ref: '#/components/schemas/type_lists:ListType'
+          $ref: '#/components/schemas/type_lists_ListType'
         entry_type:
-          $ref: '#/components/schemas/type_lists:EntryType'
+          $ref: '#/components/schemas/type_lists_EntryType'
         created_at:
           type: string
           format: date-time
@@ -335,61 +379,17 @@ components:
       - created_at
       - pod_id
       title: PodListEntry
-    type_:Limit:
-      type: integer
-      description: Limit of number of items returned.
-      title: Limit
-    type_lists:Direction:
+    type_lists_EntryType:
       type: string
       enum:
-      - send
-      - receive
-      - reply
-      description: Direction of list entry.
-      title: Direction
-    type_lists:CreateListEntryRequest:
-      type: object
-      properties:
-        entry:
-          type: string
-          description: Email address or domain to add.
-        reason:
-          type: string
-          description: Reason for adding the entry.
-      required:
-      - entry
-      title: CreateListEntryRequest
-    type_:ValidationErrorResponse:
-      type: object
-      properties:
-        name:
-          $ref: '#/components/schemas/type_:ErrorName'
-        code:
-          $ref: '#/components/schemas/type_:ErrorCode'
-        message:
-          $ref: '#/components/schemas/type_:ErrorMessage'
-        errors:
-          description: Validation errors. Each entry has a path and a message identifying the invalid field.
-        fix:
-          $ref: '#/components/schemas/type_:ErrorFix'
-        docs:
-          $ref: '#/components/schemas/type_:ErrorDocs'
-      required:
-      - name
-      - errors
-      title: ValidationErrorResponse
-    type_:PageToken:
+      - email
+      - domain
+      description: Whether the entry is an email address or domain.
+      title: EntryType
+    type__ErrorDocs:
       type: string
-      description: Page token for pagination.
-      title: PageToken
-    type_:ErrorName:
-      type: string
-      description: Name of error.
-      title: ErrorName
-    type_:OrganizationId:
-      type: string
-      description: ID of organization.
-      title: OrganizationId
+      description: Link to the error reference entry for this code.
+      title: ErrorDocs
   securitySchemes:
     Bearer:
       type: http

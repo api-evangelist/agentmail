@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: API Reference agent inboxes > metrics API
+  title: Reference inboxes > metrics API
   version: 1.0.0
 servers:
 - url: https://api.agentmail.to
@@ -43,37 +43,37 @@ paths:
         in: path
         required: true
         schema:
-          $ref: '#/components/schemas/type_inboxes:InboxId'
+          $ref: '#/components/schemas/type_inboxes_InboxId'
       - name: event_types
         in: query
         required: false
         schema:
-          $ref: '#/components/schemas/type_metrics:MetricEventTypes'
+          $ref: '#/components/schemas/type_metrics_MetricEventTypes'
       - name: start
         in: query
         required: false
         schema:
-          $ref: '#/components/schemas/type_metrics:Start'
+          $ref: '#/components/schemas/type_metrics_Start'
       - name: end
         in: query
         required: false
         schema:
-          $ref: '#/components/schemas/type_metrics:End'
+          $ref: '#/components/schemas/type_metrics_End'
       - name: period
         in: query
         required: false
         schema:
-          $ref: '#/components/schemas/type_metrics:Period'
+          $ref: '#/components/schemas/type_metrics_Period'
       - name: limit
         in: query
         required: false
         schema:
-          $ref: '#/components/schemas/type_metrics:MetricLimit'
+          $ref: '#/components/schemas/type_metrics_MetricLimit'
       - name: descending
         in: query
         required: false
         schema:
-          $ref: '#/components/schemas/type_metrics:Descending'
+          $ref: '#/components/schemas/type_metrics_Descending'
       - name: Authorization
         in: header
         description: Bearer authentication
@@ -86,13 +86,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/type_metrics:QueryMetricsResponse'
+                $ref: '#/components/schemas/type_metrics_QueryMetricsResponse'
         '400':
           description: Error response with status 400
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/type_:ValidationErrorResponse'
+                $ref: '#/components/schemas/type__ValidationErrorResponse'
   /v0/inboxes/{inbox_id}/metrics/usage:
     get:
       operationId: query-usage
@@ -117,37 +117,37 @@ paths:
         in: path
         required: true
         schema:
-          $ref: '#/components/schemas/type_inboxes:InboxId'
+          $ref: '#/components/schemas/type_inboxes_InboxId'
       - name: usage_types
         in: query
         required: false
         schema:
-          $ref: '#/components/schemas/type_metrics:UsageTypes'
+          $ref: '#/components/schemas/type_metrics_UsageTypes'
       - name: start
         in: query
         required: false
         schema:
-          $ref: '#/components/schemas/type_metrics:Start'
+          $ref: '#/components/schemas/type_metrics_Start'
       - name: end
         in: query
         required: false
         schema:
-          $ref: '#/components/schemas/type_metrics:End'
+          $ref: '#/components/schemas/type_metrics_End'
       - name: period
         in: query
         required: false
         schema:
-          $ref: '#/components/schemas/type_metrics:Period'
+          $ref: '#/components/schemas/type_metrics_Period'
       - name: limit
         in: query
         required: false
         schema:
-          $ref: '#/components/schemas/type_metrics:MetricLimit'
+          $ref: '#/components/schemas/type_metrics_MetricLimit'
       - name: descending
         in: query
         required: false
         schema:
-          $ref: '#/components/schemas/type_metrics:Descending'
+          $ref: '#/components/schemas/type_metrics_Descending'
       - name: Authorization
         in: header
         description: Bearer authentication
@@ -160,54 +160,16 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/type_metrics:QueryUsageResponse'
+                $ref: '#/components/schemas/type_metrics_QueryUsageResponse'
         '400':
           description: Error response with status 400
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/type_:ValidationErrorResponse'
+                $ref: '#/components/schemas/type__ValidationErrorResponse'
 components:
   schemas:
-    type_metrics:Period:
-      type: integer
-      description: Size of each time bucket as a whole number of seconds, between 1 and 86400.
-      title: Period
-    type_metrics:Descending:
-      type: boolean
-      description: Sort in descending order.
-      title: Descending
-    type_metrics:Start:
-      type: string
-      format: date-time
-      description: Start timestamp for the query.
-      title: Start
-    type_metrics:UsageTypes:
-      type: array
-      items:
-        $ref: '#/components/schemas/type_metrics:UsageType'
-      description: List of usage metric types to query. Omit to query every type valid for the scope.
-      title: UsageTypes
-    type_metrics:UsageType:
-      type: string
-      enum:
-      - storage_bytes
-      - message_count
-      - thread_count
-      - inbox_count
-      - pod_count
-      - domain_count
-      description: 'Type of usage metric. Inbox-scoped queries carry `storage_bytes`,
-
-        `message_count`, and `thread_count`; pod-scoped queries add `inbox_count`
-
-        and `domain_count`; organization-scoped queries add `pod_count`.'
-      title: UsageType
-    type_:ErrorCode:
-      type: string
-      description: Stable, machine-readable error code in snake_case (for example, not_found or missing_permission). Branch on this rather than the message text.
-      title: ErrorCode
-    type_metrics:UsagePoint:
+    type_metrics_UsagePoint:
       type: object
       properties:
         timestamp:
@@ -222,60 +184,78 @@ components:
       - timestamp
       - value
       title: UsagePoint
-    type_inboxes:InboxId:
-      type: string
-      description: The ID of the inbox.
-      title: InboxId
-    type_:ValidationErrorResponse:
-      type: object
-      properties:
-        name:
-          $ref: '#/components/schemas/type_:ErrorName'
-        code:
-          $ref: '#/components/schemas/type_:ErrorCode'
-        message:
-          $ref: '#/components/schemas/type_:ErrorMessage'
-        errors:
-          description: Validation errors. Each entry has a path and a message identifying the invalid field.
-        fix:
-          $ref: '#/components/schemas/type_:ErrorFix'
-        docs:
-          $ref: '#/components/schemas/type_:ErrorDocs'
-      required:
-      - name
-      - errors
-      title: ValidationErrorResponse
-    type_metrics:MetricLimit:
+    type_metrics_Descending:
+      type: boolean
+      description: Sort in descending order.
+      title: Descending
+    type_metrics_MetricLimit:
       type: integer
       description: Limit on number of buckets to return.
       title: MetricLimit
-    type_:ErrorFix:
-      type: string
-      description: The concrete next action that resolves the error.
-      title: ErrorFix
-    type_:ErrorMessage:
-      type: string
-      description: Error message.
-      title: ErrorMessage
-    type_metrics:MetricEventTypes:
-      type: array
-      items:
-        $ref: '#/components/schemas/type_metrics:MetricEventType'
-      description: List of metric event types to query.
-      title: MetricEventTypes
-    type_metrics:QueryUsageResponse:
+    type_metrics_Period:
+      type: integer
+      description: Size of each time bucket as a whole number of seconds, between 1 and 86400.
+      title: Period
+    type_metrics_QueryMetricsResponse:
       type: object
       additionalProperties:
         type: array
         items:
-          $ref: '#/components/schemas/type_metrics:UsagePoint'
-      description: Cumulative usage series grouped by usage type.
-      title: QueryUsageResponse
-    type_:ErrorName:
+          $ref: '#/components/schemas/type_metrics_MetricBucket'
+      description: Metrics grouped by event type.
+      title: QueryMetricsResponse
+    type__ErrorFix:
+      type: string
+      description: The concrete next action that resolves the error.
+      title: ErrorFix
+    type_metrics_Start:
+      type: string
+      format: date-time
+      description: Start timestamp for the query.
+      title: Start
+    type__ValidationErrorResponse:
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/type__ErrorName'
+        code:
+          $ref: '#/components/schemas/type__ErrorCode'
+        message:
+          $ref: '#/components/schemas/type__ErrorMessage'
+        errors:
+          description: Validation errors. Each entry has a path and a message identifying the invalid field.
+        fix:
+          $ref: '#/components/schemas/type__ErrorFix'
+        docs:
+          $ref: '#/components/schemas/type__ErrorDocs'
+      required:
+      - name
+      - errors
+      title: ValidationErrorResponse
+    type__ErrorName:
       type: string
       description: Name of error.
       title: ErrorName
-    type_metrics:MetricBucket:
+    type_metrics_UsageType:
+      type: string
+      enum:
+      - storage_bytes
+      - message_count
+      - thread_count
+      - inbox_count
+      - pod_count
+      - domain_count
+      description: 'Type of usage metric. Inbox-scoped queries carry `storage_bytes`,
+
+        `message_count`, and `thread_count`; pod-scoped queries add `inbox_count`
+
+        and `domain_count`; organization-scoped queries add `pod_count`.'
+      title: UsageType
+    type__ErrorMessage:
+      type: string
+      description: Error message.
+      title: ErrorMessage
+    type_metrics_MetricBucket:
       type: object
       properties:
         timestamp:
@@ -289,7 +269,36 @@ components:
       - timestamp
       - count
       title: MetricBucket
-    type_metrics:MetricEventType:
+    type_metrics_UsageTypes:
+      type: array
+      items:
+        $ref: '#/components/schemas/type_metrics_UsageType'
+      description: List of usage metric types to query. Omit to query every type valid for the scope.
+      title: UsageTypes
+    type__ErrorCode:
+      type: string
+      description: Stable, machine-readable error code in snake_case (for example, not_found or missing_permission). Branch on this rather than the message text.
+      title: ErrorCode
+    type_metrics_End:
+      type: string
+      format: date-time
+      description: End timestamp for the query.
+      title: End
+    type_metrics_MetricEventTypes:
+      type: array
+      items:
+        $ref: '#/components/schemas/type_metrics_MetricEventType'
+      description: List of metric event types to query.
+      title: MetricEventTypes
+    type_metrics_QueryUsageResponse:
+      type: object
+      additionalProperties:
+        type: array
+        items:
+          $ref: '#/components/schemas/type_metrics_UsagePoint'
+      description: Cumulative usage series grouped by usage type.
+      title: QueryUsageResponse
+    type_metrics_MetricEventType:
       type: string
       enum:
       - message.received
@@ -304,23 +313,14 @@ components:
       - domain.verified
       description: Type of metric event.
       title: MetricEventType
-    type_metrics:QueryMetricsResponse:
-      type: object
-      additionalProperties:
-        type: array
-        items:
-          $ref: '#/components/schemas/type_metrics:MetricBucket'
-      description: Metrics grouped by event type.
-      title: QueryMetricsResponse
-    type_:ErrorDocs:
+    type_inboxes_InboxId:
+      type: string
+      description: The ID of the inbox.
+      title: InboxId
+    type__ErrorDocs:
       type: string
       description: Link to the error reference entry for this code.
       title: ErrorDocs
-    type_metrics:End:
-      type: string
-      format: date-time
-      description: End timestamp for the query.
-      title: End
   securitySchemes:
     Bearer:
       type: http

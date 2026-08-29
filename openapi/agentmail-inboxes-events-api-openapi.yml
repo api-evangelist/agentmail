@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: API Reference agent inboxes > events API
+  title: Reference inboxes > events API
   version: 1.0.0
 servers:
 - url: https://api.agentmail.to
@@ -35,22 +35,22 @@ paths:
         in: path
         required: true
         schema:
-          $ref: '#/components/schemas/type_inboxes:InboxId'
+          $ref: '#/components/schemas/type_inboxes_InboxId'
       - name: limit
         in: query
         required: false
         schema:
-          $ref: '#/components/schemas/type_:Limit'
+          $ref: '#/components/schemas/type__Limit'
       - name: page_token
         in: query
         required: false
         schema:
-          $ref: '#/components/schemas/type_:PageToken'
+          $ref: '#/components/schemas/type__PageToken'
       - name: ascending
         in: query
         required: false
         schema:
-          $ref: '#/components/schemas/type_:Ascending'
+          $ref: '#/components/schemas/type__Ascending'
       - name: Authorization
         in: header
         description: Bearer authentication
@@ -63,92 +63,41 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/type_inbox-events:ListInboxEventsResponse'
+                $ref: '#/components/schemas/type_inbox-events_ListInboxEventsResponse'
         '404':
           description: Error response with status 404
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/type_:ErrorResponse'
+                $ref: '#/components/schemas/type__ErrorResponse'
 components:
   schemas:
-    type_:Count:
-      type: integer
-      description: Number of items returned.
-      title: Count
-    type_:ErrorFix:
+    type__ErrorFix:
       type: string
       description: The concrete next action that resolves the error.
       title: ErrorFix
-    type_:ErrorMessage:
+    type__PageToken:
       type: string
-      description: Error message.
-      title: ErrorMessage
-    type_:ErrorDocs:
-      type: string
-      description: Link to the error reference entry for this code.
-      title: ErrorDocs
-    type_inbox-events:ListInboxEventsResponse:
-      type: object
-      properties:
-        count:
-          $ref: '#/components/schemas/type_:Count'
-        limit:
-          $ref: '#/components/schemas/type_:Limit'
-        next_page_token:
-          $ref: '#/components/schemas/type_:PageToken'
-        events:
-          type: array
-          items:
-            $ref: '#/components/schemas/type_inbox-events:InboxEvent'
-          description: Ordered by `event_id` descending.
-      required:
-      - count
-      - events
-      title: ListInboxEventsResponse
-    type_inbox-events:InboxEventId:
-      type: string
-      description: ID of event.
-      title: InboxEventId
-    type_:ErrorCode:
-      type: string
-      description: Stable, machine-readable error code in snake_case (for example, not_found or missing_permission). Branch on this rather than the message text.
-      title: ErrorCode
-    type_:ErrorResponse:
-      type: object
-      properties:
-        name:
-          $ref: '#/components/schemas/type_:ErrorName'
-        code:
-          $ref: '#/components/schemas/type_:ErrorCode'
-        message:
-          $ref: '#/components/schemas/type_:ErrorMessage'
-        fix:
-          $ref: '#/components/schemas/type_:ErrorFix'
-        docs:
-          $ref: '#/components/schemas/type_:ErrorDocs'
-      required:
-      - name
-      - message
-      title: ErrorResponse
-    type_:Limit:
+      description: Page token for pagination.
+      title: PageToken
+    type__Count:
       type: integer
-      description: Limit of number of items returned.
-      title: Limit
-    type_inbox-events:InboxEvent:
+      description: Number of items returned.
+      title: Count
+    type_inbox-events_InboxEvent:
       type: object
       properties:
         organization_id:
-          $ref: '#/components/schemas/type_:OrganizationId'
+          $ref: '#/components/schemas/type__OrganizationId'
         pod_id:
           type: string
           description: ID of pod.
         inbox_id:
-          $ref: '#/components/schemas/type_inboxes:InboxId'
+          $ref: '#/components/schemas/type_inboxes_InboxId'
         event_id:
-          $ref: '#/components/schemas/type_inbox-events:InboxEventId'
+          $ref: '#/components/schemas/type_inbox-events_InboxEventId'
         event_type:
-          $ref: '#/components/schemas/type_inbox-events:InboxEventType'
+          $ref: '#/components/schemas/type_inbox-events_InboxEventType'
         message_id:
           type: string
           description: ID of message.
@@ -174,7 +123,41 @@ components:
       - event_at
       - created_at
       title: InboxEvent
-    type_inbox-events:InboxEventType:
+    type__ErrorMessage:
+      type: string
+      description: Error message.
+      title: ErrorMessage
+    type__ErrorCode:
+      type: string
+      description: Stable, machine-readable error code in snake_case (for example, not_found or missing_permission). Branch on this rather than the message text.
+      title: ErrorCode
+    type__Limit:
+      type: integer
+      description: Limit of number of items returned.
+      title: Limit
+    type_inboxes_InboxId:
+      type: string
+      description: The ID of the inbox.
+      title: InboxId
+    type_inbox-events_ListInboxEventsResponse:
+      type: object
+      properties:
+        count:
+          $ref: '#/components/schemas/type__Count'
+        limit:
+          $ref: '#/components/schemas/type__Limit'
+        next_page_token:
+          $ref: '#/components/schemas/type__PageToken'
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/type_inbox-events_InboxEvent'
+          description: Ordered by `event_id` descending.
+      required:
+      - count
+      - events
+      title: ListInboxEventsResponse
+    type_inbox-events_InboxEventType:
       type: string
       enum:
       - label.added
@@ -191,26 +174,43 @@ components:
 
         `value` changed.'
       title: InboxEventType
-    type_inboxes:InboxId:
-      type: string
-      description: The ID of the inbox.
-      title: InboxId
-    type_:Ascending:
-      type: boolean
-      description: Sort in ascending temporal order.
-      title: Ascending
-    type_:PageToken:
-      type: string
-      description: Page token for pagination.
-      title: PageToken
-    type_:ErrorName:
+    type__ErrorName:
       type: string
       description: Name of error.
       title: ErrorName
-    type_:OrganizationId:
+    type__ErrorResponse:
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/type__ErrorName'
+        code:
+          $ref: '#/components/schemas/type__ErrorCode'
+        message:
+          $ref: '#/components/schemas/type__ErrorMessage'
+        fix:
+          $ref: '#/components/schemas/type__ErrorFix'
+        docs:
+          $ref: '#/components/schemas/type__ErrorDocs'
+      required:
+      - name
+      - message
+      title: ErrorResponse
+    type_inbox-events_InboxEventId:
+      type: string
+      description: ID of event.
+      title: InboxEventId
+    type__OrganizationId:
       type: string
       description: ID of organization.
       title: OrganizationId
+    type__Ascending:
+      type: boolean
+      description: Sort in ascending temporal order.
+      title: Ascending
+    type__ErrorDocs:
+      type: string
+      description: Link to the error reference entry for this code.
+      title: ErrorDocs
   securitySchemes:
     Bearer:
       type: http
