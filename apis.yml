@@ -78,7 +78,7 @@ apis:
   humanURL: https://docs.agentmail.to
   baseURL: https://api.agentmail.to
   tags:
-  - agent
+  - Agents
   tags_raw:
   - agent
   properties:
@@ -150,7 +150,7 @@ apis:
   humanURL: https://docs.agentmail.to
   baseURL: https://api.agentmail.to
   tags:
-  - drafts
+  - Drafts
   tags_raw:
   - drafts
   properties:
@@ -184,7 +184,7 @@ apis:
   humanURL: https://docs.agentmail.to
   baseURL: https://api.agentmail.to
   tags:
-  - inboxes
+  - Inboxes
   tags_raw:
   - inboxes
   properties:
@@ -384,7 +384,7 @@ apis:
   humanURL: https://docs.agentmail.to
   baseURL: https://api.agentmail.to
   tags:
-  - pods
+  - Pods
   tags_raw:
   - pods
   properties:
