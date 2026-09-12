@@ -561,6 +561,8 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: Website
+  url: https://www.agentmail.to/
 - type: CapabilityMap
   url: capabilities/agentmail-capability-edges.yml
   name: AgentMail Business Capability Map
