@@ -565,6 +565,8 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: RateLimits
+  url: rate-limits/agentmail-rate-limits.yml
 - type: Plans
   url: plans/agentmail-plans-pricing.yml
 - type: Website

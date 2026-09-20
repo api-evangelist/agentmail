@@ -1,0 +1,38 @@
+# Rate limits transcribed from the provider's own documentation — see provenance. Quoted, not derived.
+generated: '2026-09-20'
+method: searched
+source: https://docs.agentmail.to/knowledge-base/rate-limits
+sources:
+- https://docs.agentmail.to/knowledge-base/rate-limits
+provenance:
+  tool: planning/api-economics/harvest_ratelimits.py
+  run: 20260920T133210
+  grounding: every limit_text was found verbatim in the fetched page text
+published: true
+note: Page gives per-plan monthly sending limits, inbox and custom domain counts (Free 3,000 emails/3
+  inboxes; Developer 10,000/10; Startup 150,000/150; Enterprise custom). API rate limits are described
+  only qualitatively as 'generous' per organization with no numbers; 429 Too Many Requests with Retry-After
+  (usually 1 second) is returned.
+limit_count: 3
+limits:
+- name: Free plan emails per month
+  limit_text: Free 3,000 3 None
+  limit: 3000
+  window: month
+  scope: plan
+  plan: Free
+- name: Developer plan emails per month
+  limit_text: Developer 10,000 10 10
+  limit: 10000
+  window: month
+  scope: plan
+  plan: Developer
+- name: Startup plan emails per month
+  limit_text: Startup 150,000 150 150
+  limit: 150000
+  window: month
+  scope: plan
+  plan: Startup
+headers:
+- Retry-After
+exceeded_status: 429
