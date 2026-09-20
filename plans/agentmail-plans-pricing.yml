@@ -1,0 +1,45 @@
+# Pricing transcribed from the provider's own page — see provenance. Numbers are quoted, not derived.
+generated: '2026-09-20'
+method: searched
+source: https://www.agentmail.to/pricing
+sources:
+- https://www.agentmail.to/pricing
+provenance:
+  tool: planning/api-economics/harvest_pricing.py
+  run: 20260920T120546
+  grounding: every price_text was found verbatim in the fetched page text
+audience: developer-api
+pricing_basis: tiered-subscription
+published: true
+note: Yearly billing shows −20%. Add-on pricing $2/mo per inbox or domain and $2/mo per 1,000 emails.
+plan_count: 4
+currency: USD
+plans:
+- name: Free
+  price_text: $0 /month
+  price: 0
+  currency: USD
+  period: month
+  included_quota: 3 inboxes, 3,000 emails/month, 3 GB storage; 100 emails/day; 1 team member
+- name: Developer
+  price_text: $20 /month
+  price: 20
+  currency: USD
+  period: month
+  included_quota: 10 inboxes, 10,000 emails/month, 10 GB storage, 10 custom domains, 2 organization seats,
+    email support
+  overage: Add-ons are $2 /mo per inbox or domain and $2 /mo per 1,000 emails.
+- name: Startup
+  price_text: $200 /month
+  price: 200
+  currency: USD
+  period: month
+  included_quota: 150 inboxes, 150 custom domains, 10 organization seats, SOC 2 report
+- name: Enterprise
+  price_text: Custom
+  period: none
+  included_quota: Everything in Startup tier, unlimited inboxes available, bulk discounts, white-label,
+    usage-based pricing, EU region cloud, BYO cloud, dedicated IPs, OIDC/SAML SSO
+rate_limit_statements:
+- Emails/day 100 1,000 15,000 Custom
+- Emails/5 min No separate cap 100 1,500 Custom
