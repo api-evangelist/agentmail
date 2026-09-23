@@ -12,7 +12,7 @@ servers:
 - url: https://api.agentmail.eu
   description: eu-prod
 tags:
-- name: inboxes
+- name: Inboxes
 paths:
   /v0/inboxes:
     get:
@@ -26,7 +26,7 @@ paths:
 
         ```'
       tags:
-      - inboxes
+      - Inboxes
       parameters:
       - name: limit
         in: query
@@ -67,7 +67,7 @@ paths:
 
         ```'
       tags:
-      - inboxes
+      - Inboxes
       parameters:
       - name: Authorization
         in: header
@@ -107,11 +107,11 @@ paths:
 
         ```bash
 
-        agentmail inboxes get --inbox-id <inbox_id>
+        agentmail inboxes get --inbox-id
 
         ```'
       tags:
-      - inboxes
+      - Inboxes
       parameters:
       - name: inbox_id
         in: path
@@ -144,11 +144,11 @@ paths:
 
         ```bash
 
-        agentmail inboxes update --inbox-id <inbox_id> --display-name "Updated Name"
+        agentmail inboxes update --inbox-id --display-name "Updated Name"
 
         ```'
       tags:
-      - inboxes
+      - Inboxes
       parameters:
       - name: inbox_id
         in: path
@@ -193,11 +193,11 @@ paths:
 
         ```bash
 
-        agentmail inboxes delete --inbox-id <inbox_id>
+        agentmail inboxes delete --inbox-id
 
         ```'
       tags:
-      - inboxes
+      - Inboxes
       parameters:
       - name: inbox_id
         in: path
@@ -221,10 +221,67 @@ paths:
                 $ref: '#/components/schemas/type__ErrorResponse'
 components:
   schemas:
-    type_inboxes_Email:
+    type_inboxes_UpdateMetadata:
+      type: object
+      additionalProperties:
+        oneOf:
+        - $ref: '#/components/schemas/type_inboxes_MetadataValue'
+        - type: 'null'
+      description: 'Custom key-value pairs to merge into the inbox''s existing metadata. A
+
+        value may be a string, number, boolean, or null. Setting a key to null
+
+        removes it. Up to 256 keys; keys and string values are each limited to
+
+        256 characters.'
+      title: UpdateMetadata
+    type__ErrorResponse:
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/type__ErrorName'
+        code:
+          $ref: '#/components/schemas/type__ErrorCode'
+        message:
+          $ref: '#/components/schemas/type__ErrorMessage'
+        fix:
+          $ref: '#/components/schemas/type__ErrorFix'
+        docs:
+          $ref: '#/components/schemas/type__ErrorDocs'
+      required:
+      - name
+      - message
+      title: ErrorResponse
+    type__ErrorName:
       type: string
-      description: Email address of the inbox.
-      title: Email
+      description: Name of error.
+      title: ErrorName
+    type__ErrorDocs:
+      type: string
+      description: Link to the error reference entry for this code.
+      title: ErrorDocs
+    type_inboxes_ClientId:
+      type: string
+      description: Client ID of inbox.
+      title: ClientId
+    type__ErrorMessage:
+      type: string
+      description: Error message.
+      title: ErrorMessage
+    type_inboxes_Metadata:
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/type_inboxes_MetadataValue'
+      description: 'Custom key-value pairs attached to the inbox. Up to 256 keys. Keys and
+
+        string values are each limited to 256 characters. When updating metadata,
+
+        send a key with a null value to remove that key.'
+      title: Metadata
+    type__ErrorCode:
+      type: string
+      description: Stable, machine-readable error code in snake_case (for example, not_found or missing_permission). Branch on this rather than the message text.
+      title: ErrorCode
     type_inboxes_ListInboxesResponse:
       type: object
       properties:
@@ -243,102 +300,39 @@ components:
       - count
       - inboxes
       title: ListInboxesResponse
-    type_inboxes_UpdateMetadata:
-      type: object
-      additionalProperties:
-        oneOf:
-        - $ref: '#/components/schemas/type_inboxes_MetadataValue'
-        - type: 'null'
-      description: 'Custom key-value pairs to merge into the inbox''s existing metadata. A
-
-        value may be a string, number, boolean, or null. Setting a key to null
-
-        removes it. Up to 256 keys; keys and string values are each limited to
-
-        256 characters.'
-      title: UpdateMetadata
-    type__ErrorFix:
+    type_pods_PodId:
       type: string
-      description: The concrete next action that resolves the error.
-      title: ErrorFix
-    type__Count:
-      type: integer
-      description: Number of items returned.
-      title: Count
-    type_inboxes_ClientId:
-      type: string
-      description: Client ID of inbox.
-      title: ClientId
-    type__ValidationErrorResponse:
+      description: ID of pod.
+      title: PodId
+    type_inboxes_UpdateInboxRequest:
       type: object
       properties:
-        name:
-          $ref: '#/components/schemas/type__ErrorName'
-        code:
-          $ref: '#/components/schemas/type__ErrorCode'
-        message:
-          $ref: '#/components/schemas/type__ErrorMessage'
-        errors:
-          description: Validation errors. Each entry has a path and a message identifying the invalid field.
-        fix:
-          $ref: '#/components/schemas/type__ErrorFix'
-        docs:
-          $ref: '#/components/schemas/type__ErrorDocs'
-      required:
-      - name
-      - errors
-      title: ValidationErrorResponse
-    type_inboxes_Metadata:
-      type: object
-      additionalProperties:
-        $ref: '#/components/schemas/type_inboxes_MetadataValue'
-      description: 'Custom key-value pairs attached to the inbox. Up to 256 keys. Keys and
+        display_name:
+          $ref: '#/components/schemas/type_inboxes_DisplayName'
+        metadata:
+          oneOf:
+          - $ref: '#/components/schemas/type_inboxes_UpdateMetadata'
+          - type: 'null'
+          description: 'Metadata to merge into the inbox''s existing metadata. Keys you include
 
-        string values are each limited to 256 characters. When updating metadata,
+            are added or overwritten; keys you omit are left unchanged. To remove a
 
-        send a key with a null value to remove that key.'
-      title: Metadata
-    type__ErrorName:
+            single key, send it with a null value. To clear all metadata, send
+
+            `metadata` as null. Sending an empty object is rejected; use null to
+
+            clear. Each update must include at least one of `display_name` or
+
+            `metadata`.'
+      title: UpdateInboxRequest
+    type__Ascending:
+      type: boolean
+      description: Sort in ascending temporal order.
+      title: Ascending
+    type_inboxes_InboxId:
       type: string
-      description: Name of error.
-      title: ErrorName
-    type__ErrorResponse:
-      type: object
-      properties:
-        name:
-          $ref: '#/components/schemas/type__ErrorName'
-        code:
-          $ref: '#/components/schemas/type__ErrorCode'
-        message:
-          $ref: '#/components/schemas/type__ErrorMessage'
-        fix:
-          $ref: '#/components/schemas/type__ErrorFix'
-        docs:
-          $ref: '#/components/schemas/type__ErrorDocs'
-      required:
-      - name
-      - message
-      title: ErrorResponse
-    type__ErrorMessage:
-      type: string
-      description: Error message.
-      title: ErrorMessage
-    type__PageToken:
-      type: string
-      description: Page token for pagination.
-      title: PageToken
-    type_inboxes_MetadataValue:
-      oneOf:
-      - type: string
-      - type: number
-        format: double
-      - type: boolean
-      description: A metadata value. May be a string, number, or boolean.
-      title: MetadataValue
-    type__ErrorCode:
-      type: string
-      description: Stable, machine-readable error code in snake_case (for example, not_found or missing_permission). Branch on this rather than the message text.
-      title: ErrorCode
+      description: The ID of the inbox.
+      title: InboxId
     type_inboxes_Inbox:
       type: object
       properties:
@@ -370,43 +364,10 @@ components:
       - updated_at
       - created_at
       title: Inbox
-    type__Limit:
-      type: integer
-      description: Limit of number of items returned.
-      title: Limit
-    type_inboxes_UpdateInboxRequest:
-      type: object
-      properties:
-        display_name:
-          $ref: '#/components/schemas/type_inboxes_DisplayName'
-        metadata:
-          oneOf:
-          - $ref: '#/components/schemas/type_inboxes_UpdateMetadata'
-          - type: 'null'
-          description: 'Metadata to merge into the inbox''s existing metadata. Keys you include
-
-            are added or overwritten; keys you omit are left unchanged. To remove a
-
-            single key, send it with a null value. To clear all metadata, send
-
-            `metadata` as null. Sending an empty object is rejected; use null to
-
-            clear. Each update must include at least one of `display_name` or
-
-            `metadata`.'
-      title: UpdateInboxRequest
-    type_inboxes_InboxId:
+    type_inboxes_Email:
       type: string
-      description: The ID of the inbox.
-      title: InboxId
-    type_inboxes_DisplayName:
-      type: string
-      description: 'Display name: `Display Name <username@domain.com>`.'
-      title: DisplayName
-    type_pods_PodId:
-      type: string
-      description: ID of pod.
-      title: PodId
+      description: Email address of the inbox.
+      title: Email
     type_inboxes_CreateInboxRequest:
       type: object
       properties:
@@ -428,14 +389,53 @@ components:
           $ref: '#/components/schemas/type_inboxes_Metadata'
           description: Custom metadata to attach to the inbox.
       title: CreateInboxRequest
-    type__Ascending:
-      type: boolean
-      description: Sort in ascending temporal order.
-      title: Ascending
-    type__ErrorDocs:
+    type__ValidationErrorResponse:
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/type__ErrorName'
+        code:
+          $ref: '#/components/schemas/type__ErrorCode'
+        message:
+          $ref: '#/components/schemas/type__ErrorMessage'
+        errors:
+          description: Validation errors. Each entry has a path and a message identifying the invalid field.
+        fix:
+          $ref: '#/components/schemas/type__ErrorFix'
+        docs:
+          $ref: '#/components/schemas/type__ErrorDocs'
+      required:
+      - name
+      - errors
+      title: ValidationErrorResponse
+    type__Count:
+      type: integer
+      description: Number of items returned.
+      title: Count
+    type_inboxes_DisplayName:
       type: string
-      description: Link to the error reference entry for this code.
-      title: ErrorDocs
+      description: 'Display name: `Display Name <username@domain.com>`.'
+      title: DisplayName
+    type_inboxes_MetadataValue:
+      oneOf:
+      - type: string
+      - type: number
+        format: double
+      - type: boolean
+      description: A metadata value. May be a string, number, or boolean.
+      title: MetadataValue
+    type__PageToken:
+      type: string
+      description: Page token for pagination.
+      title: PageToken
+    type__Limit:
+      type: integer
+      description: Limit of number of items returned.
+      title: Limit
+    type__ErrorFix:
+      type: string
+      description: The concrete next action that resolves the error.
+      title: ErrorFix
   securitySchemes:
     Bearer:
       type: http

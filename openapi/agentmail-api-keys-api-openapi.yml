@@ -12,7 +12,7 @@ servers:
 - url: https://api.agentmail.eu
   description: eu-prod
 tags:
-- name: api-keys
+- name: API Keys
 paths:
   /v0/api-keys:
     get:
@@ -26,7 +26,7 @@ paths:
 
         ```'
       tags:
-      - api-keys
+      - API Keys
       parameters:
       - name: limit
         in: query
@@ -67,7 +67,7 @@ paths:
 
         ```'
       tags:
-      - api-keys
+      - API Keys
       parameters:
       - name: Authorization
         in: header
@@ -101,11 +101,11 @@ paths:
 
         ```bash
 
-        agentmail api-keys delete --api-key-id <api_key_id>
+        agentmail api-keys delete --api-key-id
 
         ```'
       tags:
-      - api-keys
+      - API Keys
       parameters:
       - name: api_key_id
         in: path
@@ -129,6 +129,11 @@ paths:
                 $ref: '#/components/schemas/type__ErrorResponse'
 components:
   schemas:
+    type_api-keys_CreatedAt:
+      type: string
+      format: date-time
+      description: Time at which api key was created.
+      title: CreatedAt
     type_api-keys_CreateApiKeyRequest:
       type: object
       properties:
@@ -137,42 +142,6 @@ components:
         permissions:
           $ref: '#/components/schemas/type_api-keys_ApiKeyPermissions'
       title: CreateApiKeyRequest
-    type__ErrorFix:
-      type: string
-      description: The concrete next action that resolves the error.
-      title: ErrorFix
-    type__Count:
-      type: integer
-      description: Number of items returned.
-      title: Count
-    type_api-keys_CreatedAt:
-      type: string
-      format: date-time
-      description: Time at which api key was created.
-      title: CreatedAt
-    type__ValidationErrorResponse:
-      type: object
-      properties:
-        name:
-          $ref: '#/components/schemas/type__ErrorName'
-        code:
-          $ref: '#/components/schemas/type__ErrorCode'
-        message:
-          $ref: '#/components/schemas/type__ErrorMessage'
-        errors:
-          description: Validation errors. Each entry has a path and a message identifying the invalid field.
-        fix:
-          $ref: '#/components/schemas/type__ErrorFix'
-        docs:
-          $ref: '#/components/schemas/type__ErrorDocs'
-      required:
-      - name
-      - errors
-      title: ValidationErrorResponse
-    type__ErrorName:
-      type: string
-      description: Name of error.
-      title: ErrorName
     type__ErrorResponse:
       type: object
       properties:
@@ -190,38 +159,6 @@ components:
       - name
       - message
       title: ErrorResponse
-    type_api-keys_ApiKeyId:
-      type: string
-      description: ID of api key.
-      title: ApiKeyId
-    type__ErrorMessage:
-      type: string
-      description: Error message.
-      title: ErrorMessage
-    type__Ascending:
-      type: boolean
-      description: Sort in ascending temporal order.
-      title: Ascending
-    type_api-keys_Name:
-      type: string
-      description: Name of api key.
-      title: Name
-    type__PageToken:
-      type: string
-      description: Page token for pagination.
-      title: PageToken
-    type_api-keys_Prefix:
-      type: string
-      description: Prefix of api key.
-      title: Prefix
-    type__ErrorCode:
-      type: string
-      description: Stable, machine-readable error code in snake_case (for example, not_found or missing_permission). Branch on this rather than the message text.
-      title: ErrorCode
-    type__Limit:
-      type: integer
-      description: Limit of number of items returned.
-      title: Limit
     type_api-keys_ApiKey:
       type: object
       properties:
@@ -251,35 +188,30 @@ components:
       - name
       - created_at
       title: ApiKey
-    type_api-keys_CreateApiKeyResponse:
-      type: object
-      properties:
-        api_key_id:
-          $ref: '#/components/schemas/type_api-keys_ApiKeyId'
-        api_key:
-          type: string
-          description: API key.
-        prefix:
-          $ref: '#/components/schemas/type_api-keys_Prefix'
-        name:
-          $ref: '#/components/schemas/type_api-keys_Name'
-        pod_id:
-          type: string
-          description: Pod ID the api key is scoped to.
-        inbox_id:
-          type: string
-          description: Inbox ID the api key is scoped to.
-        permissions:
-          $ref: '#/components/schemas/type_api-keys_ApiKeyPermissions'
-        created_at:
-          $ref: '#/components/schemas/type_api-keys_CreatedAt'
-      required:
-      - api_key_id
-      - api_key
-      - prefix
-      - name
-      - created_at
-      title: CreateApiKeyResponse
+    type_api-keys_ApiKeyId:
+      type: string
+      description: ID of api key.
+      title: ApiKeyId
+    type__ErrorDocs:
+      type: string
+      description: Link to the error reference entry for this code.
+      title: ErrorDocs
+    type__ErrorMessage:
+      type: string
+      description: Error message.
+      title: ErrorMessage
+    type_api-keys_Prefix:
+      type: string
+      description: Prefix of api key.
+      title: Prefix
+    type__ErrorCode:
+      type: string
+      description: Stable, machine-readable error code in snake_case (for example, not_found or missing_permission). Branch on this rather than the message text.
+      title: ErrorCode
+    type__ErrorFix:
+      type: string
+      description: The concrete next action that resolves the error.
+      title: ErrorFix
     type_api-keys_ListApiKeysResponse:
       type: object
       properties:
@@ -296,6 +228,10 @@ components:
       - count
       - api_keys
       title: ListApiKeysResponse
+    type__Ascending:
+      type: boolean
+      description: Sort in ascending temporal order.
+      title: Ascending
     type_api-keys_ApiKeyPermissions:
       type: object
       properties:
@@ -406,10 +342,74 @@ components:
           description: Delete pods.
       description: Granular permissions for the API key. When ommitted all permissions are granted. Otherwise, only permissions set to true are granted.
       title: ApiKeyPermissions
-    type__ErrorDocs:
+    type_api-keys_Name:
       type: string
-      description: Link to the error reference entry for this code.
-      title: ErrorDocs
+      description: Name of api key.
+      title: Name
+    type__ValidationErrorResponse:
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/type__ErrorName'
+        code:
+          $ref: '#/components/schemas/type__ErrorCode'
+        message:
+          $ref: '#/components/schemas/type__ErrorMessage'
+        errors:
+          description: Validation errors. Each entry has a path and a message identifying the invalid field.
+        fix:
+          $ref: '#/components/schemas/type__ErrorFix'
+        docs:
+          $ref: '#/components/schemas/type__ErrorDocs'
+      required:
+      - name
+      - errors
+      title: ValidationErrorResponse
+    type__Count:
+      type: integer
+      description: Number of items returned.
+      title: Count
+    type_api-keys_CreateApiKeyResponse:
+      type: object
+      properties:
+        api_key_id:
+          $ref: '#/components/schemas/type_api-keys_ApiKeyId'
+        api_key:
+          type: string
+          description: API key.
+        prefix:
+          $ref: '#/components/schemas/type_api-keys_Prefix'
+        name:
+          $ref: '#/components/schemas/type_api-keys_Name'
+        pod_id:
+          type: string
+          description: Pod ID the api key is scoped to.
+        inbox_id:
+          type: string
+          description: Inbox ID the api key is scoped to.
+        permissions:
+          $ref: '#/components/schemas/type_api-keys_ApiKeyPermissions'
+        created_at:
+          $ref: '#/components/schemas/type_api-keys_CreatedAt'
+      required:
+      - api_key_id
+      - api_key
+      - prefix
+      - name
+      - created_at
+      title: CreateApiKeyResponse
+    type__PageToken:
+      type: string
+      description: Page token for pagination.
+      title: PageToken
+    type__Limit:
+      type: integer
+      description: Limit of number of items returned.
+      title: Limit
+    type__ErrorName:
+      type: string
+      description: Name of error.
+      title: ErrorName
   securitySchemes:
     Bearer:
       type: http

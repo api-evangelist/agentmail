@@ -33,7 +33,7 @@ paths:
 
         ```bash
 
-        agentmail pods:metrics query --pod-id <pod_id>
+        agentmail pods:metrics query --pod-id
 
         ```'
       tags:
@@ -188,73 +188,14 @@ components:
       type: boolean
       description: Sort in descending order.
       title: Descending
-    type_metrics_MetricLimit:
-      type: integer
-      description: Limit on number of buckets to return.
-      title: MetricLimit
-    type_metrics_Period:
-      type: integer
-      description: Size of each time bucket as a whole number of seconds, between 1 and 86400.
-      title: Period
-    type_metrics_QueryMetricsResponse:
+    type_metrics_QueryUsageResponse:
       type: object
       additionalProperties:
         type: array
         items:
-          $ref: '#/components/schemas/type_metrics_MetricBucket'
-      description: Metrics grouped by event type.
-      title: QueryMetricsResponse
-    type__ErrorFix:
-      type: string
-      description: The concrete next action that resolves the error.
-      title: ErrorFix
-    type_metrics_Start:
-      type: string
-      format: date-time
-      description: Start timestamp for the query.
-      title: Start
-    type__ValidationErrorResponse:
-      type: object
-      properties:
-        name:
-          $ref: '#/components/schemas/type__ErrorName'
-        code:
-          $ref: '#/components/schemas/type__ErrorCode'
-        message:
-          $ref: '#/components/schemas/type__ErrorMessage'
-        errors:
-          description: Validation errors. Each entry has a path and a message identifying the invalid field.
-        fix:
-          $ref: '#/components/schemas/type__ErrorFix'
-        docs:
-          $ref: '#/components/schemas/type__ErrorDocs'
-      required:
-      - name
-      - errors
-      title: ValidationErrorResponse
-    type__ErrorName:
-      type: string
-      description: Name of error.
-      title: ErrorName
-    type_metrics_UsageType:
-      type: string
-      enum:
-      - storage_bytes
-      - message_count
-      - thread_count
-      - inbox_count
-      - pod_count
-      - domain_count
-      description: 'Type of usage metric. Inbox-scoped queries carry `storage_bytes`,
-
-        `message_count`, and `thread_count`; pod-scoped queries add `inbox_count`
-
-        and `domain_count`; organization-scoped queries add `pod_count`.'
-      title: UsageType
-    type__ErrorMessage:
-      type: string
-      description: Error message.
-      title: ErrorMessage
+          $ref: '#/components/schemas/type_metrics_UsagePoint'
+      description: Cumulative usage series grouped by usage type.
+      title: QueryUsageResponse
     type_metrics_MetricBucket:
       type: object
       properties:
@@ -269,35 +210,22 @@ components:
       - timestamp
       - count
       title: MetricBucket
-    type_metrics_UsageTypes:
-      type: array
-      items:
-        $ref: '#/components/schemas/type_metrics_UsageType'
-      description: List of usage metric types to query. Omit to query every type valid for the scope.
-      title: UsageTypes
+    type__ErrorName:
+      type: string
+      description: Name of error.
+      title: ErrorName
+    type__ErrorDocs:
+      type: string
+      description: Link to the error reference entry for this code.
+      title: ErrorDocs
+    type__ErrorMessage:
+      type: string
+      description: Error message.
+      title: ErrorMessage
     type__ErrorCode:
       type: string
       description: Stable, machine-readable error code in snake_case (for example, not_found or missing_permission). Branch on this rather than the message text.
       title: ErrorCode
-    type_metrics_End:
-      type: string
-      format: date-time
-      description: End timestamp for the query.
-      title: End
-    type_metrics_MetricEventTypes:
-      type: array
-      items:
-        $ref: '#/components/schemas/type_metrics_MetricEventType'
-      description: List of metric event types to query.
-      title: MetricEventTypes
-    type_metrics_QueryUsageResponse:
-      type: object
-      additionalProperties:
-        type: array
-        items:
-          $ref: '#/components/schemas/type_metrics_UsagePoint'
-      description: Cumulative usage series grouped by usage type.
-      title: QueryUsageResponse
     type_metrics_MetricEventType:
       type: string
       enum:
@@ -317,10 +245,82 @@ components:
       type: string
       description: ID of pod.
       title: PodId
-    type__ErrorDocs:
+    type_metrics_UsageType:
       type: string
-      description: Link to the error reference entry for this code.
-      title: ErrorDocs
+      enum:
+      - storage_bytes
+      - message_count
+      - thread_count
+      - inbox_count
+      - pod_count
+      - domain_count
+      description: 'Type of usage metric. Inbox-scoped queries carry `storage_bytes`,
+
+        `message_count`, and `thread_count`; pod-scoped queries add `inbox_count`
+
+        and `domain_count`; organization-scoped queries add `pod_count`.'
+      title: UsageType
+    type_metrics_End:
+      type: string
+      format: date-time
+      description: End timestamp for the query.
+      title: End
+    type__ValidationErrorResponse:
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/type__ErrorName'
+        code:
+          $ref: '#/components/schemas/type__ErrorCode'
+        message:
+          $ref: '#/components/schemas/type__ErrorMessage'
+        errors:
+          description: Validation errors. Each entry has a path and a message identifying the invalid field.
+        fix:
+          $ref: '#/components/schemas/type__ErrorFix'
+        docs:
+          $ref: '#/components/schemas/type__ErrorDocs'
+      required:
+      - name
+      - errors
+      title: ValidationErrorResponse
+    type_metrics_Start:
+      type: string
+      format: date-time
+      description: Start timestamp for the query.
+      title: Start
+    type_metrics_MetricLimit:
+      type: integer
+      description: Limit on number of buckets to return.
+      title: MetricLimit
+    type_metrics_MetricEventTypes:
+      type: array
+      items:
+        $ref: '#/components/schemas/type_metrics_MetricEventType'
+      description: List of metric event types to query.
+      title: MetricEventTypes
+    type_metrics_UsageTypes:
+      type: array
+      items:
+        $ref: '#/components/schemas/type_metrics_UsageType'
+      description: List of usage metric types to query. Omit to query every type valid for the scope.
+      title: UsageTypes
+    type_metrics_QueryMetricsResponse:
+      type: object
+      additionalProperties:
+        type: array
+        items:
+          $ref: '#/components/schemas/type_metrics_MetricBucket'
+      description: Metrics grouped by event type.
+      title: QueryMetricsResponse
+    type_metrics_Period:
+      type: integer
+      description: Size of each time bucket as a whole number of seconds, between 1 and 86400.
+      title: Period
+    type__ErrorFix:
+      type: string
+      description: The concrete next action that resolves the error.
+      title: ErrorFix
   securitySchemes:
     Bearer:
       type: http

@@ -12,7 +12,7 @@ servers:
 - url: https://api.agentmail.eu
   description: eu-prod
 tags:
-- name: agent
+- name: Agent
 paths:
   /v0/agent/sign-up:
     post:
@@ -38,7 +38,7 @@ paths:
 
         ```'
       tags:
-      - agent
+      - Agent
       responses:
         '200':
           description: Response with status 200
@@ -67,7 +67,7 @@ paths:
         On success, the organization is upgraded from `agent_unverified` to `agent_verified`, the send allowlist is removed, and free plan entitlements are applied.
 
 
-        The OTP expires after 24 hours and allows a maximum of 10 attempts. If you run into any difficulties receiving the OTP code, you can also create an account on [console.agentmail.to](https://console.agentmail.to) using the human email address you provided to verify your account.
+        The OTP expires after 24 hours and allows a maximum of 10 attempts. If you run into any difficulties receiving the OTP code, you can also create an account on console.agentmail.to using the human email address you provided to verify your account.
 
 
         **CLI:**
@@ -78,7 +78,7 @@ paths:
 
         ```'
       tags:
-      - agent
+      - Agent
       parameters:
       - name: Authorization
         in: header
@@ -100,47 +100,24 @@ paths:
               $ref: '#/components/schemas/type_agent_AgentVerifyRequest'
 components:
   schemas:
-    type__ErrorFix:
+    type__ErrorName:
       type: string
-      description: The concrete next action that resolves the error.
-      title: ErrorFix
-    type_agent_AgentVerifyResponse:
+      description: Name of error.
+      title: ErrorName
+    type_agent_AgentVerifyRequest:
       type: object
       properties:
-        verified:
-          type: boolean
-          description: Whether the organization was verified.
+        otp_code:
+          type: string
+          description: 6-digit verification code sent to the human's email address.
       required:
-      - verified
-      description: Response after successful agent verification.
-      title: AgentVerifyResponse
+      - otp_code
+      description: Request body to verify an agent with an OTP code.
+      title: AgentVerifyRequest
     type__ErrorMessage:
       type: string
       description: Error message.
       title: ErrorMessage
-    type__ValidationErrorResponse:
-      type: object
-      properties:
-        name:
-          $ref: '#/components/schemas/type__ErrorName'
-        code:
-          $ref: '#/components/schemas/type__ErrorCode'
-        message:
-          $ref: '#/components/schemas/type__ErrorMessage'
-        errors:
-          description: Validation errors. Each entry has a path and a message identifying the invalid field.
-        fix:
-          $ref: '#/components/schemas/type__ErrorFix'
-        docs:
-          $ref: '#/components/schemas/type__ErrorDocs'
-      required:
-      - name
-      - errors
-      title: ValidationErrorResponse
-    type__ErrorCode:
-      type: string
-      description: Stable, machine-readable error code in snake_case (for example, not_found or missing_permission). Branch on this rather than the message text.
-      title: ErrorCode
     type_agent_AgentSignupRequest:
       type: object
       properties:
@@ -169,10 +146,39 @@ components:
       - username
       description: Request body to sign up an agent.
       title: AgentSignupRequest
-    type__ErrorName:
+    type__ErrorCode:
       type: string
-      description: Name of error.
-      title: ErrorName
+      description: Stable, machine-readable error code in snake_case (for example, not_found or missing_permission). Branch on this rather than the message text.
+      title: ErrorCode
+    type_agent_AgentVerifyResponse:
+      type: object
+      properties:
+        verified:
+          type: boolean
+          description: Whether the organization was verified.
+      required:
+      - verified
+      description: Response after successful agent verification.
+      title: AgentVerifyResponse
+    type__ValidationErrorResponse:
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/type__ErrorName'
+        code:
+          $ref: '#/components/schemas/type__ErrorCode'
+        message:
+          $ref: '#/components/schemas/type__ErrorMessage'
+        errors:
+          description: Validation errors. Each entry has a path and a message identifying the invalid field.
+        fix:
+          $ref: '#/components/schemas/type__ErrorFix'
+        docs:
+          $ref: '#/components/schemas/type__ErrorDocs'
+      required:
+      - name
+      - errors
+      title: ValidationErrorResponse
     type_agent_AgentSignupResponse:
       type: object
       properties:
@@ -191,16 +197,10 @@ components:
       - api_key
       description: Response after successful agent sign-up.
       title: AgentSignupResponse
-    type_agent_AgentVerifyRequest:
-      type: object
-      properties:
-        otp_code:
-          type: string
-          description: 6-digit verification code sent to the human's email address.
-      required:
-      - otp_code
-      description: Request body to verify an agent with an OTP code.
-      title: AgentVerifyRequest
+    type__ErrorFix:
+      type: string
+      description: The concrete next action that resolves the error.
+      title: ErrorFix
     type__ErrorDocs:
       type: string
       description: Link to the error reference entry for this code.

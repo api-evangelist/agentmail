@@ -1,0 +1,32 @@
+# Front Door AI Index — agentmail — 2026-09-17
+# AI vocabulary counted on the provider's root page. Generated; do not edit.
+# `score` is null unless ownership is `own` — see front_door_ai.py.
+front_door_ai:
+  slug: agentmail
+  lexicon_version: '1.0'
+  probed_at: '2026-09-17'
+  host: www.agentmail.to
+  final_host: www.agentmail.to
+  ownership: own
+  owner: agentmail
+  shares_host_with: null
+  inherited_from: null
+  verdict: scored
+  score: 34
+  host_score: 34
+  density: 25.6
+  words: 1328
+  tiers:
+    agentic: 16
+    core: 16
+    model: 2
+  ambiguous: 48
+  top_terms:
+    agent: 45
+    AI: 16
+    AI agent: 10
+    agentic: 4
+    Claude: 2
+    autonomous agent: 2
+    intelligence: 2
+    automation: 1

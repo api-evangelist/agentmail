@@ -12,7 +12,7 @@ servers:
 - url: https://api.agentmail.eu
   description: eu-prod
 tags:
-- name: auth
+- name: Auth
 paths:
   /v0/auth/me:
     get:
@@ -29,7 +29,7 @@ paths:
 
         ```'
       tags:
-      - auth
+      - Auth
       parameters:
       - name: Authorization
         in: header
@@ -50,14 +50,6 @@ components:
       type: string
       description: ID of organization.
       title: OrganizationId
-    type_auth_ScopeType:
-      type: string
-      enum:
-      - organization
-      - pod
-      - inbox
-      description: The scope tier the authenticated credential is bound to.
-      title: ScopeType
     type_auth_Identity:
       type: object
       properties:
@@ -85,6 +77,14 @@ components:
       - organization_id
       description: Identity and scope of the authenticated credential.
       title: Identity
+    type_auth_ScopeType:
+      type: string
+      enum:
+      - organization
+      - pod
+      - inbox
+      description: The scope tier the authenticated credential is bound to.
+      title: ScopeType
   securitySchemes:
     Bearer:
       type: http

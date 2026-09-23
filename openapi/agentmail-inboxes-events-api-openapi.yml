@@ -25,7 +25,7 @@ paths:
 
         ```bash
 
-        agentmail inboxes:events list --inbox-id <inbox_id>
+        agentmail inboxes:events list --inbox-id
 
         ```'
       tags:
@@ -72,18 +72,6 @@ paths:
                 $ref: '#/components/schemas/type__ErrorResponse'
 components:
   schemas:
-    type__ErrorFix:
-      type: string
-      description: The concrete next action that resolves the error.
-      title: ErrorFix
-    type__PageToken:
-      type: string
-      description: Page token for pagination.
-      title: PageToken
-    type__Count:
-      type: integer
-      description: Number of items returned.
-      title: Count
     type_inbox-events_InboxEvent:
       type: object
       properties:
@@ -123,22 +111,55 @@ components:
       - event_at
       - created_at
       title: InboxEvent
+    type__ErrorName:
+      type: string
+      description: Name of error.
+      title: ErrorName
+    type__Ascending:
+      type: boolean
+      description: Sort in ascending temporal order.
+      title: Ascending
     type__ErrorMessage:
       type: string
       description: Error message.
       title: ErrorMessage
-    type__ErrorCode:
-      type: string
-      description: Stable, machine-readable error code in snake_case (for example, not_found or missing_permission). Branch on this rather than the message text.
-      title: ErrorCode
-    type__Limit:
-      type: integer
-      description: Limit of number of items returned.
-      title: Limit
     type_inboxes_InboxId:
       type: string
       description: The ID of the inbox.
       title: InboxId
+    type__PageToken:
+      type: string
+      description: Page token for pagination.
+      title: PageToken
+    type_inbox-events_InboxEventId:
+      type: string
+      description: ID of event.
+      title: InboxEventId
+    type__ErrorResponse:
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/type__ErrorName'
+        code:
+          $ref: '#/components/schemas/type__ErrorCode'
+        message:
+          $ref: '#/components/schemas/type__ErrorMessage'
+        fix:
+          $ref: '#/components/schemas/type__ErrorFix'
+        docs:
+          $ref: '#/components/schemas/type__ErrorDocs'
+      required:
+      - name
+      - message
+      title: ErrorResponse
+    type__ErrorCode:
+      type: string
+      description: Stable, machine-readable error code in snake_case (for example, not_found or missing_permission). Branch on this rather than the message text.
+      title: ErrorCode
+    type__OrganizationId:
+      type: string
+      description: ID of organization.
+      title: OrganizationId
     type_inbox-events_ListInboxEventsResponse:
       type: object
       properties:
@@ -157,6 +178,10 @@ components:
       - count
       - events
       title: ListInboxEventsResponse
+    type__Limit:
+      type: integer
+      description: Limit of number of items returned.
+      title: Limit
     type_inbox-events_InboxEventType:
       type: string
       enum:
@@ -174,39 +199,14 @@ components:
 
         `value` changed.'
       title: InboxEventType
-    type__ErrorName:
+    type__Count:
+      type: integer
+      description: Number of items returned.
+      title: Count
+    type__ErrorFix:
       type: string
-      description: Name of error.
-      title: ErrorName
-    type__ErrorResponse:
-      type: object
-      properties:
-        name:
-          $ref: '#/components/schemas/type__ErrorName'
-        code:
-          $ref: '#/components/schemas/type__ErrorCode'
-        message:
-          $ref: '#/components/schemas/type__ErrorMessage'
-        fix:
-          $ref: '#/components/schemas/type__ErrorFix'
-        docs:
-          $ref: '#/components/schemas/type__ErrorDocs'
-      required:
-      - name
-      - message
-      title: ErrorResponse
-    type_inbox-events_InboxEventId:
-      type: string
-      description: ID of event.
-      title: InboxEventId
-    type__OrganizationId:
-      type: string
-      description: ID of organization.
-      title: OrganizationId
-    type__Ascending:
-      type: boolean
-      description: Sort in ascending temporal order.
-      title: Ascending
+      description: The concrete next action that resolves the error.
+      title: ErrorFix
     type__ErrorDocs:
       type: string
       description: Link to the error reference entry for this code.

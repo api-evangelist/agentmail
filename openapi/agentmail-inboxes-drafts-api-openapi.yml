@@ -22,7 +22,7 @@ paths:
 
         ```bash
 
-        agentmail inboxes:drafts list --inbox-id <inbox_id>
+        agentmail inboxes:drafts list --inbox-id
 
         ```'
       tags:
@@ -100,7 +100,7 @@ paths:
 
         ```bash
 
-        agentmail inboxes:drafts create --inbox-id <inbox_id> --to recipient@example.com --subject "Draft subject" --text "Draft body"
+        agentmail inboxes:drafts create --inbox-id --to recipient@example.com --subject "Draft subject" --text "Draft body"
 
         ```'
       tags:
@@ -149,7 +149,7 @@ paths:
 
         ```bash
 
-        agentmail inboxes:drafts get --inbox-id <inbox_id> --draft-id <draft_id>
+        agentmail inboxes:drafts get --inbox-id --draft-id
 
         ```'
       tags:
@@ -198,7 +198,7 @@ paths:
 
         ```bash
 
-        agentmail inboxes:drafts update --inbox-id <inbox_id> --draft-id <draft_id> --subject "Updated subject"
+        agentmail inboxes:drafts update --inbox-id --draft-id --subject "Updated subject"
 
         ```'
       tags:
@@ -257,7 +257,7 @@ paths:
 
         ```bash
 
-        agentmail inboxes:drafts delete --inbox-id <inbox_id> --draft-id <draft_id>
+        agentmail inboxes:drafts delete --inbox-id --draft-id
 
         ```'
       tags:
@@ -296,7 +296,7 @@ paths:
 
         ```bash
 
-        agentmail inboxes:drafts get-attachment --inbox-id <inbox_id> --draft-id <draft_id> --attachment-id <attachment_id>
+        agentmail inboxes:drafts get-attachment --inbox-id --draft-id --attachment-id
 
         ```'
       tags:
@@ -344,7 +344,7 @@ paths:
 
         ```bash
 
-        agentmail inboxes:drafts send --inbox-id <inbox_id> --draft-id <draft_id>
+        agentmail inboxes:drafts send --inbox-id --draft-id
 
         ```'
       tags:
@@ -404,107 +404,7 @@ paths:
               $ref: '#/components/schemas/type_messages_UpdateMessageRequest'
 components:
   schemas:
-    type__Labels:
-      type: array
-      items:
-        type: string
-      description: Labels to filter by.
-      title: Labels
-    type__Before:
-      type: string
-      format: date-time
-      description: Timestamp before which to filter by.
-      title: Before
-    type_messages_UpdateMessageRequest:
-      type: object
-      properties:
-        add_labels:
-          $ref: '#/components/schemas/type_messages_UpdateMessageLabels'
-          description: Label or labels to add to message.
-        remove_labels:
-          $ref: '#/components/schemas/type_messages_UpdateMessageLabels'
-          description: Label or labels to remove from message.
-      title: UpdateMessageRequest
-    type_drafts_DraftBcc:
-      type: array
-      items:
-        type: string
-      description: Addresses of BCC recipients. In format `username@domain.com` or `Display Name <username@domain.com>`.
-      title: DraftBcc
-    type_drafts_DraftPreview:
-      type: string
-      description: Text preview of draft.
-      title: DraftPreview
-    type_drafts_DraftTo:
-      type: array
-      items:
-        type: string
-      description: Addresses of recipients. In format `username@domain.com` or `Display Name <username@domain.com>`.
-      title: DraftTo
-    type_attachments_AttachmentId:
-      type: string
-      description: ID of attachment.
-      title: AttachmentId
-    type_attachments_AttachmentSize:
-      type: integer
-      description: Size of attachment in bytes.
-      title: AttachmentSize
-    type_drafts_Draft:
-      type: object
-      properties:
-        inbox_id:
-          $ref: '#/components/schemas/type_inboxes_InboxId'
-        draft_id:
-          $ref: '#/components/schemas/type_drafts_DraftId'
-        client_id:
-          $ref: '#/components/schemas/type_drafts_DraftClientId'
-        labels:
-          $ref: '#/components/schemas/type_drafts_DraftLabels'
-        reply_to:
-          $ref: '#/components/schemas/type_drafts_DraftReplyTo'
-        to:
-          $ref: '#/components/schemas/type_drafts_DraftTo'
-        cc:
-          $ref: '#/components/schemas/type_drafts_DraftCc'
-        bcc:
-          $ref: '#/components/schemas/type_drafts_DraftBcc'
-        subject:
-          $ref: '#/components/schemas/type_drafts_DraftSubject'
-        preview:
-          $ref: '#/components/schemas/type_drafts_DraftPreview'
-        text:
-          $ref: '#/components/schemas/type_drafts_DraftText'
-        html:
-          $ref: '#/components/schemas/type_drafts_DraftHtml'
-        attachments:
-          $ref: '#/components/schemas/type_drafts_DraftAttachments'
-        in_reply_to:
-          $ref: '#/components/schemas/type_drafts_DraftInReplyTo'
-        forward_of:
-          $ref: '#/components/schemas/type_drafts_DraftForwardOf'
-        references:
-          type: array
-          items:
-            type: string
-          description: IDs of previous messages in thread.
-        send_status:
-          $ref: '#/components/schemas/type_drafts_DraftSendStatus'
-        send_at:
-          $ref: '#/components/schemas/type_drafts_DraftSendAt'
-        updated_at:
-          $ref: '#/components/schemas/type_drafts_DraftUpdatedAt'
-        created_at:
-          type: string
-          format: date-time
-          description: Time at which draft was created.
-      required:
-      - inbox_id
-      - draft_id
-      - labels
-      - updated_at
-      - created_at
-      title: Draft
-    type_attachments_Attachment:
+    type_attachments_AttachmentResponse:
       type: object
       properties:
         attachment_id:
@@ -519,46 +419,27 @@ components:
           $ref: '#/components/schemas/type_attachments_AttachmentContentDisposition'
         content_id:
           $ref: '#/components/schemas/type_attachments_AttachmentContentId'
+        download_url:
+          type: string
+          description: URL to download the attachment.
+        expires_at:
+          type: string
+          format: date-time
+          description: Time at which the download URL expires.
       required:
       - attachment_id
       - size
-      title: Attachment
-    type_drafts_ListDraftsResponse:
-      type: object
-      properties:
-        count:
-          $ref: '#/components/schemas/type__Count'
-        limit:
-          $ref: '#/components/schemas/type__Limit'
-        next_page_token:
-          $ref: '#/components/schemas/type__PageToken'
-        drafts:
-          type: array
-          items:
-            $ref: '#/components/schemas/type_drafts_DraftItem'
-          description: Ordered by `updated_at` descending.
-      required:
-      - count
-      - drafts
-      title: ListDraftsResponse
-    type_drafts_DraftId:
-      type: string
-      description: ID of draft.
-      title: DraftId
+      - download_url
+      - expires_at
+      title: AttachmentResponse
+    type_attachments_AttachmentSize:
+      type: integer
+      description: Size of attachment in bytes.
+      title: AttachmentSize
     type_drafts_DraftText:
       type: string
       description: Plain text body of draft.
       title: DraftText
-    type_drafts_DraftReplyTo:
-      type: array
-      items:
-        type: string
-      description: Reply-to addresses. In format `username@domain.com` or `Display Name <username@domain.com>`.
-      title: DraftReplyTo
-    type__ErrorFix:
-      type: string
-      description: The concrete next action that resolves the error.
-      title: ErrorFix
     type_drafts_CreateDraftRequest:
       type: object
       properties:
@@ -595,11 +476,7 @@ components:
           $ref: '#/components/schemas/type_drafts_DraftClientId'
       description: "Body for creating a draft. Supports plain, reply, reply-all, and forward\ndrafts:\n\n- **Plain draft:** supply `to`, `subject`, `text`, etc.\n- **Reply:** set `in_reply_to` to a message ID. Recipients, subject, and\n  threading are derived from that message. Set `reply_all` to address the\n  whole thread (you then cannot also pass `to`, `cc`, or `bcc`).\n- **Forward:** set `forward_of` to a message ID. The subject and threading\n  are derived from the source message, whose body and attachments are\n  merged in at send time.\n\n`in_reply_to` and `forward_of` are mutually exclusive, and reading the\nreferenced message requires `message_read` permission."
       title: CreateDraftRequest
-    type__Count:
-      type: integer
-      description: Number of items returned.
-      title: Count
-    type__ValidationErrorResponse:
+    type__ErrorResponse:
       type: object
       properties:
         name:
@@ -608,28 +485,28 @@ components:
           $ref: '#/components/schemas/type__ErrorCode'
         message:
           $ref: '#/components/schemas/type__ErrorMessage'
-        errors:
-          description: Validation errors. Each entry has a path and a message identifying the invalid field.
         fix:
           $ref: '#/components/schemas/type__ErrorFix'
         docs:
           $ref: '#/components/schemas/type__ErrorDocs'
       required:
       - name
-      - errors
-      title: ValidationErrorResponse
-    type_drafts_DraftInReplyTo:
+      - message
+      title: ErrorResponse
+    type_drafts_DraftId:
       type: string
-      description: ID of message being replied to.
-      title: DraftInReplyTo
-    type_attachments_AttachmentContentId:
+      description: ID of draft.
+      title: DraftId
+    type_drafts_DraftSubject:
       type: string
-      description: Content ID of attachment.
-      title: AttachmentContentId
-    type__ErrorName:
-      type: string
-      description: Name of error.
-      title: ErrorName
+      description: Subject of draft.
+      title: DraftSubject
+    type_drafts_DraftReplyTo:
+      type: array
+      items:
+        type: string
+      description: Reply-to addresses. In format `username@domain.com` or `Display Name <username@domain.com>`.
+      title: DraftReplyTo
     type_drafts_UpdateDraftRequest:
       type: object
       properties:
@@ -689,6 +566,142 @@ components:
 
         `send_at` to schedule or reschedule the draft, or `null` to un-schedule it.'
       title: UpdateDraftRequest
+    type_drafts_Draft:
+      type: object
+      properties:
+        inbox_id:
+          $ref: '#/components/schemas/type_inboxes_InboxId'
+        draft_id:
+          $ref: '#/components/schemas/type_drafts_DraftId'
+        client_id:
+          $ref: '#/components/schemas/type_drafts_DraftClientId'
+        labels:
+          $ref: '#/components/schemas/type_drafts_DraftLabels'
+        reply_to:
+          $ref: '#/components/schemas/type_drafts_DraftReplyTo'
+        to:
+          $ref: '#/components/schemas/type_drafts_DraftTo'
+        cc:
+          $ref: '#/components/schemas/type_drafts_DraftCc'
+        bcc:
+          $ref: '#/components/schemas/type_drafts_DraftBcc'
+        subject:
+          $ref: '#/components/schemas/type_drafts_DraftSubject'
+        preview:
+          $ref: '#/components/schemas/type_drafts_DraftPreview'
+        text:
+          $ref: '#/components/schemas/type_drafts_DraftText'
+        html:
+          $ref: '#/components/schemas/type_drafts_DraftHtml'
+        attachments:
+          $ref: '#/components/schemas/type_drafts_DraftAttachments'
+        in_reply_to:
+          $ref: '#/components/schemas/type_drafts_DraftInReplyTo'
+        forward_of:
+          $ref: '#/components/schemas/type_drafts_DraftForwardOf'
+        references:
+          type: array
+          items:
+            type: string
+          description: IDs of previous messages in thread.
+        send_status:
+          $ref: '#/components/schemas/type_drafts_DraftSendStatus'
+        send_at:
+          $ref: '#/components/schemas/type_drafts_DraftSendAt'
+        updated_at:
+          $ref: '#/components/schemas/type_drafts_DraftUpdatedAt'
+        created_at:
+          type: string
+          format: date-time
+          description: Time at which draft was created.
+      required:
+      - inbox_id
+      - draft_id
+      - labels
+      - updated_at
+      - created_at
+      title: Draft
+    type_messages_SendMessageResponse:
+      type: object
+      properties:
+        message_id:
+          $ref: '#/components/schemas/type_messages_MessageId'
+        thread_id:
+          $ref: '#/components/schemas/type_threads_ThreadId'
+      required:
+      - message_id
+      - thread_id
+      title: SendMessageResponse
+    type_drafts_ListDraftsResponse:
+      type: object
+      properties:
+        count:
+          $ref: '#/components/schemas/type__Count'
+        limit:
+          $ref: '#/components/schemas/type__Limit'
+        next_page_token:
+          $ref: '#/components/schemas/type__PageToken'
+        drafts:
+          type: array
+          items:
+            $ref: '#/components/schemas/type_drafts_DraftItem'
+          description: Ordered by `updated_at` descending.
+      required:
+      - count
+      - drafts
+      title: ListDraftsResponse
+    type__ErrorName:
+      type: string
+      description: Name of error.
+      title: ErrorName
+    type_threads_ThreadId:
+      type: string
+      description: ID of thread.
+      title: ThreadId
+    type__ErrorDocs:
+      type: string
+      description: Link to the error reference entry for this code.
+      title: ErrorDocs
+    type_drafts_DraftPreview:
+      type: string
+      description: Text preview of draft.
+      title: DraftPreview
+    type__ErrorMessage:
+      type: string
+      description: Error message.
+      title: ErrorMessage
+    type_attachments_AttachmentContentType:
+      type: string
+      description: Content type of attachment.
+      title: AttachmentContentType
+    type_drafts_DraftCc:
+      type: array
+      items:
+        type: string
+      description: Addresses of CC recipients. In format `username@domain.com` or `Display Name <username@domain.com>`.
+      title: DraftCc
+    type__ErrorCode:
+      type: string
+      description: Stable, machine-readable error code in snake_case (for example, not_found or missing_permission). Branch on this rather than the message text.
+      title: ErrorCode
+    type_drafts_DraftBcc:
+      type: array
+      items:
+        type: string
+      description: Addresses of BCC recipients. In format `username@domain.com` or `Display Name <username@domain.com>`.
+      title: DraftBcc
+    type_drafts_DraftReplyAll:
+      type: boolean
+      description: Reply to all recipients of the original message.
+      title: DraftReplyAll
+    type_drafts_DraftInReplyTo:
+      type: string
+      description: ID of message being replied to.
+      title: DraftInReplyTo
+    type_drafts_DraftForwardOf:
+      type: string
+      description: ID of message being forwarded.
+      title: DraftForwardOf
     type_drafts_DraftSendStatus:
       type: string
       enum:
@@ -697,58 +710,45 @@ components:
       - failed
       description: Schedule send status of draft.
       title: DraftSendStatus
-    type_attachments_SendAttachment:
-      type: object
-      properties:
-        filename:
-          $ref: '#/components/schemas/type_attachments_AttachmentFilename'
-        content_type:
-          $ref: '#/components/schemas/type_attachments_AttachmentContentType'
-        content_disposition:
-          $ref: '#/components/schemas/type_attachments_AttachmentContentDisposition'
-        content_id:
-          $ref: '#/components/schemas/type_attachments_AttachmentContentId'
-        content:
-          type: string
-          description: Base64 encoded content of attachment.
-        url:
-          type: string
-          description: URL to the attachment.
-      title: SendAttachment
-    type__ErrorResponse:
-      type: object
-      properties:
-        name:
-          $ref: '#/components/schemas/type__ErrorName'
-        code:
-          $ref: '#/components/schemas/type__ErrorCode'
-        message:
-          $ref: '#/components/schemas/type__ErrorMessage'
-        fix:
-          $ref: '#/components/schemas/type__ErrorFix'
-        docs:
-          $ref: '#/components/schemas/type__ErrorDocs'
-      required:
-      - name
-      - message
-      title: ErrorResponse
-    type_messages_MessageId:
-      type: string
-      description: ID of message.
-      title: MessageId
-    type_drafts_DraftUpdatedAt:
+    type_drafts_DraftSendAt:
       type: string
       format: date-time
-      description: Time at which draft was last updated.
-      title: DraftUpdatedAt
-    type_drafts_DraftReplyAll:
+      description: Time at which to schedule send draft.
+      title: DraftSendAt
+    type__Ascending:
       type: boolean
-      description: Reply to all recipients of the original message.
-      title: DraftReplyAll
-    type__ErrorMessage:
+      description: Sort in ascending temporal order.
+      title: Ascending
+    type_drafts_DraftLabels:
+      type: array
+      items:
+        type: string
+      description: Labels of draft.
+      title: DraftLabels
+    type_drafts_DraftTo:
+      type: array
+      items:
+        type: string
+      description: Addresses of recipients. In format `username@domain.com` or `Display Name <username@domain.com>`.
+      title: DraftTo
+    type_inboxes_InboxId:
       type: string
-      description: Error message.
-      title: ErrorMessage
+      description: The ID of the inbox.
+      title: InboxId
+    type_attachments_AttachmentContentId:
+      type: string
+      description: Content ID of attachment.
+      title: AttachmentContentId
+    type_messages_UpdateMessageRequest:
+      type: object
+      properties:
+        add_labels:
+          $ref: '#/components/schemas/type_messages_UpdateMessageLabels'
+          description: Label or labels to add to message.
+        remove_labels:
+          $ref: '#/components/schemas/type_messages_UpdateMessageLabels'
+          description: Label or labels to remove from message.
+      title: UpdateMessageRequest
     type_drafts_DraftItem:
       type: object
       properties:
@@ -790,61 +790,6 @@ components:
       type: string
       description: Client ID of draft.
       title: DraftClientId
-    type__PageToken:
-      type: string
-      description: Page token for pagination.
-      title: PageToken
-    type_messages_SendMessageResponse:
-      type: object
-      properties:
-        message_id:
-          $ref: '#/components/schemas/type_messages_MessageId'
-        thread_id:
-          $ref: '#/components/schemas/type_threads_ThreadId'
-      required:
-      - message_id
-      - thread_id
-      title: SendMessageResponse
-    type_drafts_DraftCc:
-      type: array
-      items:
-        type: string
-      description: Addresses of CC recipients. In format `username@domain.com` or `Display Name <username@domain.com>`.
-      title: DraftCc
-    type_drafts_DraftForwardOf:
-      type: string
-      description: ID of message being forwarded.
-      title: DraftForwardOf
-    type__ErrorCode:
-      type: string
-      description: Stable, machine-readable error code in snake_case (for example, not_found or missing_permission). Branch on this rather than the message text.
-      title: ErrorCode
-    type_drafts_DraftLabels:
-      type: array
-      items:
-        type: string
-      description: Labels of draft.
-      title: DraftLabels
-    type__Limit:
-      type: integer
-      description: Limit of number of items returned.
-      title: Limit
-    type_drafts_DraftSubject:
-      type: string
-      description: Subject of draft.
-      title: DraftSubject
-    type_messages_UpdateMessageLabels:
-      oneOf:
-      - type: string
-      - type: array
-        items:
-          type: string
-      description: Label or list of labels.
-      title: UpdateMessageLabels
-    type_attachments_AttachmentFilename:
-      type: string
-      description: Filename of attachment.
-      title: AttachmentFilename
     type__After:
       type: string
       format: date-time
@@ -856,7 +801,12 @@ components:
         $ref: '#/components/schemas/type_attachments_Attachment'
       description: Attachments in draft.
       title: DraftAttachments
-    type_attachments_AttachmentResponse:
+    type_drafts_DraftUpdatedAt:
+      type: string
+      format: date-time
+      description: Time at which draft was last updated.
+      title: DraftUpdatedAt
+    type_attachments_Attachment:
       type: object
       properties:
         attachment_id:
@@ -871,19 +821,25 @@ components:
           $ref: '#/components/schemas/type_attachments_AttachmentContentDisposition'
         content_id:
           $ref: '#/components/schemas/type_attachments_AttachmentContentId'
-        download_url:
-          type: string
-          description: URL to download the attachment.
-        expires_at:
-          type: string
-          format: date-time
-          description: Time at which the download URL expires.
       required:
       - attachment_id
       - size
-      - download_url
-      - expires_at
-      title: AttachmentResponse
+      title: Attachment
+    type_messages_MessageId:
+      type: string
+      description: ID of message.
+      title: MessageId
+    type__Labels:
+      type: array
+      items:
+        type: string
+      description: Labels to filter by.
+      title: Labels
+    type__Before:
+      type: string
+      format: date-time
+      description: Timestamp before which to filter by.
+      title: Before
     type_attachments_AttachmentContentDisposition:
       type: string
       enum:
@@ -891,35 +847,79 @@ components:
       - attachment
       description: Content disposition of attachment.
       title: AttachmentContentDisposition
+    type__Count:
+      type: integer
+      description: Number of items returned.
+      title: Count
+    type__ValidationErrorResponse:
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/type__ErrorName'
+        code:
+          $ref: '#/components/schemas/type__ErrorCode'
+        message:
+          $ref: '#/components/schemas/type__ErrorMessage'
+        errors:
+          description: Validation errors. Each entry has a path and a message identifying the invalid field.
+        fix:
+          $ref: '#/components/schemas/type__ErrorFix'
+        docs:
+          $ref: '#/components/schemas/type__ErrorDocs'
+      required:
+      - name
+      - errors
+      title: ValidationErrorResponse
+    type_messages_UpdateMessageLabels:
+      oneOf:
+      - type: string
+      - type: array
+        items:
+          type: string
+      description: Label or list of labels.
+      title: UpdateMessageLabels
+    type__PageToken:
+      type: string
+      description: Page token for pagination.
+      title: PageToken
+    type_attachments_AttachmentId:
+      type: string
+      description: ID of attachment.
+      title: AttachmentId
     type_drafts_DraftHtml:
       type: string
       description: HTML body of draft.
       title: DraftHtml
-    type_inboxes_InboxId:
+    type__Limit:
+      type: integer
+      description: Limit of number of items returned.
+      title: Limit
+    type_attachments_SendAttachment:
+      type: object
+      properties:
+        filename:
+          $ref: '#/components/schemas/type_attachments_AttachmentFilename'
+        content_type:
+          $ref: '#/components/schemas/type_attachments_AttachmentContentType'
+        content_disposition:
+          $ref: '#/components/schemas/type_attachments_AttachmentContentDisposition'
+        content_id:
+          $ref: '#/components/schemas/type_attachments_AttachmentContentId'
+        content:
+          type: string
+          description: Base64 encoded content of attachment.
+        url:
+          type: string
+          description: URL to the attachment.
+      title: SendAttachment
+    type_attachments_AttachmentFilename:
       type: string
-      description: The ID of the inbox.
-      title: InboxId
-    type_attachments_AttachmentContentType:
+      description: Filename of attachment.
+      title: AttachmentFilename
+    type__ErrorFix:
       type: string
-      description: Content type of attachment.
-      title: AttachmentContentType
-    type_drafts_DraftSendAt:
-      type: string
-      format: date-time
-      description: Time at which to schedule send draft.
-      title: DraftSendAt
-    type__Ascending:
-      type: boolean
-      description: Sort in ascending temporal order.
-      title: Ascending
-    type_threads_ThreadId:
-      type: string
-      description: ID of thread.
-      title: ThreadId
-    type__ErrorDocs:
-      type: string
-      description: Link to the error reference entry for this code.
-      title: ErrorDocs
+      description: The concrete next action that resolves the error.
+      title: ErrorFix
   securitySchemes:
     Bearer:
       type: http

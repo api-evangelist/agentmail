@@ -12,7 +12,7 @@ servers:
 - url: https://api.agentmail.eu
   description: eu-prod
 tags:
-- name: organizations
+- name: Organizations
 paths:
   /v0/organizations:
     get:
@@ -29,7 +29,7 @@ paths:
 
         ```'
       tags:
-      - organizations
+      - Organizations
       parameters:
       - name: Authorization
         in: header
@@ -46,10 +46,6 @@ paths:
                 $ref: '#/components/schemas/type_organizations_Organization'
 components:
   schemas:
-    type__OrganizationId:
-      type: string
-      description: ID of organization.
-      title: OrganizationId
     type_organizations_Organization:
       type: object
       properties:
@@ -98,6 +94,10 @@ components:
       - created_at
       description: Organization details with usage limits and counts.
       title: Organization
+    type__OrganizationId:
+      type: string
+      description: ID of organization.
+      title: OrganizationId
   securitySchemes:
     Bearer:
       type: http

@@ -33,7 +33,7 @@ paths:
 
         ```bash
 
-        agentmail inboxes:messages list --inbox-id <inbox_id>
+        agentmail inboxes:messages list --inbox-id
 
         ```'
       tags:
@@ -214,7 +214,7 @@ paths:
 
         ```bash
 
-        agentmail inboxes:messages get --inbox-id <inbox_id> --message-id <message_id>
+        agentmail inboxes:messages get --inbox-id --message-id
 
         ```'
       tags:
@@ -256,7 +256,7 @@ paths:
 
         ```bash
 
-        agentmail inboxes:messages update --inbox-id <inbox_id> --message-id <message_id> --add-label read --remove-label unread
+        agentmail inboxes:messages update --inbox-id --message-id --add-label read --remove-label unread
 
         ```'
       tags:
@@ -312,7 +312,7 @@ paths:
 
         ```bash
 
-        agentmail inboxes:messages delete --inbox-id <inbox_id> --message-id <message_id>
+        agentmail inboxes:messages delete --inbox-id --message-id
 
         ```'
       tags:
@@ -358,7 +358,7 @@ paths:
 
         ```bash
 
-        agentmail inboxes:messages batch-get --inbox-id <inbox_id> --message-id <id1> --message-id <id2>
+        agentmail inboxes:messages batch-get --inbox-id --message-id --message-id
 
         ```'
       tags:
@@ -414,7 +414,7 @@ paths:
 
         ```bash
 
-        agentmail inboxes:messages batch-update --inbox-id <inbox_id> --message-id <id1> --message-id <id2> --add-label read --remove-label unread
+        agentmail inboxes:messages batch-update --inbox-id --message-id --message-id --add-label read --remove-label unread
 
         ```'
       tags:
@@ -457,7 +457,7 @@ paths:
 
         ```bash
 
-        agentmail inboxes:messages get-attachment --inbox-id <inbox_id> --message-id <message_id> --attachment-id <attachment_id>
+        agentmail inboxes:messages get-attachment --inbox-id --message-id --attachment-id
 
         ```'
       tags:
@@ -505,7 +505,7 @@ paths:
 
         ```bash
 
-        agentmail inboxes:messages get-raw --inbox-id <inbox_id> --message-id <message_id>
+        agentmail inboxes:messages get-raw --inbox-id --message-id
 
         ```'
       tags:
@@ -548,7 +548,7 @@ paths:
 
         ```bash
 
-        agentmail inboxes:messages send --inbox-id <inbox_id> --to recipient@example.com --subject "Hello" --text "Body"
+        agentmail inboxes:messages send --inbox-id --to recipient@example.com --subject "Hello" --text "Body"
 
         ```'
       tags:
@@ -609,7 +609,7 @@ paths:
 
         ```bash
 
-        agentmail inboxes:messages reply --inbox-id <inbox_id> --message-id <message_id> --text "Reply text"
+        agentmail inboxes:messages reply --inbox-id --message-id --text "Reply text"
 
         ```'
       tags:
@@ -675,7 +675,7 @@ paths:
 
         ```bash
 
-        agentmail inboxes:messages reply-all --inbox-id <inbox_id> --message-id <message_id> --text "Reply text"
+        agentmail inboxes:messages reply-all --inbox-id --message-id --text "Reply text"
 
         ```'
       tags:
@@ -741,7 +741,7 @@ paths:
 
         ```bash
 
-        agentmail inboxes:messages forward --inbox-id <inbox_id> --message-id <message_id> --to recipient@example.com
+        agentmail inboxes:messages forward --inbox-id --message-id --to recipient@example.com
 
         ```'
       tags:
@@ -801,631 +801,6 @@ paths:
               $ref: '#/components/schemas/type_messages_SendMessageRequest'
 components:
   schemas:
-    type__Labels:
-      type: array
-      items:
-        type: string
-      description: Labels to filter by.
-      title: Labels
-    type_messages_MessageSize:
-      type: integer
-      description: Size of message in bytes.
-      title: MessageSize
-    type_messages_UpdateMessageRequest:
-      type: object
-      properties:
-        add_labels:
-          $ref: '#/components/schemas/type_messages_UpdateMessageLabels'
-          description: Label or labels to add to message.
-        remove_labels:
-          $ref: '#/components/schemas/type_messages_UpdateMessageLabels'
-          description: Label or labels to remove from message.
-      title: UpdateMessageRequest
-    type_messages_Addresses:
-      oneOf:
-      - type: string
-      - type: array
-        items:
-          type: string
-      title: Addresses
-    type__Before:
-      type: string
-      format: date-time
-      description: Timestamp before which to filter by.
-      title: Before
-    type_messages_BatchGetMessagesResponse:
-      type: object
-      properties:
-        limit:
-          $ref: '#/components/schemas/type__Limit'
-        count:
-          $ref: '#/components/schemas/type__Count'
-        messages:
-          type: array
-          items:
-            $ref: '#/components/schemas/type_messages_Message'
-          description: 'Found messages. Order matches `message_ids` in the request. Body
-
-            fields (`text`, `html`, `extracted_text`, `extracted_html`) are
-
-            never populated; use the single-message endpoint to retrieve bodies.'
-      required:
-      - limit
-      - count
-      - messages
-      title: BatchGetMessagesResponse
-    type_messages_ReplyToMessageRequest:
-      type: object
-      properties:
-        labels:
-          $ref: '#/components/schemas/type_messages_MessageLabels'
-        reply_to:
-          $ref: '#/components/schemas/type_messages_SendMessageReplyTo'
-        to:
-          $ref: '#/components/schemas/type_messages_SendMessageTo'
-        cc:
-          $ref: '#/components/schemas/type_messages_SendMessageCc'
-        bcc:
-          $ref: '#/components/schemas/type_messages_SendMessageBcc'
-        reply_all:
-          $ref: '#/components/schemas/type_messages_ReplyAll'
-        text:
-          $ref: '#/components/schemas/type_messages_MessageText'
-        html:
-          $ref: '#/components/schemas/type_messages_MessageHtml'
-        attachments:
-          $ref: '#/components/schemas/type_messages_SendMessageAttachments'
-        headers:
-          $ref: '#/components/schemas/type_messages_SendMessageHeaders'
-      title: ReplyToMessageRequest
-    type_messages_SendMessageBcc:
-      $ref: '#/components/schemas/type_messages_Addresses'
-      description: BCC recipient address or addresses.
-      title: SendMessageBcc
-    type_attachments_AttachmentId:
-      type: string
-      description: ID of attachment.
-      title: AttachmentId
-    type_attachments_AttachmentSize:
-      type: integer
-      description: Size of attachment in bytes.
-      title: AttachmentSize
-    type_messages_ReplyAll:
-      type: boolean
-      description: Reply to all recipients of the original message.
-      title: ReplyAll
-    type_attachments_Attachment:
-      type: object
-      properties:
-        attachment_id:
-          $ref: '#/components/schemas/type_attachments_AttachmentId'
-        filename:
-          $ref: '#/components/schemas/type_attachments_AttachmentFilename'
-        size:
-          $ref: '#/components/schemas/type_attachments_AttachmentSize'
-        content_type:
-          $ref: '#/components/schemas/type_attachments_AttachmentContentType'
-        content_disposition:
-          $ref: '#/components/schemas/type_attachments_AttachmentContentDisposition'
-        content_id:
-          $ref: '#/components/schemas/type_attachments_AttachmentContentId'
-      required:
-      - attachment_id
-      - size
-      title: Attachment
-    type_messages_MessageHeaders:
-      type: object
-      additionalProperties:
-        type: string
-      description: Headers in message.
-      title: MessageHeaders
-    type_messages_MessageLabels:
-      type: array
-      items:
-        type: string
-      description: Labels of message.
-      title: MessageLabels
-    type_messages_MessageCreatedAt:
-      type: string
-      format: date-time
-      description: Time at which message was created.
-      title: MessageCreatedAt
-    type_messages_SendMessageAttachments:
-      type: array
-      items:
-        $ref: '#/components/schemas/type_attachments_SendAttachment'
-      description: Attachments to include in message.
-      title: SendMessageAttachments
-    type_messages_MessageItem:
-      type: object
-      properties:
-        inbox_id:
-          $ref: '#/components/schemas/type_inboxes_InboxId'
-        thread_id:
-          $ref: '#/components/schemas/type_threads_ThreadId'
-        message_id:
-          $ref: '#/components/schemas/type_messages_MessageId'
-        labels:
-          $ref: '#/components/schemas/type_messages_MessageLabels'
-        timestamp:
-          $ref: '#/components/schemas/type_messages_MessageTimestamp'
-        from:
-          $ref: '#/components/schemas/type_messages_MessageFrom'
-        to:
-          $ref: '#/components/schemas/type_messages_MessageTo'
-        cc:
-          $ref: '#/components/schemas/type_messages_MessageCc'
-        bcc:
-          $ref: '#/components/schemas/type_messages_MessageBcc'
-        subject:
-          $ref: '#/components/schemas/type_messages_MessageSubject'
-        preview:
-          $ref: '#/components/schemas/type_messages_MessagePreview'
-        attachments:
-          $ref: '#/components/schemas/type_messages_MessageAttachments'
-        in_reply_to:
-          $ref: '#/components/schemas/type_messages_MessageInReplyTo'
-        references:
-          $ref: '#/components/schemas/type_messages_MessageReferences'
-        headers:
-          $ref: '#/components/schemas/type_messages_MessageHeaders'
-        size:
-          $ref: '#/components/schemas/type_messages_MessageSize'
-        updated_at:
-          $ref: '#/components/schemas/type_messages_MessageUpdatedAt'
-        created_at:
-          $ref: '#/components/schemas/type_messages_MessageCreatedAt'
-      required:
-      - inbox_id
-      - thread_id
-      - message_id
-      - labels
-      - timestamp
-      - from
-      - to
-      - size
-      - updated_at
-      - created_at
-      title: MessageItem
-    type_messages_SendMessageCc:
-      $ref: '#/components/schemas/type_messages_Addresses'
-      description: CC recipient address or addresses.
-      title: SendMessageCc
-    type__IncludeUnauthenticated:
-      type: boolean
-      description: Include unauthenticated in results.
-      title: IncludeUnauthenticated
-    type_messages_MessageUpdatedAt:
-      type: string
-      format: date-time
-      description: Time at which message was last updated.
-      title: MessageUpdatedAt
-    type_messages_ReplyAllMessageRequest:
-      type: object
-      properties:
-        labels:
-          $ref: '#/components/schemas/type_messages_MessageLabels'
-        reply_to:
-          $ref: '#/components/schemas/type_messages_SendMessageReplyTo'
-        text:
-          $ref: '#/components/schemas/type_messages_MessageText'
-        html:
-          $ref: '#/components/schemas/type_messages_MessageHtml'
-        attachments:
-          $ref: '#/components/schemas/type_messages_SendMessageAttachments'
-        headers:
-          $ref: '#/components/schemas/type_messages_SendMessageHeaders'
-      title: ReplyAllMessageRequest
-    type__ErrorFix:
-      type: string
-      description: The concrete next action that resolves the error.
-      title: ErrorFix
-    type__Count:
-      type: integer
-      description: Number of items returned.
-      title: Count
-    type_messages_SendMessageTo:
-      $ref: '#/components/schemas/type_messages_Addresses'
-      description: Recipient address or addresses.
-      title: SendMessageTo
-    type__ErrorMessage:
-      type: string
-      description: Error message.
-      title: ErrorMessage
-    type__ValidationErrorResponse:
-      type: object
-      properties:
-        name:
-          $ref: '#/components/schemas/type__ErrorName'
-        code:
-          $ref: '#/components/schemas/type__ErrorCode'
-        message:
-          $ref: '#/components/schemas/type__ErrorMessage'
-        errors:
-          description: Validation errors. Each entry has a path and a message identifying the invalid field.
-        fix:
-          $ref: '#/components/schemas/type__ErrorFix'
-        docs:
-          $ref: '#/components/schemas/type__ErrorDocs'
-      required:
-      - name
-      - errors
-      title: ValidationErrorResponse
-    type__IncludeTrash:
-      type: boolean
-      description: Include trash in results.
-      title: IncludeTrash
-    type_messages_MessageAttachments:
-      type: array
-      items:
-        $ref: '#/components/schemas/type_attachments_Attachment'
-      description: Attachments in message.
-      title: MessageAttachments
-    type__IncludeSpam:
-      type: boolean
-      description: Include spam in results.
-      title: IncludeSpam
-    type_attachments_AttachmentContentId:
-      type: string
-      description: Content ID of attachment.
-      title: AttachmentContentId
-    type__ErrorName:
-      type: string
-      description: Name of error.
-      title: ErrorName
-    type_messages_MessageCc:
-      type: array
-      items:
-        type: string
-      description: Addresses of CC recipients. In format `username@domain.com` or `Display Name <username@domain.com>`.
-      title: MessageCc
-    type_messages_MessageText:
-      type: string
-      description: Plain text body of message.
-      title: MessageText
-    type_attachments_SendAttachment:
-      type: object
-      properties:
-        filename:
-          $ref: '#/components/schemas/type_attachments_AttachmentFilename'
-        content_type:
-          $ref: '#/components/schemas/type_attachments_AttachmentContentType'
-        content_disposition:
-          $ref: '#/components/schemas/type_attachments_AttachmentContentDisposition'
-        content_id:
-          $ref: '#/components/schemas/type_attachments_AttachmentContentId'
-        content:
-          type: string
-          description: Base64 encoded content of attachment.
-        url:
-          type: string
-          description: URL to the attachment.
-      title: SendAttachment
-    type_messages_MessageId:
-      type: string
-      description: ID of message.
-      title: MessageId
-    type__ErrorResponse:
-      type: object
-      properties:
-        name:
-          $ref: '#/components/schemas/type__ErrorName'
-        code:
-          $ref: '#/components/schemas/type__ErrorCode'
-        message:
-          $ref: '#/components/schemas/type__ErrorMessage'
-        fix:
-          $ref: '#/components/schemas/type__ErrorFix'
-        docs:
-          $ref: '#/components/schemas/type__ErrorDocs'
-      required:
-      - name
-      - message
-      title: ErrorResponse
-    type_messages_MessageTimestamp:
-      type: string
-      format: date-time
-      description: Time at which message was sent or drafted.
-      title: MessageTimestamp
-    type_messages_SendMessageReplyTo:
-      $ref: '#/components/schemas/type_messages_Addresses'
-      description: Reply-to address or addresses.
-      title: SendMessageReplyTo
-    type__Ascending:
-      type: boolean
-      description: Sort in ascending temporal order.
-      title: Ascending
-    type_messages_BatchUpdateMessagesResponse:
-      type: object
-      properties:
-        limit:
-          $ref: '#/components/schemas/type__Limit'
-        count:
-          $ref: '#/components/schemas/type__Count'
-        updates:
-          type: array
-          items:
-            $ref: '#/components/schemas/type_messages_UpdateMessageResponse'
-          description: 'Updated messages with their new labels. Order matches `message_ids`
-
-            in the request. Excluded ids are omitted, so `count` may be less than
-
-            `limit`.'
-      required:
-      - limit
-      - count
-      - updates
-      title: BatchUpdateMessagesResponse
-    type_messages_MessageSubject:
-      type: string
-      description: Subject of message.
-      title: MessageSubject
-    type__PageToken:
-      type: string
-      description: Page token for pagination.
-      title: PageToken
-    type_messages_MessageTo:
-      type: array
-      items:
-        type: string
-      description: Addresses of recipients. In format `username@domain.com` or `Display Name <username@domain.com>`.
-      title: MessageTo
-    type_messages_SendMessageResponse:
-      type: object
-      properties:
-        message_id:
-          $ref: '#/components/schemas/type_messages_MessageId'
-        thread_id:
-          $ref: '#/components/schemas/type_threads_ThreadId'
-      required:
-      - message_id
-      - thread_id
-      title: SendMessageResponse
-    type_messages_BatchGetMessagesMessageIds:
-      type: array
-      items:
-        $ref: '#/components/schemas/type_messages_MessageId'
-      description: 'IDs of messages to fetch. Maximum 500 ids per request. Duplicates are
-
-        rejected with a validation error. IDs not found in the inbox (including
-
-        cross-inbox or permission-restricted) are silently omitted from the
-
-        response; callers detect misses by comparing `count` against `limit`.'
-      title: BatchGetMessagesMessageIds
-    type_messages_ListMessagesResponse:
-      type: object
-      properties:
-        count:
-          $ref: '#/components/schemas/type__Count'
-        limit:
-          $ref: '#/components/schemas/type__Limit'
-        next_page_token:
-          $ref: '#/components/schemas/type__PageToken'
-        messages:
-          type: array
-          items:
-            $ref: '#/components/schemas/type_messages_MessageItem'
-          description: Ordered by `timestamp` descending.
-      required:
-      - count
-      - messages
-      title: ListMessagesResponse
-    type__IncludeBlocked:
-      type: boolean
-      description: Include blocked in results.
-      title: IncludeBlocked
-    type__Limit:
-      type: integer
-      description: Limit of number of items returned.
-      title: Limit
-    type_messages_BatchUpdateMessagesMessageIds:
-      type: array
-      items:
-        $ref: '#/components/schemas/type_messages_MessageId'
-      description: 'IDs of messages to update. Maximum 50 ids per request. Duplicates are
-
-        rejected with a validation error. IDs not found in the inbox (including
-
-        cross-inbox or permission-restricted) are silently excluded from the
-
-        update; callers detect exclusions by comparing `count` against `limit`.'
-      title: BatchUpdateMessagesMessageIds
-    type__ErrorCode:
-      type: string
-      description: Stable, machine-readable error code in snake_case (for example, not_found or missing_permission). Branch on this rather than the message text.
-      title: ErrorCode
-    type_messages_BatchUpdateMessagesRequest:
-      type: object
-      properties:
-        message_ids:
-          $ref: '#/components/schemas/type_messages_BatchUpdateMessagesMessageIds'
-        add_labels:
-          $ref: '#/components/schemas/type_messages_UpdateMessageLabels'
-          description: Label or labels to add to every message.
-        remove_labels:
-          $ref: '#/components/schemas/type_messages_UpdateMessageLabels'
-          description: Label or labels to remove from every message.
-      required:
-      - message_ids
-      title: BatchUpdateMessagesRequest
-    type_messages_UpdateMessageResponse:
-      type: object
-      properties:
-        message_id:
-          $ref: '#/components/schemas/type_messages_MessageId'
-        labels:
-          $ref: '#/components/schemas/type_messages_MessageLabels'
-      required:
-      - message_id
-      - labels
-      title: UpdateMessageResponse
-    type__Query:
-      type: string
-      description: 'Full-text search query. Matched against the sender, recipients, and
-
-        subject (substring) and the message body (tokenized full text).'
-      title: Query
-    type_messages_UpdateMessageLabels:
-      oneOf:
-      - type: string
-      - type: array
-        items:
-          type: string
-      description: Label or list of labels.
-      title: UpdateMessageLabels
-    type_messages_RawMessageResponse:
-      type: object
-      properties:
-        message_id:
-          $ref: '#/components/schemas/type_messages_MessageId'
-          description: ID of the message.
-        size:
-          $ref: '#/components/schemas/type_messages_MessageSize'
-          description: Size of the raw message in bytes.
-        download_url:
-          type: string
-          description: S3 presigned URL to download the raw message. Expires at expires_at.
-        expires_at:
-          type: string
-          format: date-time
-          description: Time at which the download URL expires.
-      required:
-      - message_id
-      - size
-      - download_url
-      - expires_at
-      description: S3 presigned URL to download the raw .eml file.
-      title: RawMessageResponse
-    type_messages_SendMessageRequest:
-      type: object
-      properties:
-        labels:
-          $ref: '#/components/schemas/type_messages_MessageLabels'
-        reply_to:
-          $ref: '#/components/schemas/type_messages_SendMessageReplyTo'
-        to:
-          $ref: '#/components/schemas/type_messages_SendMessageTo'
-        cc:
-          $ref: '#/components/schemas/type_messages_SendMessageCc'
-        bcc:
-          $ref: '#/components/schemas/type_messages_SendMessageBcc'
-        subject:
-          $ref: '#/components/schemas/type_messages_MessageSubject'
-        text:
-          $ref: '#/components/schemas/type_messages_MessageText'
-        html:
-          $ref: '#/components/schemas/type_messages_MessageHtml'
-        attachments:
-          $ref: '#/components/schemas/type_messages_SendMessageAttachments'
-        headers:
-          $ref: '#/components/schemas/type_messages_SendMessageHeaders'
-      title: SendMessageRequest
-    type_messages_SearchMessageHighlights:
-      type: object
-      properties:
-        from:
-          type: array
-          items:
-            type: string
-          description: Matched fragments from the sender address.
-        recipients:
-          type: array
-          items:
-            type: string
-          description: Matched fragments from the recipient addresses (to, cc, or bcc).
-        subject:
-          type: array
-          items:
-            type: string
-          description: Matched fragments from the subject.
-        text:
-          type: array
-          items:
-            type: string
-          description: Matched fragments from the message body.
-      description: 'Matched fragments per field on a message search result, with matched terms
-
-        wrapped in `**`. A field key is present only when the query matched that
-
-        field, so the present keys also tell you which fields produced the hit.'
-      title: SearchMessageHighlights
-    type_messages_MessageFrom:
-      type: string
-      description: Address of sender. In format `username@domain.com` or `Display Name <username@domain.com>`.
-      title: MessageFrom
-    type_messages_MessagePreview:
-      type: string
-      description: Text preview of message.
-      title: MessagePreview
-    type_messages_MessageBcc:
-      type: array
-      items:
-        type: string
-      description: Addresses of BCC recipients. In format `username@domain.com` or `Display Name <username@domain.com>`.
-      title: MessageBcc
-    type_attachments_AttachmentResponse:
-      type: object
-      properties:
-        attachment_id:
-          $ref: '#/components/schemas/type_attachments_AttachmentId'
-        filename:
-          $ref: '#/components/schemas/type_attachments_AttachmentFilename'
-        size:
-          $ref: '#/components/schemas/type_attachments_AttachmentSize'
-        content_type:
-          $ref: '#/components/schemas/type_attachments_AttachmentContentType'
-        content_disposition:
-          $ref: '#/components/schemas/type_attachments_AttachmentContentDisposition'
-        content_id:
-          $ref: '#/components/schemas/type_attachments_AttachmentContentId'
-        download_url:
-          type: string
-          description: URL to download the attachment.
-        expires_at:
-          type: string
-          format: date-time
-          description: Time at which the download URL expires.
-      required:
-      - attachment_id
-      - size
-      - download_url
-      - expires_at
-      title: AttachmentResponse
-    type_messages_BatchGetMessagesRequest:
-      type: object
-      properties:
-        message_ids:
-          $ref: '#/components/schemas/type_messages_BatchGetMessagesMessageIds'
-      required:
-      - message_ids
-      title: BatchGetMessagesRequest
-    type__After:
-      type: string
-      format: date-time
-      description: Timestamp after which to filter by.
-      title: After
-    type_messages_MessageInReplyTo:
-      type: string
-      description: ID of message being replied to.
-      title: MessageInReplyTo
-    type_messages_MessageReferences:
-      type: array
-      items:
-        type: string
-      description: IDs of previous messages in thread.
-      title: MessageReferences
-    type_attachments_AttachmentContentDisposition:
-      type: string
-      enum:
-      - inline
-      - attachment
-      description: Content disposition of attachment.
-      title: AttachmentContentDisposition
-    type_inboxes_InboxId:
-      type: string
-      description: The ID of the inbox.
-      title: InboxId
     type_messages_Message:
       type: object
       properties:
@@ -1492,6 +867,283 @@ components:
       - updated_at
       - created_at
       title: Message
+    type_attachments_AttachmentResponse:
+      type: object
+      properties:
+        attachment_id:
+          $ref: '#/components/schemas/type_attachments_AttachmentId'
+        filename:
+          $ref: '#/components/schemas/type_attachments_AttachmentFilename'
+        size:
+          $ref: '#/components/schemas/type_attachments_AttachmentSize'
+        content_type:
+          $ref: '#/components/schemas/type_attachments_AttachmentContentType'
+        content_disposition:
+          $ref: '#/components/schemas/type_attachments_AttachmentContentDisposition'
+        content_id:
+          $ref: '#/components/schemas/type_attachments_AttachmentContentId'
+        download_url:
+          type: string
+          description: URL to download the attachment.
+        expires_at:
+          type: string
+          format: date-time
+          description: Time at which the download URL expires.
+      required:
+      - attachment_id
+      - size
+      - download_url
+      - expires_at
+      title: AttachmentResponse
+    type_messages_ReplyAll:
+      type: boolean
+      description: Reply to all recipients of the original message.
+      title: ReplyAll
+    type_messages_MessageLabels:
+      type: array
+      items:
+        type: string
+      description: Labels of message.
+      title: MessageLabels
+    type_attachments_AttachmentSize:
+      type: integer
+      description: Size of attachment in bytes.
+      title: AttachmentSize
+    type_messages_SendMessageAttachments:
+      type: array
+      items:
+        $ref: '#/components/schemas/type_attachments_SendAttachment'
+      description: Attachments to include in message.
+      title: SendMessageAttachments
+    type_messages_SearchMessagesResponse:
+      type: object
+      properties:
+        count:
+          $ref: '#/components/schemas/type__Count'
+        limit:
+          $ref: '#/components/schemas/type__Limit'
+        next_page_token:
+          $ref: '#/components/schemas/type__PageToken'
+        messages:
+          type: array
+          items:
+            $ref: '#/components/schemas/type_messages_SearchMessageItem'
+          description: Ordered by relevance, best match first.
+      required:
+      - count
+      - messages
+      title: SearchMessagesResponse
+    type__ErrorResponse:
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/type__ErrorName'
+        code:
+          $ref: '#/components/schemas/type__ErrorCode'
+        message:
+          $ref: '#/components/schemas/type__ErrorMessage'
+        fix:
+          $ref: '#/components/schemas/type__ErrorFix'
+        docs:
+          $ref: '#/components/schemas/type__ErrorDocs'
+      required:
+      - name
+      - message
+      title: ErrorResponse
+    type_messages_BatchUpdateMessagesResponse:
+      type: object
+      properties:
+        limit:
+          $ref: '#/components/schemas/type__Limit'
+        count:
+          $ref: '#/components/schemas/type__Count'
+        updates:
+          type: array
+          items:
+            $ref: '#/components/schemas/type_messages_UpdateMessageResponse'
+          description: 'Updated messages with their new labels. Order matches `message_ids`
+
+            in the request. Excluded ids are omitted, so `count` may be less than
+
+            `limit`.'
+      required:
+      - limit
+      - count
+      - updates
+      title: BatchUpdateMessagesResponse
+    type_messages_SendMessageHeaders:
+      type: object
+      additionalProperties:
+        type: string
+      description: Headers to include in message.
+      title: SendMessageHeaders
+    type_messages_MessageFrom:
+      type: string
+      description: Address of sender. In format `username@domain.com` or `Display Name <username@domain.com>`.
+      title: MessageFrom
+    type_messages_MessageHtml:
+      type: string
+      description: HTML body of message.
+      title: MessageHtml
+    type_messages_SendMessageResponse:
+      type: object
+      properties:
+        message_id:
+          $ref: '#/components/schemas/type_messages_MessageId'
+        thread_id:
+          $ref: '#/components/schemas/type_threads_ThreadId'
+      required:
+      - message_id
+      - thread_id
+      title: SendMessageResponse
+    type_messages_MessagePreview:
+      type: string
+      description: Text preview of message.
+      title: MessagePreview
+    type_messages_SendMessageTo:
+      $ref: '#/components/schemas/type_messages_Addresses'
+      description: Recipient address or addresses.
+      title: SendMessageTo
+    type_messages_ReplyToMessageRequest:
+      type: object
+      properties:
+        labels:
+          $ref: '#/components/schemas/type_messages_MessageLabels'
+        reply_to:
+          $ref: '#/components/schemas/type_messages_SendMessageReplyTo'
+        to:
+          $ref: '#/components/schemas/type_messages_SendMessageTo'
+        cc:
+          $ref: '#/components/schemas/type_messages_SendMessageCc'
+        bcc:
+          $ref: '#/components/schemas/type_messages_SendMessageBcc'
+        reply_all:
+          $ref: '#/components/schemas/type_messages_ReplyAll'
+        text:
+          $ref: '#/components/schemas/type_messages_MessageText'
+        html:
+          $ref: '#/components/schemas/type_messages_MessageHtml'
+        attachments:
+          $ref: '#/components/schemas/type_messages_SendMessageAttachments'
+        headers:
+          $ref: '#/components/schemas/type_messages_SendMessageHeaders'
+      title: ReplyToMessageRequest
+    type__ErrorName:
+      type: string
+      description: Name of error.
+      title: ErrorName
+    type_threads_ThreadId:
+      type: string
+      description: ID of thread.
+      title: ThreadId
+    type__ErrorDocs:
+      type: string
+      description: Link to the error reference entry for this code.
+      title: ErrorDocs
+    type_messages_MessageText:
+      type: string
+      description: Plain text body of message.
+      title: MessageText
+    type_messages_Addresses:
+      oneOf:
+      - type: string
+      - type: array
+        items:
+          type: string
+      title: Addresses
+    type_messages_BatchGetMessagesRequest:
+      type: object
+      properties:
+        message_ids:
+          $ref: '#/components/schemas/type_messages_BatchGetMessagesMessageIds'
+      required:
+      - message_ids
+      title: BatchGetMessagesRequest
+    type__ErrorMessage:
+      type: string
+      description: Error message.
+      title: ErrorMessage
+    type_messages_SendMessageBcc:
+      $ref: '#/components/schemas/type_messages_Addresses'
+      description: BCC recipient address or addresses.
+      title: SendMessageBcc
+    type_attachments_AttachmentContentType:
+      type: string
+      description: Content type of attachment.
+      title: AttachmentContentType
+    type__IncludeUnauthenticated:
+      type: boolean
+      description: Include unauthenticated in results.
+      title: IncludeUnauthenticated
+    type_messages_BatchGetMessagesResponse:
+      type: object
+      properties:
+        limit:
+          $ref: '#/components/schemas/type__Limit'
+        count:
+          $ref: '#/components/schemas/type__Count'
+        messages:
+          type: array
+          items:
+            $ref: '#/components/schemas/type_messages_Message'
+          description: 'Found messages. Order matches `message_ids` in the request. Body
+
+            fields (`text`, `html`, `extracted_text`, `extracted_html`) are
+
+            never populated; use the single-message endpoint to retrieve bodies.'
+      required:
+      - limit
+      - count
+      - messages
+      title: BatchGetMessagesResponse
+    type_messages_MessageTo:
+      type: array
+      items:
+        type: string
+      description: Addresses of recipients. In format `username@domain.com` or `Display Name <username@domain.com>`.
+      title: MessageTo
+    type_messages_MessageHeaders:
+      type: object
+      additionalProperties:
+        type: string
+      description: Headers in message.
+      title: MessageHeaders
+    type__ErrorCode:
+      type: string
+      description: Stable, machine-readable error code in snake_case (for example, not_found or missing_permission). Branch on this rather than the message text.
+      title: ErrorCode
+    type_messages_MessageUpdatedAt:
+      type: string
+      format: date-time
+      description: Time at which message was last updated.
+      title: MessageUpdatedAt
+    type_messages_MessageAttachments:
+      type: array
+      items:
+        $ref: '#/components/schemas/type_attachments_Attachment'
+      description: Attachments in message.
+      title: MessageAttachments
+    type_messages_MessageInReplyTo:
+      type: string
+      description: ID of message being replied to.
+      title: MessageInReplyTo
+    type_messages_MessageTimestamp:
+      type: string
+      format: date-time
+      description: Time at which message was sent or drafted.
+      title: MessageTimestamp
+    type_messages_BatchGetMessagesMessageIds:
+      type: array
+      items:
+        $ref: '#/components/schemas/type_messages_MessageId'
+      description: 'IDs of messages to fetch. Maximum 500 ids per request. Duplicates are
+
+        rejected with a validation error. IDs not found in the inbox (including
+
+        cross-inbox or permission-restricted) are silently omitted from the
+
+        response; callers detect misses by comparing `count` against `limit`.'
+      title: BatchGetMessagesMessageIds
     type_messages_SearchMessageItem:
       type: object
       properties:
@@ -1546,21 +1198,337 @@ components:
       - updated_at
       - created_at
       title: SearchMessageItem
-    type_messages_SendMessageHeaders:
+    type_messages_SearchMessageHighlights:
       type: object
-      additionalProperties:
+      properties:
+        from:
+          type: array
+          items:
+            type: string
+          description: Matched fragments from the sender address.
+        recipients:
+          type: array
+          items:
+            type: string
+          description: Matched fragments from the recipient addresses (to, cc, or bcc).
+        subject:
+          type: array
+          items:
+            type: string
+          description: Matched fragments from the subject.
+        text:
+          type: array
+          items:
+            type: string
+          description: Matched fragments from the message body.
+      description: 'Matched fragments per field on a message search result, with matched terms
+
+        wrapped in `**`. A field key is present only when the query matched that
+
+        field, so the present keys also tell you which fields produced the hit.'
+      title: SearchMessageHighlights
+    type_messages_SendMessageCc:
+      $ref: '#/components/schemas/type_messages_Addresses'
+      description: CC recipient address or addresses.
+      title: SendMessageCc
+    type_messages_SendMessageRequest:
+      type: object
+      properties:
+        labels:
+          $ref: '#/components/schemas/type_messages_MessageLabels'
+        reply_to:
+          $ref: '#/components/schemas/type_messages_SendMessageReplyTo'
+        to:
+          $ref: '#/components/schemas/type_messages_SendMessageTo'
+        cc:
+          $ref: '#/components/schemas/type_messages_SendMessageCc'
+        bcc:
+          $ref: '#/components/schemas/type_messages_SendMessageBcc'
+        subject:
+          $ref: '#/components/schemas/type_messages_MessageSubject'
+        text:
+          $ref: '#/components/schemas/type_messages_MessageText'
+        html:
+          $ref: '#/components/schemas/type_messages_MessageHtml'
+        attachments:
+          $ref: '#/components/schemas/type_messages_SendMessageAttachments'
+        headers:
+          $ref: '#/components/schemas/type_messages_SendMessageHeaders'
+      title: SendMessageRequest
+    type__Ascending:
+      type: boolean
+      description: Sort in ascending temporal order.
+      title: Ascending
+    type_messages_UpdateMessageRequest:
+      type: object
+      properties:
+        add_labels:
+          $ref: '#/components/schemas/type_messages_UpdateMessageLabels'
+          description: Label or labels to add to message.
+        remove_labels:
+          $ref: '#/components/schemas/type_messages_UpdateMessageLabels'
+          description: Label or labels to remove from message.
+      title: UpdateMessageRequest
+    type_inboxes_InboxId:
+      type: string
+      description: The ID of the inbox.
+      title: InboxId
+    type_attachments_AttachmentContentId:
+      type: string
+      description: Content ID of attachment.
+      title: AttachmentContentId
+    type_messages_MessageBcc:
+      type: array
+      items:
         type: string
-      description: Headers to include in message.
-      title: SendMessageHeaders
-    type_attachments_AttachmentContentType:
+      description: Addresses of BCC recipients. In format `username@domain.com` or `Display Name <username@domain.com>`.
+      title: MessageBcc
+    type_messages_MessageCc:
+      type: array
+      items:
+        type: string
+      description: Addresses of CC recipients. In format `username@domain.com` or `Display Name <username@domain.com>`.
+      title: MessageCc
+    type_messages_UpdateMessageResponse:
+      type: object
+      properties:
+        message_id:
+          $ref: '#/components/schemas/type_messages_MessageId'
+        labels:
+          $ref: '#/components/schemas/type_messages_MessageLabels'
+      required:
+      - message_id
+      - labels
+      title: UpdateMessageResponse
+    type_messages_MessageSubject:
       type: string
-      description: Content type of attachment.
-      title: AttachmentContentType
-    type_messages_MessageHtml:
+      description: Subject of message.
+      title: MessageSubject
+    type_messages_MessageSize:
+      type: integer
+      description: Size of message in bytes.
+      title: MessageSize
+    type__After:
       type: string
-      description: HTML body of message.
-      title: MessageHtml
-    type_messages_SearchMessagesResponse:
+      format: date-time
+      description: Timestamp after which to filter by.
+      title: After
+    type_messages_ReplyAllMessageRequest:
+      type: object
+      properties:
+        labels:
+          $ref: '#/components/schemas/type_messages_MessageLabels'
+        reply_to:
+          $ref: '#/components/schemas/type_messages_SendMessageReplyTo'
+        text:
+          $ref: '#/components/schemas/type_messages_MessageText'
+        html:
+          $ref: '#/components/schemas/type_messages_MessageHtml'
+        attachments:
+          $ref: '#/components/schemas/type_messages_SendMessageAttachments'
+        headers:
+          $ref: '#/components/schemas/type_messages_SendMessageHeaders'
+      title: ReplyAllMessageRequest
+    type_messages_MessageItem:
+      type: object
+      properties:
+        inbox_id:
+          $ref: '#/components/schemas/type_inboxes_InboxId'
+        thread_id:
+          $ref: '#/components/schemas/type_threads_ThreadId'
+        message_id:
+          $ref: '#/components/schemas/type_messages_MessageId'
+        labels:
+          $ref: '#/components/schemas/type_messages_MessageLabels'
+        timestamp:
+          $ref: '#/components/schemas/type_messages_MessageTimestamp'
+        from:
+          $ref: '#/components/schemas/type_messages_MessageFrom'
+        to:
+          $ref: '#/components/schemas/type_messages_MessageTo'
+        cc:
+          $ref: '#/components/schemas/type_messages_MessageCc'
+        bcc:
+          $ref: '#/components/schemas/type_messages_MessageBcc'
+        subject:
+          $ref: '#/components/schemas/type_messages_MessageSubject'
+        preview:
+          $ref: '#/components/schemas/type_messages_MessagePreview'
+        attachments:
+          $ref: '#/components/schemas/type_messages_MessageAttachments'
+        in_reply_to:
+          $ref: '#/components/schemas/type_messages_MessageInReplyTo'
+        references:
+          $ref: '#/components/schemas/type_messages_MessageReferences'
+        headers:
+          $ref: '#/components/schemas/type_messages_MessageHeaders'
+        size:
+          $ref: '#/components/schemas/type_messages_MessageSize'
+        updated_at:
+          $ref: '#/components/schemas/type_messages_MessageUpdatedAt'
+        created_at:
+          $ref: '#/components/schemas/type_messages_MessageCreatedAt'
+      required:
+      - inbox_id
+      - thread_id
+      - message_id
+      - labels
+      - timestamp
+      - from
+      - to
+      - size
+      - updated_at
+      - created_at
+      title: MessageItem
+    type_messages_MessageId:
+      type: string
+      description: ID of message.
+      title: MessageId
+    type_attachments_Attachment:
+      type: object
+      properties:
+        attachment_id:
+          $ref: '#/components/schemas/type_attachments_AttachmentId'
+        filename:
+          $ref: '#/components/schemas/type_attachments_AttachmentFilename'
+        size:
+          $ref: '#/components/schemas/type_attachments_AttachmentSize'
+        content_type:
+          $ref: '#/components/schemas/type_attachments_AttachmentContentType'
+        content_disposition:
+          $ref: '#/components/schemas/type_attachments_AttachmentContentDisposition'
+        content_id:
+          $ref: '#/components/schemas/type_attachments_AttachmentContentId'
+      required:
+      - attachment_id
+      - size
+      title: Attachment
+    type__Labels:
+      type: array
+      items:
+        type: string
+      description: Labels to filter by.
+      title: Labels
+    type__ValidationErrorResponse:
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/type__ErrorName'
+        code:
+          $ref: '#/components/schemas/type__ErrorCode'
+        message:
+          $ref: '#/components/schemas/type__ErrorMessage'
+        errors:
+          description: Validation errors. Each entry has a path and a message identifying the invalid field.
+        fix:
+          $ref: '#/components/schemas/type__ErrorFix'
+        docs:
+          $ref: '#/components/schemas/type__ErrorDocs'
+      required:
+      - name
+      - errors
+      title: ValidationErrorResponse
+    type_messages_BatchUpdateMessagesMessageIds:
+      type: array
+      items:
+        $ref: '#/components/schemas/type_messages_MessageId'
+      description: 'IDs of messages to update. Maximum 50 ids per request. Duplicates are
+
+        rejected with a validation error. IDs not found in the inbox (including
+
+        cross-inbox or permission-restricted) are silently excluded from the
+
+        update; callers detect exclusions by comparing `count` against `limit`.'
+      title: BatchUpdateMessagesMessageIds
+    type_attachments_AttachmentContentDisposition:
+      type: string
+      enum:
+      - inline
+      - attachment
+      description: Content disposition of attachment.
+      title: AttachmentContentDisposition
+    type__Count:
+      type: integer
+      description: Number of items returned.
+      title: Count
+    type__Before:
+      type: string
+      format: date-time
+      description: Timestamp before which to filter by.
+      title: Before
+    type__Query:
+      type: string
+      description: 'Full-text search query. Matched against the sender, recipients, and
+
+        subject (substring) and the message body (tokenized full text).'
+      title: Query
+    type_messages_RawMessageResponse:
+      type: object
+      properties:
+        message_id:
+          $ref: '#/components/schemas/type_messages_MessageId'
+          description: ID of the message.
+        size:
+          $ref: '#/components/schemas/type_messages_MessageSize'
+          description: Size of the raw message in bytes.
+        download_url:
+          type: string
+          description: S3 presigned URL to download the raw message. Expires at expires_at.
+        expires_at:
+          type: string
+          format: date-time
+          description: Time at which the download URL expires.
+      required:
+      - message_id
+      - size
+      - download_url
+      - expires_at
+      description: S3 presigned URL to download the raw .eml file.
+      title: RawMessageResponse
+    type__IncludeSpam:
+      type: boolean
+      description: Include spam in results.
+      title: IncludeSpam
+    type__IncludeBlocked:
+      type: boolean
+      description: Include blocked in results.
+      title: IncludeBlocked
+    type_messages_SendMessageReplyTo:
+      $ref: '#/components/schemas/type_messages_Addresses'
+      description: Reply-to address or addresses.
+      title: SendMessageReplyTo
+    type_messages_UpdateMessageLabels:
+      oneOf:
+      - type: string
+      - type: array
+        items:
+          type: string
+      description: Label or list of labels.
+      title: UpdateMessageLabels
+    type__PageToken:
+      type: string
+      description: Page token for pagination.
+      title: PageToken
+    type_attachments_AttachmentId:
+      type: string
+      description: ID of attachment.
+      title: AttachmentId
+    type_messages_MessageReferences:
+      type: array
+      items:
+        type: string
+      description: IDs of previous messages in thread.
+      title: MessageReferences
+    type_messages_MessageCreatedAt:
+      type: string
+      format: date-time
+      description: Time at which message was created.
+      title: MessageCreatedAt
+    type__Limit:
+      type: integer
+      description: Limit of number of items returned.
+      title: Limit
+    type_messages_ListMessagesResponse:
       type: object
       properties:
         count:
@@ -1572,24 +1540,56 @@ components:
         messages:
           type: array
           items:
-            $ref: '#/components/schemas/type_messages_SearchMessageItem'
-          description: Ordered by relevance, best match first.
+            $ref: '#/components/schemas/type_messages_MessageItem'
+          description: Ordered by `timestamp` descending.
       required:
       - count
       - messages
-      title: SearchMessagesResponse
+      title: ListMessagesResponse
+    type__IncludeTrash:
+      type: boolean
+      description: Include trash in results.
+      title: IncludeTrash
+    type_attachments_SendAttachment:
+      type: object
+      properties:
+        filename:
+          $ref: '#/components/schemas/type_attachments_AttachmentFilename'
+        content_type:
+          $ref: '#/components/schemas/type_attachments_AttachmentContentType'
+        content_disposition:
+          $ref: '#/components/schemas/type_attachments_AttachmentContentDisposition'
+        content_id:
+          $ref: '#/components/schemas/type_attachments_AttachmentContentId'
+        content:
+          type: string
+          description: Base64 encoded content of attachment.
+        url:
+          type: string
+          description: URL to the attachment.
+      title: SendAttachment
     type_attachments_AttachmentFilename:
       type: string
       description: Filename of attachment.
       title: AttachmentFilename
-    type_threads_ThreadId:
+    type__ErrorFix:
       type: string
-      description: ID of thread.
-      title: ThreadId
-    type__ErrorDocs:
-      type: string
-      description: Link to the error reference entry for this code.
-      title: ErrorDocs
+      description: The concrete next action that resolves the error.
+      title: ErrorFix
+    type_messages_BatchUpdateMessagesRequest:
+      type: object
+      properties:
+        message_ids:
+          $ref: '#/components/schemas/type_messages_BatchUpdateMessagesMessageIds'
+        add_labels:
+          $ref: '#/components/schemas/type_messages_UpdateMessageLabels'
+          description: Label or labels to add to every message.
+        remove_labels:
+          $ref: '#/components/schemas/type_messages_UpdateMessageLabels'
+          description: Label or labels to remove from every message.
+      required:
+      - message_ids
+      title: BatchUpdateMessagesRequest
   securitySchemes:
     Bearer:
       type: http

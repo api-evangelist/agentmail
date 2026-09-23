@@ -75,11 +75,13 @@
     "agentmail-openapi-original.yml: declared missing tag: pods > threads",
     "agentmail-openapi-original.yml: declared missing tag: pods > webhooks",
     "agentmail-openapi-original.yml: declared missing tag: threads",
-    "agentmail-openapi-original.yml: declared missing tag: webhooks"
+    "agentmail-openapi-original.yml: declared missing tag: webhooks",
+    "apis.yml register: already-registered"
   ],
   "skipped": [
     "agentmail-agent-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "agentmail-api-keys-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "agentmail-api-reference-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "agentmail-auth-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "agentmail-domains-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "agentmail-drafts-api-openapi.yml: previously refined output, superseded by openapi/_original/",

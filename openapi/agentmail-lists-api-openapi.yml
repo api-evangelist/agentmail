@@ -12,7 +12,7 @@ servers:
 - url: https://api.agentmail.eu
   description: eu-prod
 tags:
-- name: lists
+- name: Lists
 paths:
   /v0/lists/{direction}/{type}:
     get:
@@ -22,11 +22,11 @@ paths:
 
         ```bash
 
-        agentmail lists list --direction <direction> --type <type>
+        agentmail lists list --direction --type
 
         ```'
       tags:
-      - lists
+      - Lists
       parameters:
       - name: direction
         in: path
@@ -68,11 +68,11 @@ paths:
 
         ```bash
 
-        agentmail lists create --direction <direction> --type <type> --entry user@example.com
+        agentmail lists create --direction --type --entry user@example.com
 
         ```'
       tags:
-      - lists
+      - Lists
       parameters:
       - name: direction
         in: path
@@ -116,11 +116,11 @@ paths:
 
         ```bash
 
-        agentmail lists get --direction <direction> --type <type> --entry <entry>
+        agentmail lists get --direction --type --entry
 
         ```'
       tags:
-      - lists
+      - Lists
       parameters:
       - name: direction
         in: path
@@ -164,11 +164,11 @@ paths:
 
         ```bash
 
-        agentmail lists delete --direction <direction> --type <type> --entry <entry>
+        agentmail lists delete --direction --type --entry
 
         ```'
       tags:
-      - lists
+      - Lists
       parameters:
       - name: direction
         in: path
@@ -203,22 +203,6 @@ paths:
                 $ref: '#/components/schemas/type__ErrorResponse'
 components:
   schemas:
-    type__ErrorFix:
-      type: string
-      description: The concrete next action that resolves the error.
-      title: ErrorFix
-    type_lists_Direction:
-      type: string
-      enum:
-      - send
-      - receive
-      - reply
-      description: Direction of list entry.
-      title: Direction
-    type__PageToken:
-      type: string
-      description: Page token for pagination.
-      title: PageToken
     type_lists_ListType:
       type: string
       enum:
@@ -226,26 +210,70 @@ components:
       - block
       description: Type of list entry.
       title: ListType
-    type__OrganizationId:
+    type__ErrorName:
       type: string
-      description: ID of organization.
-      title: OrganizationId
-    type__Count:
-      type: integer
-      description: Number of items returned.
-      title: Count
+      description: Name of error.
+      title: ErrorName
     type__ErrorMessage:
       type: string
       description: Error message.
       title: ErrorMessage
+    type_lists_CreateListEntryRequest:
+      type: object
+      properties:
+        entry:
+          type: string
+          description: Email address or domain to add.
+        reason:
+          type: string
+          description: Reason for adding the entry.
+      required:
+      - entry
+      title: CreateListEntryRequest
+    type__PageToken:
+      type: string
+      description: Page token for pagination.
+      title: PageToken
+    type__ErrorResponse:
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/type__ErrorName'
+        code:
+          $ref: '#/components/schemas/type__ErrorCode'
+        message:
+          $ref: '#/components/schemas/type__ErrorMessage'
+        fix:
+          $ref: '#/components/schemas/type__ErrorFix'
+        docs:
+          $ref: '#/components/schemas/type__ErrorDocs'
+      required:
+      - name
+      - message
+      title: ErrorResponse
+    type_lists_EntryType:
+      type: string
+      enum:
+      - email
+      - domain
+      description: Whether the entry is an email address or domain.
+      title: EntryType
     type__ErrorCode:
       type: string
       description: Stable, machine-readable error code in snake_case (for example, not_found or missing_permission). Branch on this rather than the message text.
       title: ErrorCode
+    type__OrganizationId:
+      type: string
+      description: ID of organization.
+      title: OrganizationId
     type__Limit:
       type: integer
       description: Limit of number of items returned.
       title: Limit
+    type__ErrorFix:
+      type: string
+      description: The concrete next action that resolves the error.
+      title: ErrorFix
     type__ValidationErrorResponse:
       type: object
       properties:
@@ -265,10 +293,6 @@ components:
       - name
       - errors
       title: ValidationErrorResponse
-    type__ErrorName:
-      type: string
-      description: Name of error.
-      title: ErrorName
     type_lists_ListEntry:
       type: object
       properties:
@@ -301,6 +325,10 @@ components:
       - entry_type
       - created_at
       title: ListEntry
+    type__Count:
+      type: integer
+      description: Number of items returned.
+      title: Count
     type_lists_ListListEntriesResponse:
       type: object
       properties:
@@ -319,42 +347,14 @@ components:
       - count
       - entries
       title: ListListEntriesResponse
-    type__ErrorResponse:
-      type: object
-      properties:
-        name:
-          $ref: '#/components/schemas/type__ErrorName'
-        code:
-          $ref: '#/components/schemas/type__ErrorCode'
-        message:
-          $ref: '#/components/schemas/type__ErrorMessage'
-        fix:
-          $ref: '#/components/schemas/type__ErrorFix'
-        docs:
-          $ref: '#/components/schemas/type__ErrorDocs'
-      required:
-      - name
-      - message
-      title: ErrorResponse
-    type_lists_CreateListEntryRequest:
-      type: object
-      properties:
-        entry:
-          type: string
-          description: Email address or domain to add.
-        reason:
-          type: string
-          description: Reason for adding the entry.
-      required:
-      - entry
-      title: CreateListEntryRequest
-    type_lists_EntryType:
+    type_lists_Direction:
       type: string
       enum:
-      - email
-      - domain
-      description: Whether the entry is an email address or domain.
-      title: EntryType
+      - send
+      - receive
+      - reply
+      description: Direction of list entry.
+      title: Direction
     type__ErrorDocs:
       type: string
       description: Link to the error reference entry for this code.
