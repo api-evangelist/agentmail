@@ -322,10 +322,67 @@ paths:
                 $ref: '#/components/schemas/type__ErrorResponse'
 components:
   schemas:
+    type_domains_ClientId:
+      type: string
+      description: Client ID of domain.
+      title: ClientId
+    type_domains_RecordStatus:
+      type: string
+      enum:
+      - MISSING
+      - INVALID
+      - VALID
+      title: RecordStatus
+    type_domains_CreateDomainRequest:
+      type: object
+      properties:
+        domain:
+          $ref: '#/components/schemas/type_domains_DomainName'
+        feedback_enabled:
+          $ref: '#/components/schemas/type_domains_FeedbackEnabled'
+        subdomains_enabled:
+          $ref: '#/components/schemas/type_domains_SubdomainsEnabled'
+      required:
+      - domain
+      title: CreateDomainRequest
+    type__ErrorCode:
+      type: string
+      description: Stable, machine-readable error code in snake_case (for example, not_found or missing_permission). Branch on this rather than the message text.
+      title: ErrorCode
+    type_domains_FeedbackEnabled:
+      type: boolean
+      description: Bounce and complaint notifications are sent to your inboxes.
+      title: FeedbackEnabled
+    type_domains_ListDomainsResponse:
+      type: object
+      properties:
+        count:
+          $ref: '#/components/schemas/type__Count'
+        limit:
+          $ref: '#/components/schemas/type__Limit'
+        next_page_token:
+          $ref: '#/components/schemas/type__PageToken'
+        domains:
+          type: array
+          items:
+            $ref: '#/components/schemas/type_domains_DomainItem'
+          description: Ordered by `created_at` descending.
+      required:
+      - count
+      - domains
+      title: ListDomainsResponse
     type_domains_DomainId:
       type: string
       description: The ID of the domain.
       title: DomainId
+    type__Count:
+      type: integer
+      description: Number of items returned.
+      title: Count
+    type__Limit:
+      type: integer
+      description: Limit of number of items returned.
+      title: Limit
     type_domains_VerificationRecord:
       type: object
       properties:
@@ -350,86 +407,27 @@ components:
       - value
       - status
       title: VerificationRecord
-    type__ErrorResponse:
-      type: object
-      properties:
-        name:
-          $ref: '#/components/schemas/type__ErrorName'
-        code:
-          $ref: '#/components/schemas/type__ErrorCode'
-        message:
-          $ref: '#/components/schemas/type__ErrorMessage'
-        fix:
-          $ref: '#/components/schemas/type__ErrorFix'
-        docs:
-          $ref: '#/components/schemas/type__ErrorDocs'
-      required:
-      - name
-      - message
-      title: ErrorResponse
-    type_domains_ClientId:
-      type: string
-      description: Client ID of domain.
-      title: ClientId
-    type_domains_FeedbackEnabled:
-      type: boolean
-      description: Bounce and complaint notifications are sent to your inboxes.
-      title: FeedbackEnabled
-    type__ErrorDocs:
-      type: string
-      description: Link to the error reference entry for this code.
-      title: ErrorDocs
-    type__ErrorMessage:
-      type: string
-      description: Error message.
-      title: ErrorMessage
-    type__ErrorCode:
-      type: string
-      description: Stable, machine-readable error code in snake_case (for example, not_found or missing_permission). Branch on this rather than the message text.
-      title: ErrorCode
     type__ErrorFix:
       type: string
       description: The concrete next action that resolves the error.
       title: ErrorFix
-    type_pods_PodId:
-      type: string
-      description: ID of pod.
-      title: PodId
-    type_domains_CreateDomainRequest:
-      type: object
-      properties:
-        domain:
-          $ref: '#/components/schemas/type_domains_DomainName'
-        feedback_enabled:
-          $ref: '#/components/schemas/type_domains_FeedbackEnabled'
-        subdomains_enabled:
-          $ref: '#/components/schemas/type_domains_SubdomainsEnabled'
-      required:
-      - domain
-      title: CreateDomainRequest
-    type_domains_UpdateDomainRequest:
-      type: object
-      properties:
-        feedback_enabled:
-          $ref: '#/components/schemas/type_domains_FeedbackEnabled'
-        subdomains_enabled:
-          $ref: '#/components/schemas/type_domains_SubdomainsEnabled'
-      description: 'Provide at least one of `feedback_enabled` or `subdomains_enabled`. Omitted
-
-        fields are left unchanged; an empty body is rejected. Enabling
-
-        `subdomains_enabled` on a verified domain returns it to `PENDING` until the
-
-        newly-required wildcard MX record (`*.<domain>`) is published and verified.'
-      title: UpdateDomainRequest
-    type_domains_Status:
-      $ref: '#/components/schemas/type_domains_VerificationStatus'
-      description: The verification status of the domain.
-      title: Status
-    type__Ascending:
+    type_domains_SubdomainsEnabled:
       type: boolean
-      description: Sort in ascending temporal order.
-      title: Ascending
+      description: 'Allow inboxes on any subdomain of this domain. Adds a required wildcard MX
+
+        record (`*.<domain>`) to `records`.'
+      title: SubdomainsEnabled
+    type_domains_RecordType:
+      type: string
+      enum:
+      - TXT
+      - CNAME
+      - MX
+      title: RecordType
+    type__ErrorName:
+      type: string
+      description: Name of error.
+      title: ErrorName
     type_domains_DomainItem:
       type: object
       properties:
@@ -461,47 +459,43 @@ components:
       - updated_at
       - created_at
       title: DomainItem
-    type_domains_RecordStatus:
+    type__ErrorDocs:
+      type: string
+      description: Link to the error reference entry for this code.
+      title: ErrorDocs
+    type_domains_VerificationStatus:
       type: string
       enum:
-      - MISSING
+      - NOT_STARTED
+      - PENDING
       - INVALID
-      - VALID
-      title: RecordStatus
-    type_domains_RecordType:
-      type: string
-      enum:
-      - TXT
-      - CNAME
-      - MX
-      title: RecordType
-    type_domains_DomainName:
-      type: string
-      description: The name of the domain (e.g., `example.com`).
-      title: DomainName
-    type__ValidationErrorResponse:
+      - FAILED
+      - VERIFYING
+      - VERIFIED
+      title: VerificationStatus
+    type_domains_UpdateDomainRequest:
       type: object
       properties:
-        name:
-          $ref: '#/components/schemas/type__ErrorName'
-        code:
-          $ref: '#/components/schemas/type__ErrorCode'
-        message:
-          $ref: '#/components/schemas/type__ErrorMessage'
-        errors:
-          description: Validation errors. Each entry has a path and a message identifying the invalid field.
-        fix:
-          $ref: '#/components/schemas/type__ErrorFix'
-        docs:
-          $ref: '#/components/schemas/type__ErrorDocs'
-      required:
-      - name
-      - errors
-      title: ValidationErrorResponse
-    type__Count:
-      type: integer
-      description: Number of items returned.
-      title: Count
+        feedback_enabled:
+          $ref: '#/components/schemas/type_domains_FeedbackEnabled'
+        subdomains_enabled:
+          $ref: '#/components/schemas/type_domains_SubdomainsEnabled'
+      description: 'Provide at least one of `feedback_enabled` or `subdomains_enabled`. Omitted
+
+        fields are left unchanged; an empty body is rejected. Enabling
+
+        `subdomains_enabled` on a verified domain returns it to `PENDING` until the
+
+        newly-required wildcard MX record (`*.<domain>`) is published and verified.'
+      title: UpdateDomainRequest
+    type_domains_Status:
+      $ref: '#/components/schemas/type_domains_VerificationStatus'
+      description: The verification status of the domain.
+      title: Status
+    type_pods_PodId:
+      type: string
+      description: ID of pod.
+      title: PodId
     type_domains_Domain:
       type: object
       properties:
@@ -544,52 +538,58 @@ components:
       - updated_at
       - created_at
       title: Domain
-    type_domains_VerificationStatus:
-      type: string
-      enum:
-      - NOT_STARTED
-      - PENDING
-      - INVALID
-      - FAILED
-      - VERIFYING
-      - VERIFIED
-      title: VerificationStatus
+    type__ErrorResponse:
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/type__ErrorName'
+        code:
+          $ref: '#/components/schemas/type__ErrorCode'
+        message:
+          $ref: '#/components/schemas/type__ErrorMessage'
+        fix:
+          $ref: '#/components/schemas/type__ErrorFix'
+        docs:
+          $ref: '#/components/schemas/type__ErrorDocs'
+      required:
+      - name
+      - message
+      title: ErrorResponse
     type__PageToken:
       type: string
       description: Page token for pagination.
       title: PageToken
-    type_domains_SubdomainsEnabled:
-      type: boolean
-      description: 'Allow inboxes on any subdomain of this domain. Adds a required wildcard MX
-
-        record (`*.<domain>`) to `records`.'
-      title: SubdomainsEnabled
-    type_domains_ListDomainsResponse:
+    type__ErrorMessage:
+      type: string
+      description: Error message.
+      title: ErrorMessage
+    type__ValidationErrorResponse:
       type: object
       properties:
-        count:
-          $ref: '#/components/schemas/type__Count'
-        limit:
-          $ref: '#/components/schemas/type__Limit'
-        next_page_token:
-          $ref: '#/components/schemas/type__PageToken'
-        domains:
-          type: array
-          items:
-            $ref: '#/components/schemas/type_domains_DomainItem'
-          description: Ordered by `created_at` descending.
+        name:
+          $ref: '#/components/schemas/type__ErrorName'
+        code:
+          $ref: '#/components/schemas/type__ErrorCode'
+        message:
+          $ref: '#/components/schemas/type__ErrorMessage'
+        errors:
+          description: Validation errors. Each entry has a path and a message identifying the invalid field.
+        fix:
+          $ref: '#/components/schemas/type__ErrorFix'
+        docs:
+          $ref: '#/components/schemas/type__ErrorDocs'
       required:
-      - count
-      - domains
-      title: ListDomainsResponse
-    type__Limit:
-      type: integer
-      description: Limit of number of items returned.
-      title: Limit
-    type__ErrorName:
+      - name
+      - errors
+      title: ValidationErrorResponse
+    type__Ascending:
+      type: boolean
+      description: Sort in ascending temporal order.
+      title: Ascending
+    type_domains_DomainName:
       type: string
-      description: Name of error.
-      title: ErrorName
+      description: The name of the domain (e.g., `example.com`).
+      title: DomainName
   securitySchemes:
     Bearer:
       type: http

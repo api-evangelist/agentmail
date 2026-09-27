@@ -160,6 +160,18 @@ paths:
                 $ref: '#/components/schemas/type__ErrorResponse'
 components:
   schemas:
+    type_drafts_DraftPreview:
+      type: string
+      description: Text preview of draft.
+      title: DraftPreview
+    type__ErrorCode:
+      type: string
+      description: Stable, machine-readable error code in snake_case (for example, not_found or missing_permission). Branch on this rather than the message text.
+      title: ErrorCode
+    type_drafts_DraftClientId:
+      type: string
+      description: Client ID of draft.
+      title: DraftClientId
     type_attachments_AttachmentResponse:
       type: object
       properties:
@@ -188,14 +200,172 @@ components:
       - download_url
       - expires_at
       title: AttachmentResponse
-    type_attachments_AttachmentSize:
+    type_drafts_DraftBcc:
+      type: array
+      items:
+        type: string
+      description: Addresses of BCC recipients. In format `username@domain.com` or `Display Name <username@domain.com>`.
+      title: DraftBcc
+    type__Count:
       type: integer
-      description: Size of attachment in bytes.
-      title: AttachmentSize
+      description: Number of items returned.
+      title: Count
+    type__Limit:
+      type: integer
+      description: Limit of number of items returned.
+      title: Limit
+    type_attachments_AttachmentContentId:
+      type: string
+      description: Content ID of attachment.
+      title: AttachmentContentId
+    type_drafts_DraftInReplyTo:
+      type: string
+      description: ID of message being replied to.
+      title: DraftInReplyTo
+    type__ErrorFix:
+      type: string
+      description: The concrete next action that resolves the error.
+      title: ErrorFix
+    type_drafts_DraftCc:
+      type: array
+      items:
+        type: string
+      description: Addresses of CC recipients. In format `username@domain.com` or `Display Name <username@domain.com>`.
+      title: DraftCc
+    type_attachments_AttachmentFilename:
+      type: string
+      description: Filename of attachment.
+      title: AttachmentFilename
+    type_drafts_DraftUpdatedAt:
+      type: string
+      format: date-time
+      description: Time at which draft was last updated.
+      title: DraftUpdatedAt
+    type_drafts_DraftSendStatus:
+      type: string
+      enum:
+      - scheduled
+      - sending
+      - failed
+      description: Schedule send status of draft.
+      title: DraftSendStatus
+    type_drafts_DraftItem:
+      type: object
+      properties:
+        inbox_id:
+          $ref: '#/components/schemas/type_inboxes_InboxId'
+        draft_id:
+          $ref: '#/components/schemas/type_drafts_DraftId'
+        labels:
+          $ref: '#/components/schemas/type_drafts_DraftLabels'
+        to:
+          $ref: '#/components/schemas/type_drafts_DraftTo'
+        cc:
+          $ref: '#/components/schemas/type_drafts_DraftCc'
+        bcc:
+          $ref: '#/components/schemas/type_drafts_DraftBcc'
+        subject:
+          $ref: '#/components/schemas/type_drafts_DraftSubject'
+        preview:
+          $ref: '#/components/schemas/type_drafts_DraftPreview'
+        attachments:
+          $ref: '#/components/schemas/type_drafts_DraftAttachments'
+        in_reply_to:
+          $ref: '#/components/schemas/type_drafts_DraftInReplyTo'
+        forward_of:
+          $ref: '#/components/schemas/type_drafts_DraftForwardOf'
+        send_status:
+          $ref: '#/components/schemas/type_drafts_DraftSendStatus'
+        send_at:
+          $ref: '#/components/schemas/type_drafts_DraftSendAt'
+        updated_at:
+          $ref: '#/components/schemas/type_drafts_DraftUpdatedAt'
+      required:
+      - inbox_id
+      - draft_id
+      - labels
+      - updated_at
+      title: DraftItem
+    type__Before:
+      type: string
+      format: date-time
+      description: Timestamp before which to filter by.
+      title: Before
+    type_drafts_DraftSubject:
+      type: string
+      description: Subject of draft.
+      title: DraftSubject
     type_drafts_DraftText:
       type: string
       description: Plain text body of draft.
       title: DraftText
+    type_drafts_DraftSendAt:
+      type: string
+      format: date-time
+      description: Time at which to schedule send draft.
+      title: DraftSendAt
+    type__ErrorName:
+      type: string
+      description: Name of error.
+      title: ErrorName
+    type_attachments_AttachmentContentType:
+      type: string
+      description: Content type of attachment.
+      title: AttachmentContentType
+    type_drafts_DraftTo:
+      type: array
+      items:
+        type: string
+      description: Addresses of recipients. In format `username@domain.com` or `Display Name <username@domain.com>`.
+      title: DraftTo
+    type_drafts_DraftHtml:
+      type: string
+      description: HTML body of draft.
+      title: DraftHtml
+    type_attachments_AttachmentContentDisposition:
+      type: string
+      enum:
+      - inline
+      - attachment
+      description: Content disposition of attachment.
+      title: AttachmentContentDisposition
+    type__ErrorDocs:
+      type: string
+      description: Link to the error reference entry for this code.
+      title: ErrorDocs
+    type_drafts_DraftAttachments:
+      type: array
+      items:
+        $ref: '#/components/schemas/type_attachments_Attachment'
+      description: Attachments in draft.
+      title: DraftAttachments
+    type_attachments_AttachmentId:
+      type: string
+      description: ID of attachment.
+      title: AttachmentId
+    type_inboxes_InboxId:
+      type: string
+      description: The ID of the inbox.
+      title: InboxId
+    type__After:
+      type: string
+      format: date-time
+      description: Timestamp after which to filter by.
+      title: After
+    type_attachments_AttachmentSize:
+      type: integer
+      description: Size of attachment in bytes.
+      title: AttachmentSize
+    type__Labels:
+      type: array
+      items:
+        type: string
+      description: Labels to filter by.
+      title: Labels
+    type_drafts_DraftForwardOf:
+      type: string
+      description: ID of message being forwarded.
+      title: DraftForwardOf
     type__ErrorResponse:
       type: object
       properties:
@@ -213,20 +383,20 @@ components:
       - name
       - message
       title: ErrorResponse
-    type_drafts_DraftId:
-      type: string
-      description: ID of draft.
-      title: DraftId
-    type_drafts_DraftSubject:
-      type: string
-      description: Subject of draft.
-      title: DraftSubject
     type_drafts_DraftReplyTo:
       type: array
       items:
         type: string
       description: Reply-to addresses. In format `username@domain.com` or `Display Name <username@domain.com>`.
       title: DraftReplyTo
+    type_drafts_DraftId:
+      type: string
+      description: ID of draft.
+      title: DraftId
+    type__PageToken:
+      type: string
+      description: Page token for pagination.
+      title: PageToken
     type_drafts_Draft:
       type: object
       properties:
@@ -282,162 +452,10 @@ components:
       - updated_at
       - created_at
       title: Draft
-    type_drafts_ListDraftsResponse:
-      type: object
-      properties:
-        count:
-          $ref: '#/components/schemas/type__Count'
-        limit:
-          $ref: '#/components/schemas/type__Limit'
-        next_page_token:
-          $ref: '#/components/schemas/type__PageToken'
-        drafts:
-          type: array
-          items:
-            $ref: '#/components/schemas/type_drafts_DraftItem'
-          description: Ordered by `updated_at` descending.
-      required:
-      - count
-      - drafts
-      title: ListDraftsResponse
-    type__ErrorName:
-      type: string
-      description: Name of error.
-      title: ErrorName
-    type__ErrorDocs:
-      type: string
-      description: Link to the error reference entry for this code.
-      title: ErrorDocs
-    type_drafts_DraftPreview:
-      type: string
-      description: Text preview of draft.
-      title: DraftPreview
     type__ErrorMessage:
       type: string
       description: Error message.
       title: ErrorMessage
-    type_attachments_AttachmentContentType:
-      type: string
-      description: Content type of attachment.
-      title: AttachmentContentType
-    type_drafts_DraftCc:
-      type: array
-      items:
-        type: string
-      description: Addresses of CC recipients. In format `username@domain.com` or `Display Name <username@domain.com>`.
-      title: DraftCc
-    type__ErrorCode:
-      type: string
-      description: Stable, machine-readable error code in snake_case (for example, not_found or missing_permission). Branch on this rather than the message text.
-      title: ErrorCode
-    type_drafts_DraftBcc:
-      type: array
-      items:
-        type: string
-      description: Addresses of BCC recipients. In format `username@domain.com` or `Display Name <username@domain.com>`.
-      title: DraftBcc
-    type_drafts_DraftInReplyTo:
-      type: string
-      description: ID of message being replied to.
-      title: DraftInReplyTo
-    type_drafts_DraftForwardOf:
-      type: string
-      description: ID of message being forwarded.
-      title: DraftForwardOf
-    type_drafts_DraftSendStatus:
-      type: string
-      enum:
-      - scheduled
-      - sending
-      - failed
-      description: Schedule send status of draft.
-      title: DraftSendStatus
-    type_drafts_DraftSendAt:
-      type: string
-      format: date-time
-      description: Time at which to schedule send draft.
-      title: DraftSendAt
-    type__Ascending:
-      type: boolean
-      description: Sort in ascending temporal order.
-      title: Ascending
-    type_drafts_DraftLabels:
-      type: array
-      items:
-        type: string
-      description: Labels of draft.
-      title: DraftLabels
-    type_drafts_DraftTo:
-      type: array
-      items:
-        type: string
-      description: Addresses of recipients. In format `username@domain.com` or `Display Name <username@domain.com>`.
-      title: DraftTo
-    type_inboxes_InboxId:
-      type: string
-      description: The ID of the inbox.
-      title: InboxId
-    type_attachments_AttachmentContentId:
-      type: string
-      description: Content ID of attachment.
-      title: AttachmentContentId
-    type_drafts_DraftItem:
-      type: object
-      properties:
-        inbox_id:
-          $ref: '#/components/schemas/type_inboxes_InboxId'
-        draft_id:
-          $ref: '#/components/schemas/type_drafts_DraftId'
-        labels:
-          $ref: '#/components/schemas/type_drafts_DraftLabels'
-        to:
-          $ref: '#/components/schemas/type_drafts_DraftTo'
-        cc:
-          $ref: '#/components/schemas/type_drafts_DraftCc'
-        bcc:
-          $ref: '#/components/schemas/type_drafts_DraftBcc'
-        subject:
-          $ref: '#/components/schemas/type_drafts_DraftSubject'
-        preview:
-          $ref: '#/components/schemas/type_drafts_DraftPreview'
-        attachments:
-          $ref: '#/components/schemas/type_drafts_DraftAttachments'
-        in_reply_to:
-          $ref: '#/components/schemas/type_drafts_DraftInReplyTo'
-        forward_of:
-          $ref: '#/components/schemas/type_drafts_DraftForwardOf'
-        send_status:
-          $ref: '#/components/schemas/type_drafts_DraftSendStatus'
-        send_at:
-          $ref: '#/components/schemas/type_drafts_DraftSendAt'
-        updated_at:
-          $ref: '#/components/schemas/type_drafts_DraftUpdatedAt'
-      required:
-      - inbox_id
-      - draft_id
-      - labels
-      - updated_at
-      title: DraftItem
-    type_drafts_DraftClientId:
-      type: string
-      description: Client ID of draft.
-      title: DraftClientId
-    type__After:
-      type: string
-      format: date-time
-      description: Timestamp after which to filter by.
-      title: After
-    type_drafts_DraftAttachments:
-      type: array
-      items:
-        $ref: '#/components/schemas/type_attachments_Attachment'
-      description: Attachments in draft.
-      title: DraftAttachments
-    type_drafts_DraftUpdatedAt:
-      type: string
-      format: date-time
-      description: Time at which draft was last updated.
-      title: DraftUpdatedAt
     type_attachments_Attachment:
       type: object
       properties:
@@ -457,52 +475,34 @@ components:
       - attachment_id
       - size
       title: Attachment
-    type__Labels:
+    type_drafts_ListDraftsResponse:
+      type: object
+      properties:
+        count:
+          $ref: '#/components/schemas/type__Count'
+        limit:
+          $ref: '#/components/schemas/type__Limit'
+        next_page_token:
+          $ref: '#/components/schemas/type__PageToken'
+        drafts:
+          type: array
+          items:
+            $ref: '#/components/schemas/type_drafts_DraftItem'
+          description: Ordered by `updated_at` descending.
+      required:
+      - count
+      - drafts
+      title: ListDraftsResponse
+    type_drafts_DraftLabels:
       type: array
       items:
         type: string
-      description: Labels to filter by.
-      title: Labels
-    type__Before:
-      type: string
-      format: date-time
-      description: Timestamp before which to filter by.
-      title: Before
-    type_attachments_AttachmentContentDisposition:
-      type: string
-      enum:
-      - inline
-      - attachment
-      description: Content disposition of attachment.
-      title: AttachmentContentDisposition
-    type__Count:
-      type: integer
-      description: Number of items returned.
-      title: Count
-    type__PageToken:
-      type: string
-      description: Page token for pagination.
-      title: PageToken
-    type_attachments_AttachmentId:
-      type: string
-      description: ID of attachment.
-      title: AttachmentId
-    type_drafts_DraftHtml:
-      type: string
-      description: HTML body of draft.
-      title: DraftHtml
-    type__Limit:
-      type: integer
-      description: Limit of number of items returned.
-      title: Limit
-    type_attachments_AttachmentFilename:
-      type: string
-      description: Filename of attachment.
-      title: AttachmentFilename
-    type__ErrorFix:
-      type: string
-      description: The concrete next action that resolves the error.
-      title: ErrorFix
+      description: Labels of draft.
+      title: DraftLabels
+    type__Ascending:
+      type: boolean
+      description: Sort in ascending temporal order.
+      title: Ascending
   securitySchemes:
     Bearer:
       type: http

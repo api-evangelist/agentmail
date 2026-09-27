@@ -46,6 +46,10 @@ paths:
                 $ref: '#/components/schemas/type_organizations_Organization'
 components:
   schemas:
+    type__OrganizationId:
+      type: string
+      description: ID of organization.
+      title: OrganizationId
     type_organizations_Organization:
       type: object
       properties:
@@ -94,10 +98,6 @@ components:
       - created_at
       description: Organization details with usage limits and counts.
       title: Organization
-    type__OrganizationId:
-      type: string
-      description: ID of organization.
-      title: OrganizationId
   securitySchemes:
     Bearer:
       type: http

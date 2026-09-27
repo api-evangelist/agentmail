@@ -59,8 +59,8 @@ tags:
 - SMTP
 - IMAP
 - MCP
-- Agentic
 - Developer Tools
+- Real-Time
 tags_raw:
 - Company
 - Ai
@@ -76,9 +76,10 @@ tags_raw:
 - MCP
 - Agentic
 - Developer Tools
+- Real-Time
 apis:
 - aid: agentmail:agentmail-agent-api
-  name: AgentMail agent API
+  name: AgentMail Agent API
   description: The agent API from AgentMail — 2 operation(s) for agent.
   humanURL: https://docs.agentmail.to
   baseURL: https://api.agentmail.to
@@ -96,7 +97,7 @@ apis:
   - type: APIReference
     url: https://docs.agentmail.to/api-reference
 - aid: agentmail:agentmail-api-keys-api
-  name: AgentMail api-keys API
+  name: AgentMail API Keys API
   description: The api-keys API from AgentMail — 2 operation(s) for api-keys.
   humanURL: https://docs.agentmail.to
   baseURL: https://api.agentmail.to
@@ -114,7 +115,7 @@ apis:
   - type: APIReference
     url: https://docs.agentmail.to/api-reference
 - aid: agentmail:agentmail-auth-api
-  name: AgentMail auth API
+  name: AgentMail Auth API
   description: The auth API from AgentMail — 1 operation(s) for auth.
   humanURL: https://docs.agentmail.to
   baseURL: https://api.agentmail.to
@@ -132,7 +133,7 @@ apis:
   - type: APIReference
     url: https://docs.agentmail.to/api-reference
 - aid: agentmail:agentmail-domains-api
-  name: AgentMail domains API
+  name: AgentMail Domains API
   description: The domains API from AgentMail — 4 operation(s) for domains.
   humanURL: https://docs.agentmail.to
   baseURL: https://api.agentmail.to
@@ -150,7 +151,7 @@ apis:
   - type: APIReference
     url: https://docs.agentmail.to/api-reference
 - aid: agentmail:agentmail-drafts-api
-  name: AgentMail drafts API
+  name: AgentMail Drafts API
   description: The drafts API from AgentMail — 3 operation(s) for drafts.
   humanURL: https://docs.agentmail.to
   baseURL: https://api.agentmail.to
@@ -184,7 +185,7 @@ apis:
   - type: APIReference
     url: https://docs.agentmail.to/api-reference
 - aid: agentmail:agentmail-inboxes-api
-  name: AgentMail inboxes API
+  name: AgentMail Inboxes API
   description: The inboxes API from AgentMail — 2 operation(s) for inboxes.
   humanURL: https://docs.agentmail.to
   baseURL: https://api.agentmail.to
@@ -314,7 +315,7 @@ apis:
   - type: APIReference
     url: https://docs.agentmail.to/api-reference
 - aid: agentmail:agentmail-lists-api
-  name: AgentMail lists API
+  name: AgentMail Lists API
   description: The lists API from AgentMail — 2 operation(s) for lists.
   humanURL: https://docs.agentmail.to
   baseURL: https://api.agentmail.to
@@ -332,7 +333,7 @@ apis:
   - type: APIReference
     url: https://docs.agentmail.to/api-reference
 - aid: agentmail:agentmail-metrics-api
-  name: AgentMail metrics API
+  name: AgentMail Metrics API
   description: The metrics API from AgentMail — 2 operation(s) for metrics.
   humanURL: https://docs.agentmail.to
   baseURL: https://api.agentmail.to
@@ -350,7 +351,7 @@ apis:
   - type: APIReference
     url: https://docs.agentmail.to/api-reference
 - aid: agentmail:agentmail-organizations-api
-  name: AgentMail organizations API
+  name: AgentMail Organizations API
   description: The organizations API from AgentMail — 1 operation(s) for organizations.
   humanURL: https://docs.agentmail.to
   baseURL: https://api.agentmail.to
@@ -384,7 +385,7 @@ apis:
   - type: APIReference
     url: https://docs.agentmail.to/api-reference
 - aid: agentmail:agentmail-pods-api
-  name: AgentMail pods API
+  name: AgentMail Pods API
   description: The pods API from AgentMail — 2 operation(s) for pods.
   humanURL: https://docs.agentmail.to
   baseURL: https://api.agentmail.to
@@ -514,7 +515,7 @@ apis:
   - type: APIReference
     url: https://docs.agentmail.to/api-reference
 - aid: agentmail:agentmail-threads-api
-  name: AgentMail threads API
+  name: AgentMail Threads API
   description: The threads API from AgentMail — 4 operation(s) for threads.
   humanURL: https://docs.agentmail.to
   baseURL: https://api.agentmail.to
@@ -532,7 +533,7 @@ apis:
   - type: APIReference
     url: https://docs.agentmail.to/api-reference
 - aid: agentmail:agentmail-webhooks-api
-  name: AgentMail webhooks API
+  name: AgentMail Webhooks API
   description: The webhooks API from AgentMail — 2 operation(s) for webhooks.
   humanURL: https://docs.agentmail.to
   baseURL: https://api.agentmail.to
