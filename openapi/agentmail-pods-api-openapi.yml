@@ -166,11 +166,19 @@ paths:
                 $ref: '#/components/schemas/type__ErrorResponse'
 components:
   schemas:
-    type__ErrorFix:
+    type__ErrorName:
       type: string
-      description: The concrete next action that resolves the error.
-      title: ErrorFix
-    type__ErrorResponse:
+      description: Name of error.
+      title: ErrorName
+    type_pods_CreatePodRequest:
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/type_pods_Name'
+        client_id:
+          $ref: '#/components/schemas/type_pods_ClientId'
+      title: CreatePodRequest
+    type__ValidationErrorResponse:
       type: object
       properties:
         name:
@@ -179,26 +187,46 @@ components:
           $ref: '#/components/schemas/type__ErrorCode'
         message:
           $ref: '#/components/schemas/type__ErrorMessage'
+        errors:
+          description: Validation errors. Each entry has a path and a message identifying the invalid field.
         fix:
           $ref: '#/components/schemas/type__ErrorFix'
         docs:
           $ref: '#/components/schemas/type__ErrorDocs'
       required:
       - name
-      - message
-      title: ErrorResponse
-    type__ErrorCode:
+      - errors
+      title: ValidationErrorResponse
+    type__ErrorDocs:
       type: string
-      description: Stable, machine-readable error code in snake_case (for example, not_found or missing_permission). Branch on this rather than the message text.
-      title: ErrorCode
+      description: Link to the error reference entry for this code.
+      title: ErrorDocs
     type_pods_Name:
       type: string
       description: Name of pod.
       title: Name
-    type__ErrorMessage:
+    type_pods_ListPodsResponse:
+      type: object
+      properties:
+        count:
+          $ref: '#/components/schemas/type__Count'
+        limit:
+          $ref: '#/components/schemas/type__Limit'
+        next_page_token:
+          $ref: '#/components/schemas/type__PageToken'
+        pods:
+          type: array
+          items:
+            $ref: '#/components/schemas/type_pods_Pod'
+          description: Ordered by `created_at` descending.
+      required:
+      - count
+      - pods
+      title: ListPodsResponse
+    type__PageToken:
       type: string
-      description: Error message.
-      title: ErrorMessage
+      description: Page token for pagination.
+      title: PageToken
     type_pods_Pod:
       type: object
       properties:
@@ -222,41 +250,27 @@ components:
       - updated_at
       - created_at
       title: Pod
-    type_pods_CreatePodRequest:
-      type: object
-      properties:
-        name:
-          $ref: '#/components/schemas/type_pods_Name'
-        client_id:
-          $ref: '#/components/schemas/type_pods_ClientId'
-      title: CreatePodRequest
-    type_pods_ListPodsResponse:
-      type: object
-      properties:
-        count:
-          $ref: '#/components/schemas/type__Count'
-        limit:
-          $ref: '#/components/schemas/type__Limit'
-        next_page_token:
-          $ref: '#/components/schemas/type__PageToken'
-        pods:
-          type: array
-          items:
-            $ref: '#/components/schemas/type_pods_Pod'
-          description: Ordered by `created_at` descending.
-      required:
-      - count
-      - pods
-      title: ListPodsResponse
+    type__Ascending:
+      type: boolean
+      description: Sort in ascending temporal order.
+      title: Ascending
     type_pods_PodId:
       type: string
       description: ID of pod.
       title: PodId
+    type__ErrorCode:
+      type: string
+      description: Stable, machine-readable error code in snake_case (for example, not_found or missing_permission). Branch on this rather than the message text.
+      title: ErrorCode
     type__Limit:
       type: integer
       description: Limit of number of items returned.
       title: Limit
-    type__ValidationErrorResponse:
+    type__Count:
+      type: integer
+      description: Number of items returned.
+      title: Count
+    type__ErrorResponse:
       type: object
       properties:
         name:
@@ -265,40 +279,26 @@ components:
           $ref: '#/components/schemas/type__ErrorCode'
         message:
           $ref: '#/components/schemas/type__ErrorMessage'
-        errors:
-          description: Validation errors. Each entry has a path and a message identifying the invalid field.
         fix:
           $ref: '#/components/schemas/type__ErrorFix'
         docs:
           $ref: '#/components/schemas/type__ErrorDocs'
       required:
       - name
-      - errors
-      title: ValidationErrorResponse
-    type__ErrorName:
-      type: string
-      description: Name of error.
-      title: ErrorName
+      - message
+      title: ErrorResponse
     type_pods_ClientId:
       type: string
       description: Client ID of pod.
       title: ClientId
-    type__Count:
-      type: integer
-      description: Number of items returned.
-      title: Count
-    type__Ascending:
-      type: boolean
-      description: Sort in ascending temporal order.
-      title: Ascending
-    type__PageToken:
+    type__ErrorFix:
       type: string
-      description: Page token for pagination.
-      title: PageToken
-    type__ErrorDocs:
+      description: The concrete next action that resolves the error.
+      title: ErrorFix
+    type__ErrorMessage:
       type: string
-      description: Link to the error reference entry for this code.
-      title: ErrorDocs
+      description: Error message.
+      title: ErrorMessage
   securitySchemes:
     Bearer:
       type: http
