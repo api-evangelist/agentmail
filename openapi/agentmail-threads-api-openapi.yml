@@ -365,95 +365,22 @@ paths:
                 $ref: '#/components/schemas/type__ErrorResponse'
 components:
   schemas:
-    type_attachments_AttachmentResponse:
-      type: object
-      properties:
-        attachment_id:
-          $ref: '#/components/schemas/type_attachments_AttachmentId'
-        filename:
-          $ref: '#/components/schemas/type_attachments_AttachmentFilename'
-        size:
-          $ref: '#/components/schemas/type_attachments_AttachmentSize'
-        content_type:
-          $ref: '#/components/schemas/type_attachments_AttachmentContentType'
-        content_disposition:
-          $ref: '#/components/schemas/type_attachments_AttachmentContentDisposition'
-        content_id:
-          $ref: '#/components/schemas/type_attachments_AttachmentContentId'
-        download_url:
-          type: string
-          description: URL to download the attachment.
-        expires_at:
-          type: string
-          format: date-time
-          description: Time at which the download URL expires.
-      required:
-      - attachment_id
-      - size
-      - download_url
-      - expires_at
-      title: AttachmentResponse
-    type_messages_MessageUpdatedAt:
-      type: string
-      format: date-time
-      description: Time at which message was last updated.
-      title: MessageUpdatedAt
-    type_threads_ThreadSentTimestamp:
-      type: string
-      format: date-time
-      description: Timestamp of last sent message.
-      title: ThreadSentTimestamp
-    type_threads_UpdateThreadRequest:
-      type: object
-      properties:
-        add_labels:
-          type: array
-          items:
-            type: string
-          description: Labels to add to thread. Cannot be system labels.
-        remove_labels:
-          type: array
-          items:
-            type: string
-          description: Labels to remove from thread. Cannot be system labels. Takes priority over `add_labels` (in the event of duplicate labels passed in).
-      title: UpdateThreadRequest
-    type_threads_ThreadMessageCount:
-      type: integer
-      description: Number of messages in thread.
-      title: ThreadMessageCount
-    type_attachments_AttachmentContentDisposition:
-      type: string
-      enum:
-      - inline
-      - attachment
-      description: Content disposition of attachment.
-      title: AttachmentContentDisposition
-    type__Limit:
-      type: integer
-      description: Limit of number of items returned.
-      title: Limit
     type_messages_MessageInReplyTo:
       type: string
       description: ID of message being replied to.
       title: MessageInReplyTo
-    type__IncludeUnauthenticated:
-      type: boolean
-      description: Include unauthenticated in results.
-      title: IncludeUnauthenticated
-    type_messages_MessageSubject:
+    type_threads_ThreadSize:
+      type: integer
+      description: Size of thread in bytes.
+      title: ThreadSize
+    type_messages_MessageFrom:
       type: string
-      description: Subject of message.
-      title: MessageSubject
-    type_threads_ThreadSenders:
-      type: array
-      items:
-        type: string
-      description: Senders in thread. In format `username@domain.com` or `Display Name <username@domain.com>`.
-      title: ThreadSenders
-    type__ErrorName:
-      type: string
-      description: Name of error.
-      title: ErrorName
+      description: Address of sender. In format `username@domain.com` or `Display Name <username@domain.com>`.
+      title: MessageFrom
+    type__Limit:
+      type: integer
+      description: Limit of number of items returned.
+      title: Limit
     type_messages_Message:
       type: object
       properties:
@@ -520,118 +447,18 @@ components:
       - updated_at
       - created_at
       title: Message
-    type_threads_ThreadReceivedTimestamp:
-      type: string
-      format: date-time
-      description: Timestamp of last received message.
-      title: ThreadReceivedTimestamp
-    type_messages_MessageCc:
-      type: array
-      items:
-        type: string
-      description: Addresses of CC recipients. In format `username@domain.com` or `Display Name <username@domain.com>`.
-      title: MessageCc
-    type_threads_ThreadSize:
-      type: integer
-      description: Size of thread in bytes.
-      title: ThreadSize
-    type_attachments_AttachmentFilename:
-      type: string
-      description: Filename of attachment.
-      title: AttachmentFilename
-    type_threads_ThreadCreatedAt:
-      type: string
-      format: date-time
-      description: Time at which thread was created.
-      title: ThreadCreatedAt
-    type__ErrorDocs:
-      type: string
-      description: Link to the error reference entry for this code.
-      title: ErrorDocs
-    type__IncludeBlocked:
+    type__IncludeUnauthenticated:
       type: boolean
-      description: Include blocked in results.
-      title: IncludeBlocked
-    type_attachments_AttachmentId:
+      description: Include unauthenticated in results.
+      title: IncludeUnauthenticated
+    type_attachments_AttachmentContentId:
       type: string
-      description: ID of attachment.
-      title: AttachmentId
-    type_threads_ThreadAttachments:
-      type: array
-      items:
-        $ref: '#/components/schemas/type_attachments_Attachment'
-      description: Attachments in thread.
-      title: ThreadAttachments
-    type_inboxes_InboxId:
-      type: string
-      description: The ID of the inbox.
-      title: InboxId
-    type_messages_MessageId:
-      type: string
-      description: ID of message.
-      title: MessageId
-    type__Ascending:
+      description: Content ID of attachment.
+      title: AttachmentContentId
+    type__IncludeSpam:
       type: boolean
-      description: Sort in ascending temporal order.
-      title: Ascending
-    type_threads_ThreadRecipients:
-      type: array
-      items:
-        type: string
-      description: Recipients in thread. In format `username@domain.com` or `Display Name <username@domain.com>`.
-      title: ThreadRecipients
-    type_threads_ThreadItem:
-      type: object
-      properties:
-        inbox_id:
-          $ref: '#/components/schemas/type_inboxes_InboxId'
-        thread_id:
-          $ref: '#/components/schemas/type_threads_ThreadId'
-        labels:
-          $ref: '#/components/schemas/type_threads_ThreadLabels'
-        timestamp:
-          $ref: '#/components/schemas/type_threads_ThreadTimestamp'
-        received_timestamp:
-          $ref: '#/components/schemas/type_threads_ThreadReceivedTimestamp'
-        sent_timestamp:
-          $ref: '#/components/schemas/type_threads_ThreadSentTimestamp'
-        senders:
-          $ref: '#/components/schemas/type_threads_ThreadSenders'
-        recipients:
-          $ref: '#/components/schemas/type_threads_ThreadRecipients'
-        subject:
-          $ref: '#/components/schemas/type_threads_ThreadSubject'
-        preview:
-          $ref: '#/components/schemas/type_threads_ThreadPreview'
-        attachments:
-          $ref: '#/components/schemas/type_threads_ThreadAttachments'
-        last_message_id:
-          $ref: '#/components/schemas/type_threads_ThreadLastMessageId'
-        message_count:
-          $ref: '#/components/schemas/type_threads_ThreadMessageCount'
-        size:
-          $ref: '#/components/schemas/type_threads_ThreadSize'
-        updated_at:
-          $ref: '#/components/schemas/type_threads_ThreadUpdatedAt'
-        created_at:
-          $ref: '#/components/schemas/type_threads_ThreadCreatedAt'
-      required:
-      - inbox_id
-      - thread_id
-      - labels
-      - timestamp
-      - senders
-      - recipients
-      - last_message_id
-      - message_count
-      - size
-      - updated_at
-      - created_at
-      title: ThreadItem
-    type_messages_MessageSize:
-      type: integer
-      description: Size of message in bytes.
-      title: MessageSize
+      description: Include spam in results.
+      title: IncludeSpam
     type_threads_UpdateThreadResponse:
       type: object
       properties:
@@ -643,50 +470,14 @@ components:
       - thread_id
       - labels
       title: UpdateThreadResponse
-    type_threads_SearchThreadsResponse:
-      type: object
-      properties:
-        count:
-          $ref: '#/components/schemas/type__Count'
-        limit:
-          $ref: '#/components/schemas/type__Limit'
-        next_page_token:
-          $ref: '#/components/schemas/type__PageToken'
-        threads:
-          type: array
-          items:
-            $ref: '#/components/schemas/type_threads_SearchThreadItem'
-          description: Ordered by relevance, best match first.
-      required:
-      - count
-      - threads
-      title: SearchThreadsResponse
-    type_threads_ThreadSubject:
+    type_threads_ThreadPreview:
       type: string
-      description: Subject of thread.
-      title: ThreadSubject
-    type__After:
+      description: Text preview of last message in thread.
+      title: ThreadPreview
+    type_messages_MessagePreview:
       type: string
-      format: date-time
-      description: Timestamp after which to filter by.
-      title: After
-    type_messages_MessageReferences:
-      type: array
-      items:
-        type: string
-      description: IDs of previous messages in thread.
-      title: MessageReferences
-    type_threads_ThreadTimestamp:
-      type: string
-      format: date-time
-      description: Timestamp of last sent or received message.
-      title: ThreadTimestamp
-    type_messages_MessageLabels:
-      type: array
-      items:
-        type: string
-      description: Labels of message.
-      title: MessageLabels
+      description: Text preview of message.
+      title: MessagePreview
     type_attachments_Attachment:
       type: object
       properties:
@@ -706,108 +497,119 @@ components:
       - attachment_id
       - size
       title: Attachment
-    type_messages_MessageFrom:
-      type: string
-      description: Address of sender. In format `username@domain.com` or `Display Name <username@domain.com>`.
-      title: MessageFrom
-    type__ValidationErrorResponse:
+    type_threads_ListThreadsResponse:
       type: object
       properties:
-        name:
-          $ref: '#/components/schemas/type__ErrorName'
-        code:
-          $ref: '#/components/schemas/type__ErrorCode'
-        message:
-          $ref: '#/components/schemas/type__ErrorMessage'
-        errors:
-          description: Validation errors. Each entry has a path and a message identifying the invalid field.
-        fix:
-          $ref: '#/components/schemas/type__ErrorFix'
-        docs:
-          $ref: '#/components/schemas/type__ErrorDocs'
+        count:
+          $ref: '#/components/schemas/type__Count'
+        limit:
+          $ref: '#/components/schemas/type__Limit'
+        next_page_token:
+          $ref: '#/components/schemas/type__PageToken'
+        threads:
+          type: array
+          items:
+            $ref: '#/components/schemas/type_threads_ThreadItem'
+          description: Ordered by `timestamp` descending.
       required:
-      - name
-      - errors
-      title: ValidationErrorResponse
-    type_messages_MessageText:
-      type: string
-      description: Plain text body of message.
-      title: MessageText
-    type_messages_MessageHeaders:
-      type: object
-      additionalProperties:
-        type: string
-      description: Headers in message.
-      title: MessageHeaders
-    type_threads_ThreadLastMessageId:
-      type: string
-      description: ID of last message in thread.
-      title: ThreadLastMessageId
-    type__ErrorCode:
-      type: string
-      description: Stable, machine-readable error code in snake_case (for example, not_found or missing_permission). Branch on this rather than the message text.
-      title: ErrorCode
-    type_messages_MessageAttachments:
-      type: array
-      items:
-        $ref: '#/components/schemas/type_attachments_Attachment'
-      description: Attachments in message.
-      title: MessageAttachments
-    type__Labels:
+      - count
+      - threads
+      title: ListThreadsResponse
+    type_messages_MessageLabels:
       type: array
       items:
         type: string
-      description: Labels to filter by.
-      title: Labels
+      description: Labels of message.
+      title: MessageLabels
+    type_threads_ThreadRecipients:
+      type: array
+      items:
+        type: string
+      description: Recipients in thread. In format `username@domain.com` or `Display Name <username@domain.com>`.
+      title: ThreadRecipients
+    type_threads_ThreadCreatedAt:
+      type: string
+      format: date-time
+      description: Time at which thread was created.
+      title: ThreadCreatedAt
+    type_messages_MessageCc:
+      type: array
+      items:
+        type: string
+      description: Addresses of CC recipients. In format `username@domain.com` or `Display Name <username@domain.com>`.
+      title: MessageCc
+    type_attachments_AttachmentContentDisposition:
+      type: string
+      enum:
+      - inline
+      - attachment
+      description: Content disposition of attachment.
+      title: AttachmentContentDisposition
     type_messages_MessageTimestamp:
       type: string
       format: date-time
       description: Time at which message was sent or drafted.
       title: MessageTimestamp
-    type_attachments_AttachmentContentId:
+    type_attachments_AttachmentFilename:
       type: string
-      description: Content ID of attachment.
-      title: AttachmentContentId
-    type__ErrorResponse:
-      type: object
-      properties:
-        name:
-          $ref: '#/components/schemas/type__ErrorName'
-        code:
-          $ref: '#/components/schemas/type__ErrorCode'
-        message:
-          $ref: '#/components/schemas/type__ErrorMessage'
-        fix:
-          $ref: '#/components/schemas/type__ErrorFix'
-        docs:
-          $ref: '#/components/schemas/type__ErrorDocs'
-      required:
-      - name
-      - message
-      title: ErrorResponse
-    type__ErrorFix:
-      type: string
-      description: The concrete next action that resolves the error.
-      title: ErrorFix
-    type__IncludeTrash:
-      type: boolean
-      description: Include trash in results.
-      title: IncludeTrash
-    type__Before:
+      description: Filename of attachment.
+      title: AttachmentFilename
+    type_threads_ThreadReceivedTimestamp:
       type: string
       format: date-time
-      description: Timestamp before which to filter by.
-      title: Before
+      description: Timestamp of last received message.
+      title: ThreadReceivedTimestamp
+    type_threads_ThreadTimestamp:
+      type: string
+      format: date-time
+      description: Timestamp of last sent or received message.
+      title: ThreadTimestamp
+    type__Count:
+      type: integer
+      description: Number of items returned.
+      title: Count
+    type_messages_MessageSubject:
+      type: string
+      description: Subject of message.
+      title: MessageSubject
+    type_attachments_AttachmentResponse:
+      type: object
+      properties:
+        attachment_id:
+          $ref: '#/components/schemas/type_attachments_AttachmentId'
+        filename:
+          $ref: '#/components/schemas/type_attachments_AttachmentFilename'
+        size:
+          $ref: '#/components/schemas/type_attachments_AttachmentSize'
+        content_type:
+          $ref: '#/components/schemas/type_attachments_AttachmentContentType'
+        content_disposition:
+          $ref: '#/components/schemas/type_attachments_AttachmentContentDisposition'
+        content_id:
+          $ref: '#/components/schemas/type_attachments_AttachmentContentId'
+        download_url:
+          type: string
+          description: URL to download the attachment.
+        expires_at:
+          type: string
+          format: date-time
+          description: Time at which the download URL expires.
+      required:
+      - attachment_id
+      - size
+      - download_url
+      - expires_at
+      title: AttachmentResponse
     type_threads_ThreadLabels:
       type: array
       items:
         type: string
       description: Labels of thread.
       title: ThreadLabels
-    type__ErrorMessage:
+    type_attachments_AttachmentId:
       type: string
-      description: Error message.
-      title: ErrorMessage
+      description: ID of attachment.
+      title: AttachmentId
     type_threads_SearchThreadItem:
       type: object
       properties:
@@ -859,6 +661,65 @@ components:
       - updated_at
       - created_at
       title: SearchThreadItem
+    type__ValidationErrorResponse:
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/type__ErrorName'
+        code:
+          $ref: '#/components/schemas/type__ErrorCode'
+        message:
+          $ref: '#/components/schemas/type__ErrorMessage'
+        errors:
+          description: Validation errors. Each entry has a path and a message identifying the invalid field.
+        fix:
+          $ref: '#/components/schemas/type__ErrorFix'
+        docs:
+          $ref: '#/components/schemas/type__ErrorDocs'
+      required:
+      - name
+      - errors
+      title: ValidationErrorResponse
+    type__PageToken:
+      type: string
+      description: Page token for pagination.
+      title: PageToken
+    type_messages_MessageAttachments:
+      type: array
+      items:
+        $ref: '#/components/schemas/type_attachments_Attachment'
+      description: Attachments in message.
+      title: MessageAttachments
+    type_inboxes_InboxId:
+      type: string
+      description: The ID of the inbox.
+      title: InboxId
+    type_messages_MessageUpdatedAt:
+      type: string
+      format: date-time
+      description: Time at which message was last updated.
+      title: MessageUpdatedAt
+    type__IncludeTrash:
+      type: boolean
+      description: Include trash in results.
+      title: IncludeTrash
+    type_messages_MessageCreatedAt:
+      type: string
+      format: date-time
+      description: Time at which message was created.
+      title: MessageCreatedAt
+    type__ErrorCode:
+      type: string
+      description: Stable, machine-readable error code in snake_case (for example, not_found or missing_permission). Branch on this rather than the message text.
+      title: ErrorCode
+    type__ErrorDocs:
+      type: string
+      description: Link to the error reference entry for this code.
+      title: ErrorDocs
+    type_messages_MessageSize:
+      type: integer
+      description: Size of message in bytes.
+      title: MessageSize
     type_threads_SearchThreadHighlights:
       type: object
       properties:
@@ -888,88 +749,116 @@ components:
 
         field, so the present keys also tell you which fields produced the hit.'
       title: SearchThreadHighlights
-    type_messages_MessagePreview:
+    type__ErrorFix:
       type: string
-      description: Text preview of message.
-      title: MessagePreview
-    type_messages_MessageBcc:
+      description: The concrete next action that resolves the error.
+      title: ErrorFix
+    type__ErrorName:
+      type: string
+      description: Name of error.
+      title: ErrorName
+    type_threads_ThreadMessageCount:
+      type: integer
+      description: Number of messages in thread.
+      title: ThreadMessageCount
+    type_threads_ThreadSenders:
       type: array
       items:
         type: string
-      description: Addresses of BCC recipients. In format `username@domain.com` or `Display Name <username@domain.com>`.
-      title: MessageBcc
-    type_threads_ThreadUpdatedAt:
+      description: Senders in thread. In format `username@domain.com` or `Display Name <username@domain.com>`.
+      title: ThreadSenders
+    type_messages_MessageText:
       type: string
-      format: date-time
-      description: Time at which thread was last updated.
-      title: ThreadUpdatedAt
-    type_messages_MessageHtml:
-      type: string
-      description: HTML body of message.
-      title: MessageHtml
-    type__PageToken:
-      type: string
-      description: Page token for pagination.
-      title: PageToken
-    type_threads_ThreadId:
-      type: string
-      description: ID of thread.
-      title: ThreadId
-    type_attachments_AttachmentContentType:
-      type: string
-      description: Content type of attachment.
-      title: AttachmentContentType
-    type__IncludeSpam:
+      description: Plain text body of message.
+      title: MessageText
+    type_messages_MessageReferences:
+      type: array
+      items:
+        type: string
+      description: IDs of previous messages in thread.
+      title: MessageReferences
+    type__IncludeBlocked:
       type: boolean
-      description: Include spam in results.
-      title: IncludeSpam
-    type__Query:
-      type: string
-      description: 'Full-text search query. Matched against the sender, recipients, and
-
-        subject (substring) and the message body (tokenized full text).'
-      title: Query
-    type_attachments_AttachmentSize:
-      type: integer
-      description: Size of attachment in bytes.
-      title: AttachmentSize
-    type_threads_ListThreadsResponse:
+      description: Include blocked in results.
+      title: IncludeBlocked
+    type_threads_ThreadItem:
       type: object
       properties:
-        count:
-          $ref: '#/components/schemas/type__Count'
-        limit:
-          $ref: '#/components/schemas/type__Limit'
-        next_page_token:
-          $ref: '#/components/schemas/type__PageToken'
-        threads:
+        inbox_id:
+          $ref: '#/components/schemas/type_inboxes_InboxId'
+        thread_id:
+          $ref: '#/components/schemas/type_threads_ThreadId'
+        labels:
+          $ref: '#/components/schemas/type_threads_ThreadLabels'
+        timestamp:
+          $ref: '#/components/schemas/type_threads_ThreadTimestamp'
+        received_timestamp:
+          $ref: '#/components/schemas/type_threads_ThreadReceivedTimestamp'
+        sent_timestamp:
+          $ref: '#/components/schemas/type_threads_ThreadSentTimestamp'
+        senders:
+          $ref: '#/components/schemas/type_threads_ThreadSenders'
+        recipients:
+          $ref: '#/components/schemas/type_threads_ThreadRecipients'
+        subject:
+          $ref: '#/components/schemas/type_threads_ThreadSubject'
+        preview:
+          $ref: '#/components/schemas/type_threads_ThreadPreview'
+        attachments:
+          $ref: '#/components/schemas/type_threads_ThreadAttachments'
+        last_message_id:
+          $ref: '#/components/schemas/type_threads_ThreadLastMessageId'
+        message_count:
+          $ref: '#/components/schemas/type_threads_ThreadMessageCount'
+        size:
+          $ref: '#/components/schemas/type_threads_ThreadSize'
+        updated_at:
+          $ref: '#/components/schemas/type_threads_ThreadUpdatedAt'
+        created_at:
+          $ref: '#/components/schemas/type_threads_ThreadCreatedAt'
+      required:
+      - inbox_id
+      - thread_id
+      - labels
+      - timestamp
+      - senders
+      - recipients
+      - last_message_id
+      - message_count
+      - size
+      - updated_at
+      - created_at
+      title: ThreadItem
+    type_threads_UpdateThreadRequest:
+      type: object
+      properties:
+        add_labels:
           type: array
           items:
-            $ref: '#/components/schemas/type_threads_ThreadItem'
-          description: Ordered by `timestamp` descending.
-      required:
-      - count
-      - threads
-      title: ListThreadsResponse
-    type__Count:
-      type: integer
-      description: Number of items returned.
-      title: Count
-    type_messages_MessageCreatedAt:
+            type: string
+          description: Labels to add to thread. Cannot be system labels.
+        remove_labels:
+          type: array
+          items:
+            type: string
+          description: Labels to remove from thread. Cannot be system labels. Takes priority over `add_labels` (in the event of duplicate labels passed in).
+      title: UpdateThreadRequest
+    type_messages_MessageHeaders:
+      type: object
+      additionalProperties:
+        type: string
+      description: Headers in message.
+      title: MessageHeaders
+    type_messages_MessageId:
       type: string
-      format: date-time
-      description: Time at which message was created.
-      title: MessageCreatedAt
-    type_threads_ThreadPreview:
-      type: string
-      description: Text preview of last message in thread.
-      title: ThreadPreview
-    type_messages_MessageTo:
+      description: ID of message.
+      title: MessageId
+    type__Labels:
       type: array
       items:
         type: string
-      description: Addresses of recipients. In format `username@domain.com` or `Display Name <username@domain.com>`.
-      title: MessageTo
+      description: Labels to filter by.
+      title: Labels
     type_threads_Thread:
       type: object
       properties:
@@ -1024,6 +913,117 @@ components:
       - created_at
       - messages
       title: Thread
+    type_threads_SearchThreadsResponse:
+      type: object
+      properties:
+        count:
+          $ref: '#/components/schemas/type__Count'
+        limit:
+          $ref: '#/components/schemas/type__Limit'
+        next_page_token:
+          $ref: '#/components/schemas/type__PageToken'
+        threads:
+          type: array
+          items:
+            $ref: '#/components/schemas/type_threads_SearchThreadItem'
+          description: Ordered by relevance, best match first.
+      required:
+      - count
+      - threads
+      title: SearchThreadsResponse
+    type__Before:
+      type: string
+      format: date-time
+      description: Timestamp before which to filter by.
+      title: Before
+    type_messages_MessageBcc:
+      type: array
+      items:
+        type: string
+      description: Addresses of BCC recipients. In format `username@domain.com` or `Display Name <username@domain.com>`.
+      title: MessageBcc
+    type_messages_MessageTo:
+      type: array
+      items:
+        type: string
+      description: Addresses of recipients. In format `username@domain.com` or `Display Name <username@domain.com>`.
+      title: MessageTo
+    type_threads_ThreadId:
+      type: string
+      description: ID of thread.
+      title: ThreadId
+    type_threads_ThreadSentTimestamp:
+      type: string
+      format: date-time
+      description: Timestamp of last sent message.
+      title: ThreadSentTimestamp
+    type_threads_ThreadSubject:
+      type: string
+      description: Subject of thread.
+      title: ThreadSubject
+    type__ErrorResponse:
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/type__ErrorName'
+        code:
+          $ref: '#/components/schemas/type__ErrorCode'
+        message:
+          $ref: '#/components/schemas/type__ErrorMessage'
+        fix:
+          $ref: '#/components/schemas/type__ErrorFix'
+        docs:
+          $ref: '#/components/schemas/type__ErrorDocs'
+      required:
+      - name
+      - message
+      title: ErrorResponse
+    type_threads_ThreadLastMessageId:
+      type: string
+      description: ID of last message in thread.
+      title: ThreadLastMessageId
+    type__Ascending:
+      type: boolean
+      description: Sort in ascending temporal order.
+      title: Ascending
+    type__After:
+      type: string
+      format: date-time
+      description: Timestamp after which to filter by.
+      title: After
+    type_threads_ThreadUpdatedAt:
+      type: string
+      format: date-time
+      description: Time at which thread was last updated.
+      title: ThreadUpdatedAt
+    type_messages_MessageHtml:
+      type: string
+      description: HTML body of message.
+      title: MessageHtml
+    type_threads_ThreadAttachments:
+      type: array
+      items:
+        $ref: '#/components/schemas/type_attachments_Attachment'
+      description: Attachments in thread.
+      title: ThreadAttachments
+    type_attachments_AttachmentContentType:
+      type: string
+      description: Content type of attachment.
+      title: AttachmentContentType
+    type__Query:
+      type: string
+      description: 'Full-text search query. Matched against the sender, recipients, and
+
+        subject (substring) and the message body (tokenized full text).'
+      title: Query
+    type__ErrorMessage:
+      type: string
+      description: Error message.
+      title: ErrorMessage
+    type_attachments_AttachmentSize:
+      type: integer
+      description: Size of attachment in bytes.
+      title: AttachmentSize
   securitySchemes:
     Bearer:
       type: http
