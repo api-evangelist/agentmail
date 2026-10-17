@@ -46,10 +46,14 @@ paths:
                 $ref: '#/components/schemas/type_auth_Identity'
 components:
   schemas:
-    type__OrganizationId:
+    type_auth_ScopeType:
       type: string
-      description: ID of organization.
-      title: OrganizationId
+      enum:
+      - organization
+      - pod
+      - inbox
+      description: The scope tier the authenticated credential is bound to.
+      title: ScopeType
     type_auth_Identity:
       type: object
       properties:
@@ -77,14 +81,10 @@ components:
       - organization_id
       description: Identity and scope of the authenticated credential.
       title: Identity
-    type_auth_ScopeType:
+    type__OrganizationId:
       type: string
-      enum:
-      - organization
-      - pod
-      - inbox
-      description: The scope tier the authenticated credential is bound to.
-      title: ScopeType
+      description: ID of organization.
+      title: OrganizationId
   securitySchemes:
     Bearer:
       type: http
