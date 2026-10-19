@@ -1,0 +1,535 @@
+openapi: 3.2.0
+info:
+  title: Reference Apps API
+  version: 1.0.0
+servers:
+- url: https://api.agentmail.to
+  description: prod
+- url: https://x402.api.agentmail.to
+  description: prod-x402
+- url: https://mpp.api.agentmail.to
+  description: prod-mpp
+- url: https://api.agentmail.eu
+  description: eu-prod
+tags:
+- name: Apps
+paths:
+  /v0/apps:
+    get:
+      operationId: apps_list
+      summary: List Apps
+      description: Lists apps, most popular first.
+      tags:
+      - Apps
+      parameters:
+      - name: limit
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/Limit'
+      - name: page_token
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/PageToken'
+      - name: category
+        in: query
+        description: Only apps in this category. A filtered page can hold fewer than `limit` apps while more remain, so page until `next_page_token` is absent. A `page_token` works only with the `category` it was returned for.
+        required: false
+        schema:
+          $ref: '#/components/schemas/apps_AppCategory'
+      responses:
+        '200':
+          description: Response with status 200
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apps_ListAppsResponse'
+        '400':
+          description: Error response with status 400
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
+      security:
+      - Bearer: []
+  /v0/apps/search:
+    get:
+      operationId: apps_search
+      summary: Search Apps
+      description: Searches apps by name prefix.
+      tags:
+      - Apps
+      parameters:
+      - name: q
+        in: query
+        description: Name prefix to search for.
+        required: true
+        schema:
+          type: string
+      - name: limit
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/Limit'
+      responses:
+        '200':
+          description: Response with status 200
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apps_SearchAppsResponse'
+        '400':
+          description: Error response with status 400
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
+      security:
+      - Bearer: []
+  /v0/apps/{app_id}:
+    get:
+      operationId: apps_get
+      summary: Get App
+      description: 'Gets one app by ID or slug. A catalog app returns its full entry.
+
+        A registered app that the catalog does not list returns its ID and
+
+        name only, without `updated_at`, so anyone holding its ID can still look
+
+        it up; a slug finds catalog apps only. List Apps and Search Apps show
+
+        catalog entries only.'
+      tags:
+      - Apps
+      parameters:
+      - name: app_id
+        in: path
+        description: ID of app, or the `slug` of an app in the catalog. A slug ignores case, spaces and punctuation.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Response with status 200
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apps_App'
+        '404':
+          description: Error response with status 404
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - Bearer: []
+  /v0/apps/{app_id}/accounts:
+    get:
+      operationId: apps_listAccounts
+      summary: List App Accounts
+      description: Lists accounts at one app, most recent sign-in first.
+      tags:
+      - Apps
+      parameters:
+      - name: app_id
+        in: path
+        description: ID of app, or the `slug` of an app in the catalog. A slug ignores case, spaces and punctuation.
+        required: true
+        schema:
+          type: string
+      - name: limit
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/Limit'
+      - name: page_token
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/PageToken'
+      responses:
+        '200':
+          description: Response with status 200
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apps_ListAppAccountsResponse'
+        '400':
+          description: Error response with status 400
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
+      security:
+      - Bearer: []
+  /v0/apps/{app_id}/connect:
+    post:
+      operationId: apps_connect
+      summary: Connect App
+      description: 'Starts signing an inbox in to an app. Returns a single-use `magic_url`,
+
+        valid for five minutes, to open in the client that will hold the sign-in;
+
+        the client enrolls as the inbox and continues to the app.
+
+        An app in the catalog can be named by its `slug`, as in
+
+        `POST /v0/apps/firecrawl/connect`.
+
+        A `404` names the missing resource: `App` or `Inbox`.
+
+        A `403` `AppSignupLimitError` means the app accepts no more sign-ups from
+
+        your organization; sign in with an inbox that already has an account there.'
+      tags:
+      - Apps
+      parameters:
+      - name: app_id
+        in: path
+        description: ID of app, or the `slug` of an app in the catalog. A slug ignores case, spaces and punctuation.
+        required: true
+        schema:
+          type: string
+      responses:
+        '202':
+          description: Response with status 202
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apps_ConnectAccepted'
+        '400':
+          description: Error response with status 400
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
+        '403':
+          description: 'The app''s sign-up limit for your organization is reached, or the app has paused new
+
+            sign-ups. `code` is `limit_exceeded` and `fix` says which. Inboxes that already have an
+
+            account at the app can still sign in.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Error response with status 404
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/apps_ConnectAppBody'
+      security:
+      - Bearer: []
+components:
+  schemas:
+    apps_ConnectAppBody:
+      type: object
+      properties:
+        inbox_id:
+          $ref: '#/components/schemas/apps_ConnectInboxId'
+        accept_disclosure:
+          $ref: '#/components/schemas/apiKeys_AcceptDisclosure'
+      title: ConnectAppBody
+    ErrorMessage:
+      type: string
+      description: Error message.
+      title: ErrorMessage
+    apps_ConnectAccepted:
+      type: object
+      properties:
+        api_key_id:
+          $ref: '#/components/schemas/apiKeys_ApiKeyId'
+        magic_url:
+          $ref: '#/components/schemas/apps_MagicUrl'
+        expires_at:
+          $ref: '#/components/schemas/apiKeys_ExpiresAt'
+      required:
+      - api_key_id
+      - magic_url
+      - expires_at
+      description: The pending sign-in key the client will activate. Poll Get API Key with `api_key_id` for `status`.
+      title: ConnectAccepted
+    apps_SearchAppsResponse:
+      type: object
+      properties:
+        count:
+          $ref: '#/components/schemas/Count'
+        limit:
+          $ref: '#/components/schemas/Limit'
+        apps:
+          type: array
+          items:
+            $ref: '#/components/schemas/apps_App'
+      required:
+      - count
+      - limit
+      - apps
+      title: SearchAppsResponse
+    apps_AppCategory:
+      type: string
+      enum:
+      - ai
+      - search
+      - scraping
+      - browser
+      - data
+      - developer-tools
+      - communication
+      - productivity
+      - payments
+      - finance
+      - commerce
+      - marketing
+      - analytics
+      - security
+      - infrastructure
+      - other
+      description: Kind of app.
+      title: AppCategory
+    accounts_AccountId:
+      type: string
+      format: uuid
+      description: ID of account.
+      title: AccountId
+    accounts_AccountStatus:
+      type: string
+      enum:
+      - disabled
+      description: '`disabled` refuses every new sign-in for the account until it is
+
+        re-enabled. Access tokens already issued are not revoked.'
+      title: AccountStatus
+    PageToken:
+      type: string
+      description: Page token for pagination.
+      title: PageToken
+    apiKeys_ExpiresAt:
+      type: string
+      format: date-time
+      description: Time at which api key expires. Omitted when it does not expire.
+      title: ExpiresAt
+    apps_ListAppAccountsResponse:
+      type: object
+      properties:
+        app:
+          $ref: '#/components/schemas/apps_App'
+        count:
+          $ref: '#/components/schemas/Count'
+        limit:
+          $ref: '#/components/schemas/Limit'
+        next_page_token:
+          $ref: '#/components/schemas/PageToken'
+        accounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/accounts_Account'
+      required:
+      - count
+      - limit
+      - accounts
+      title: ListAppAccountsResponse
+    ErrorDocs:
+      type: string
+      description: Link to the error reference entry for this code.
+      title: ErrorDocs
+    OrganizationId:
+      type: string
+      description: ID of organization.
+      title: OrganizationId
+    Count:
+      type: integer
+      description: Number of items returned.
+      title: Count
+    apps_ConnectInboxId:
+      $ref: '#/components/schemas/inboxes_InboxId'
+      description: Inbox to sign in as. Required unless the API key is scoped to an inbox.
+      title: ConnectInboxId
+    inboxes_InboxId:
+      type: string
+      description: The ID of the inbox.
+      title: InboxId
+    Limit:
+      type: integer
+      description: Limit of number of items returned.
+      title: Limit
+    ValidationErrorResponse:
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/ErrorName'
+        code:
+          $ref: '#/components/schemas/ErrorCode'
+        message:
+          $ref: '#/components/schemas/ErrorMessage'
+        errors:
+          description: Validation errors. Each entry has a path and a message identifying the invalid field.
+        fix:
+          $ref: '#/components/schemas/ErrorFix'
+        docs:
+          $ref: '#/components/schemas/ErrorDocs'
+      required:
+      - name
+      - errors
+      title: ValidationErrorResponse
+    ErrorFix:
+      type: string
+      description: The concrete next action that resolves the error.
+      title: ErrorFix
+    ErrorCode:
+      type: string
+      description: Stable, machine-readable error code in snake_case (for example, not_found or missing_permission). Branch on this rather than the message text.
+      title: ErrorCode
+    pods_PodId:
+      type: string
+      description: ID of pod.
+      title: PodId
+    apiKeys_ApiKeyId:
+      type: string
+      description: ID of api key.
+      title: ApiKeyId
+    accounts_Account:
+      type: object
+      properties:
+        account_id:
+          $ref: '#/components/schemas/accounts_AccountId'
+        app_id:
+          $ref: '#/components/schemas/apps_AppId'
+        app_name:
+          type: string
+          description: Display name of app.
+        inbox_id:
+          $ref: '#/components/schemas/inboxes_InboxId'
+        pod_id:
+          $ref: '#/components/schemas/pods_PodId'
+        organization_id:
+          $ref: '#/components/schemas/OrganizationId'
+        first_signed_in_at:
+          type: string
+          format: date-time
+          description: Time of first sign-in at app.
+        last_signed_in_at:
+          type: string
+          format: date-time
+          description: Time of most recent sign-in at app.
+        sign_in_count:
+          type: integer
+          description: Number of sign-ins at app.
+        status:
+          $ref: '#/components/schemas/accounts_AccountStatus'
+          description: Present only while the account is disabled. Absent means the inbox may sign in.
+        disabled_at:
+          type: string
+          format: date-time
+          description: Time at which the account was disabled. Present only while `status` is `disabled`.
+      required:
+      - account_id
+      - app_id
+      - inbox_id
+      - pod_id
+      - organization_id
+      - first_signed_in_at
+      - last_signed_in_at
+      - sign_in_count
+      description: One inbox signed in at one app.
+      title: Account
+    ErrorResponse:
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/ErrorName'
+        code:
+          $ref: '#/components/schemas/ErrorCode'
+        message:
+          $ref: '#/components/schemas/ErrorMessage'
+        fix:
+          $ref: '#/components/schemas/ErrorFix'
+        docs:
+          $ref: '#/components/schemas/ErrorDocs'
+      required:
+      - name
+      - message
+      title: ErrorResponse
+    ErrorName:
+      type: string
+      description: Name of error.
+      title: ErrorName
+    apps_ListAppsResponse:
+      type: object
+      properties:
+        count:
+          $ref: '#/components/schemas/Count'
+        limit:
+          $ref: '#/components/schemas/Limit'
+        next_page_token:
+          $ref: '#/components/schemas/PageToken'
+        apps:
+          type: array
+          items:
+            $ref: '#/components/schemas/apps_App'
+      required:
+      - count
+      - limit
+      - apps
+      title: ListAppsResponse
+    apps_App:
+      type: object
+      properties:
+        app_id:
+          $ref: '#/components/schemas/apps_AppId'
+        slug:
+          type: string
+          description: Short name accepted in place of `app_id` by Get App, List App Accounts and Connect App. Set by AgentMail on apps in the catalog; renaming the app does not change it. Store `app_id`, the app's permanent ID.
+        name:
+          type: string
+        updated_at:
+          type: string
+          format: date-time
+          description: Time at which app was last updated.
+        description:
+          type: string
+        logo_url:
+          type: string
+        terms_url:
+          type: string
+        privacy_url:
+          type: string
+        categories:
+          type: array
+          items:
+            $ref: '#/components/schemas/apps_AppCategory'
+          description: Kinds of app, up to 3. Omitted when the app sets none.
+        owner_signup_limit:
+          type: integer
+          description: Maximum number of accounts your organization may sign up at this app. Omitted when the app sets no limit. 0 means the app has paused new sign-ups; existing accounts keep signing in.
+      required:
+      - app_id
+      description: An app an inbox can sign in to.
+      title: App
+    apiKeys_AcceptDisclosure:
+      type: boolean
+      description: 'Accept the app''s disclosure on the agent''s behalf, skipping the
+
+        first-use disclosure page. Requires `app_share_owner` when owner
+
+        scopes are involved.'
+      title: AcceptDisclosure
+    apps_AppId:
+      type: string
+      format: uuid
+      description: ID of app.
+      title: AppId
+    apps_MagicUrl:
+      type: string
+      description: Single-use URL to open in the client that will hold the key.
+      title: MagicUrl
+  securitySchemes:
+    Bearer:
+      type: http
+      scheme: bearer

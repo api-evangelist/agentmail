@@ -16,13 +16,13 @@ tags:
 paths:
   /v0/pods/{pod_id}/inboxes:
     get:
-      operationId: list
+      operationId: pods_inboxes_list
       summary: List Inboxes
       description: '**CLI:**
 
         ```bash
 
-        agentmail pods:inboxes list --pod-id
+        agentmail pods inboxes list --pod-id
 
         ```'
       tags:
@@ -32,49 +32,45 @@ paths:
         in: path
         required: true
         schema:
-          $ref: '#/components/schemas/type_pods_PodId'
+          $ref: '#/components/schemas/pods_PodId'
       - name: limit
         in: query
         required: false
         schema:
-          $ref: '#/components/schemas/type__Limit'
+          $ref: '#/components/schemas/Limit'
       - name: page_token
         in: query
         required: false
         schema:
-          $ref: '#/components/schemas/type__PageToken'
+          $ref: '#/components/schemas/PageToken'
       - name: ascending
         in: query
         required: false
         schema:
-          $ref: '#/components/schemas/type__Ascending'
-      - name: Authorization
-        in: header
-        description: Bearer authentication
-        required: true
-        schema:
-          type: string
+          $ref: '#/components/schemas/Ascending'
       responses:
         '200':
           description: Response with status 200
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/type_inboxes_ListInboxesResponse'
+                $ref: '#/components/schemas/inboxes_ListInboxesResponse'
         '404':
           description: Error response with status 404
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/type__ErrorResponse'
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - Bearer: []
     post:
-      operationId: create
+      operationId: pods_inboxes_create
       summary: Create Inbox
       description: '**CLI:**
 
         ```bash
 
-        agentmail pods:inboxes create --pod-id --username myagent --domain example.com
+        agentmail pods inboxes create --pod-id --username myagent --domain example.com
 
         ```'
       tags:
@@ -84,46 +80,102 @@ paths:
         in: path
         required: true
         schema:
-          $ref: '#/components/schemas/type_pods_PodId'
-      - name: Authorization
-        in: header
-        description: Bearer authentication
-        required: true
-        schema:
-          type: string
+          $ref: '#/components/schemas/pods_PodId'
       responses:
         '200':
           description: Response with status 200
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/type_inboxes_Inbox'
+                $ref: '#/components/schemas/inboxes_Inbox'
         '400':
           description: Error response with status 400
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/type__ValidationErrorResponse'
+                $ref: '#/components/schemas/ValidationErrorResponse'
         '422':
           description: Error response with status 422
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/type__ErrorResponse'
+                $ref: '#/components/schemas/ErrorResponse'
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/type_inboxes_CreateInboxRequest'
+              $ref: '#/components/schemas/inboxes_CreateInboxRequest'
+      security:
+      - Bearer: []
+  /v0/pods/{pod_id}/inboxes/search:
+    get:
+      operationId: pods_inboxes_search
+      summary: Search Inboxes
+      description: 'Searches inboxes in the pod by address or display name, ranked by
+
+        relevance. Each word in the query matches the start of a word in the
+
+        address or display name, so `sup` matches `support@example.com` but
+
+        `port` does not. An exact address match always ranks first. `limit`
+
+        cannot exceed 100. A page can be empty and still carry a
+
+        `next_page_token`; keep paging until the token is absent.'
+      tags:
+      - pods > inboxes
+      parameters:
+      - name: pod_id
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/pods_PodId'
+      - name: q
+        in: query
+        description: Address or display name to search for. Matches word prefixes. Must be 2 to 256 characters.
+        required: true
+        schema:
+          type: string
+      - name: limit
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/Limit'
+      - name: page_token
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/PageToken'
+      responses:
+        '200':
+          description: Response with status 200
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inboxes_SearchInboxesResponse'
+        '400':
+          description: Error response with status 400
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
+        '404':
+          description: Error response with status 404
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - Bearer: []
   /v0/pods/{pod_id}/inboxes/{inbox_id}:
     get:
-      operationId: get
+      operationId: pods_inboxes_get
       summary: Get Inbox
       description: '**CLI:**
 
         ```bash
 
-        agentmail pods:inboxes get --pod-id --inbox-id
+        agentmail pods inboxes get --pod-id --inbox-id
 
         ```'
       tags:
@@ -133,39 +185,35 @@ paths:
         in: path
         required: true
         schema:
-          $ref: '#/components/schemas/type_pods_PodId'
+          $ref: '#/components/schemas/pods_PodId'
       - name: inbox_id
         in: path
         required: true
         schema:
-          $ref: '#/components/schemas/type_inboxes_InboxId'
-      - name: Authorization
-        in: header
-        description: Bearer authentication
-        required: true
-        schema:
-          type: string
+          $ref: '#/components/schemas/inboxes_InboxId'
       responses:
         '200':
           description: Response with status 200
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/type_inboxes_Inbox'
+                $ref: '#/components/schemas/inboxes_Inbox'
         '404':
           description: Error response with status 404
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/type__ErrorResponse'
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - Bearer: []
     patch:
-      operationId: update
+      operationId: pods_inboxes_update
       summary: Update Inbox
       description: '**CLI:**
 
         ```bash
 
-        agentmail pods:inboxes update --pod-id --inbox-id
+        agentmail pods inboxes update --pod-id --inbox-id
 
         ```'
       tags:
@@ -175,44 +223,46 @@ paths:
         in: path
         required: true
         schema:
-          $ref: '#/components/schemas/type_pods_PodId'
+          $ref: '#/components/schemas/pods_PodId'
       - name: inbox_id
         in: path
         required: true
         schema:
-          $ref: '#/components/schemas/type_inboxes_InboxId'
-      - name: Authorization
-        in: header
-        description: Bearer authentication
-        required: true
-        schema:
-          type: string
+          $ref: '#/components/schemas/inboxes_InboxId'
       responses:
         '200':
           description: Response with status 200
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/type_inboxes_Inbox'
+                $ref: '#/components/schemas/inboxes_Inbox'
         '404':
           description: Error response with status 404
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/type__ErrorResponse'
+                $ref: '#/components/schemas/ErrorResponse'
+        '409':
+          description: Error response with status 409
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/type_inboxes_UpdateInboxRequest'
+              $ref: '#/components/schemas/inboxes_UpdateInboxRequest'
+      security:
+      - Bearer: []
     delete:
-      operationId: delete
+      operationId: pods_inboxes_delete
       summary: Delete Inbox
       description: '**CLI:**
 
         ```bash
 
-        agentmail pods:inboxes delete --pod-id --inbox-id
+        agentmail pods inboxes delete --pod-id --inbox-id
 
         ```'
       tags:
@@ -222,18 +272,12 @@ paths:
         in: path
         required: true
         schema:
-          $ref: '#/components/schemas/type_pods_PodId'
+          $ref: '#/components/schemas/pods_PodId'
       - name: inbox_id
         in: path
         required: true
         schema:
-          $ref: '#/components/schemas/type_inboxes_InboxId'
-      - name: Authorization
-        in: header
-        description: Bearer authentication
-        required: true
-        schema:
-          type: string
+          $ref: '#/components/schemas/inboxes_InboxId'
       responses:
         '200':
           description: Successful response
@@ -242,127 +286,32 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/type__ErrorResponse'
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - Bearer: []
 components:
   schemas:
-    type__ValidationErrorResponse:
-      type: object
-      properties:
-        name:
-          $ref: '#/components/schemas/type__ErrorName'
-        code:
-          $ref: '#/components/schemas/type__ErrorCode'
-        message:
-          $ref: '#/components/schemas/type__ErrorMessage'
-        errors:
-          description: Validation errors. Each entry has a path and a message identifying the invalid field.
-        fix:
-          $ref: '#/components/schemas/type__ErrorFix'
-        docs:
-          $ref: '#/components/schemas/type__ErrorDocs'
-      required:
-      - name
-      - errors
-      title: ValidationErrorResponse
-    type_inboxes_ClientId:
-      type: string
-      description: Client ID of inbox.
-      title: ClientId
-    type__ErrorMessage:
+    ErrorMessage:
       type: string
       description: Error message.
       title: ErrorMessage
-    type__ErrorName:
-      type: string
-      description: Name of error.
-      title: ErrorName
-    type__Count:
-      type: integer
-      description: Number of items returned.
-      title: Count
-    type_pods_PodId:
-      type: string
-      description: ID of pod.
-      title: PodId
-    type__ErrorCode:
-      type: string
-      description: Stable, machine-readable error code in snake_case (for example, not_found or missing_permission). Branch on this rather than the message text.
-      title: ErrorCode
-    type_inboxes_UpdateInboxRequest:
-      type: object
-      properties:
-        display_name:
-          $ref: '#/components/schemas/type_inboxes_DisplayName'
-        metadata:
-          oneOf:
-          - $ref: '#/components/schemas/type_inboxes_UpdateMetadata'
-          - type: 'null'
-          description: 'Metadata to merge into the inbox''s existing metadata. Keys you include
-
-            are added or overwritten; keys you omit are left unchanged. To remove a
-
-            single key, send it with a null value. To clear all metadata, send
-
-            `metadata` as null. Sending an empty object is rejected; use null to
-
-            clear. Each update must include at least one of `display_name` or
-
-            `metadata`.'
-      title: UpdateInboxRequest
-    type__ErrorResponse:
-      type: object
-      properties:
-        name:
-          $ref: '#/components/schemas/type__ErrorName'
-        code:
-          $ref: '#/components/schemas/type__ErrorCode'
-        message:
-          $ref: '#/components/schemas/type__ErrorMessage'
-        fix:
-          $ref: '#/components/schemas/type__ErrorFix'
-        docs:
-          $ref: '#/components/schemas/type__ErrorDocs'
-      required:
-      - name
-      - message
-      title: ErrorResponse
-    type_inboxes_UpdateMetadata:
-      type: object
-      additionalProperties:
-        oneOf:
-        - $ref: '#/components/schemas/type_inboxes_MetadataValue'
-        - type: 'null'
-      description: 'Custom key-value pairs to merge into the inbox''s existing metadata. A
-
-        value may be a string, number, boolean, or null. Setting a key to null
-
-        removes it. Up to 256 keys; keys and string values are each limited to
-
-        256 characters.'
-      title: UpdateMetadata
-    type_inboxes_Metadata:
-      type: object
-      additionalProperties:
-        $ref: '#/components/schemas/type_inboxes_MetadataValue'
-      description: 'Custom key-value pairs attached to the inbox. Up to 256 keys. Keys and
-
-        string values are each limited to 256 characters. When updating metadata,
-
-        send a key with a null value to remove that key.'
-      title: Metadata
-    type__ErrorFix:
-      type: string
-      description: The concrete next action that resolves the error.
-      title: ErrorFix
-    type_inboxes_InboxId:
-      type: string
-      description: The ID of the inbox.
-      title: InboxId
-    type__PageToken:
+    Ascending:
+      type: boolean
+      description: Sort in ascending temporal order.
+      title: Ascending
+    PageToken:
       type: string
       description: Page token for pagination.
       title: PageToken
-    type_inboxes_CreateInboxRequest:
+    inboxes_Email:
+      type: string
+      description: Email address of the inbox.
+      title: Email
+    ErrorDocs:
+      type: string
+      description: Link to the error reference entry for this code.
+      title: ErrorDocs
+    inboxes_CreateInboxRequest:
       type: object
       properties:
         username:
@@ -376,36 +325,219 @@ components:
 
             Defaults to `agentmail.to`.'
         display_name:
-          $ref: '#/components/schemas/type_inboxes_DisplayName'
+          $ref: '#/components/schemas/inboxes_DisplayName'
         client_id:
-          $ref: '#/components/schemas/type_inboxes_ClientId'
+          $ref: '#/components/schemas/inboxes_ClientId'
+        status:
+          $ref: '#/components/schemas/inboxes_InboxStatus'
+          description: Set `paused` to create the inbox paused.
         metadata:
-          $ref: '#/components/schemas/type_inboxes_Metadata'
+          $ref: '#/components/schemas/inboxes_Metadata'
           description: Custom metadata to attach to the inbox.
       title: CreateInboxRequest
-    type__Ascending:
-      type: boolean
-      description: Sort in ascending temporal order.
-      title: Ascending
-    type__ErrorDocs:
+    inboxes_MetadataValue:
+      oneOf:
+      - type: string
+      - type: number
+        format: double
+      - type: boolean
+      description: A metadata value. May be a string, number, or boolean.
+      title: MetadataValue
+    Count:
+      type: integer
+      description: Number of items returned.
+      title: Count
+    inboxes_InboxId:
       type: string
-      description: Link to the error reference entry for this code.
-      title: ErrorDocs
-    type_inboxes_Inbox:
+      description: The ID of the inbox.
+      title: InboxId
+    inboxes_ListInboxesResponse:
+      type: object
+      properties:
+        count:
+          $ref: '#/components/schemas/Count'
+        limit:
+          $ref: '#/components/schemas/Limit'
+        next_page_token:
+          $ref: '#/components/schemas/PageToken'
+        inboxes:
+          type: array
+          items:
+            $ref: '#/components/schemas/inboxes_Inbox'
+          description: Ordered by `created_at` descending.
+      required:
+      - count
+      - inboxes
+      title: ListInboxesResponse
+    inboxes_Metadata:
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/inboxes_MetadataValue'
+      description: 'Custom key-value pairs attached to the inbox. Up to 256 keys. Keys and
+
+        string values are each limited to 256 characters. When updating metadata,
+
+        send a key with a null value to remove that key.'
+      title: Metadata
+    inboxes_UpdateInboxRequest:
+      type: object
+      properties:
+        display_name:
+          $ref: '#/components/schemas/inboxes_DisplayName'
+        status:
+          $ref: '#/components/schemas/inboxes_InboxStatus'
+          description: '`paused` stops the inbox sending and receiving mail; `active` resumes
+
+            it. Mail that arrived while the inbox was paused is not delivered on
+
+            resume.'
+        metadata:
+          oneOf:
+          - $ref: '#/components/schemas/inboxes_UpdateMetadata'
+          - type: 'null'
+          description: 'Metadata to merge into the inbox''s existing metadata. Keys you include
+
+            are added or overwritten; keys you omit are left unchanged. To remove a
+
+            single key, send it with a null value. To clear all metadata, send
+
+            `metadata` as null. Sending an empty object is rejected; use null to
+
+            clear. Each update must include at least one of `display_name`,
+
+            `status`, or `metadata`.'
+      title: UpdateInboxRequest
+    Limit:
+      type: integer
+      description: Limit of number of items returned.
+      title: Limit
+    ValidationErrorResponse:
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/ErrorName'
+        code:
+          $ref: '#/components/schemas/ErrorCode'
+        message:
+          $ref: '#/components/schemas/ErrorMessage'
+        errors:
+          description: Validation errors. Each entry has a path and a message identifying the invalid field.
+        fix:
+          $ref: '#/components/schemas/ErrorFix'
+        docs:
+          $ref: '#/components/schemas/ErrorDocs'
+      required:
+      - name
+      - errors
+      title: ValidationErrorResponse
+    ErrorFix:
+      type: string
+      description: The concrete next action that resolves the error.
+      title: ErrorFix
+    inboxes_DisplayName:
+      type: string
+      description: 'Display name: `Display Name <username@domain.com>`.'
+      title: DisplayName
+    inboxes_UpdateMetadata:
+      type: object
+      additionalProperties:
+        oneOf:
+        - $ref: '#/components/schemas/inboxes_MetadataValue'
+        - type: 'null'
+      description: 'Custom key-value pairs to merge into the inbox''s existing metadata. A
+
+        value may be a string, number, boolean, or null. Setting a key to null
+
+        removes it. Up to 256 keys; keys and string values are each limited to
+
+        256 characters.'
+      title: UpdateMetadata
+    ErrorCode:
+      type: string
+      description: Stable, machine-readable error code in snake_case (for example, not_found or missing_permission). Branch on this rather than the message text.
+      title: ErrorCode
+    pods_PodId:
+      type: string
+      description: ID of pod.
+      title: PodId
+    inboxes_SearchInboxesResponse:
+      type: object
+      properties:
+        count:
+          $ref: '#/components/schemas/Count'
+        limit:
+          $ref: '#/components/schemas/Limit'
+        next_page_token:
+          $ref: '#/components/schemas/PageToken'
+        inboxes:
+          type: array
+          items:
+            $ref: '#/components/schemas/inboxes_Inbox'
+          description: Ordered by relevance, best match first.
+      required:
+      - count
+      - inboxes
+      title: SearchInboxesResponse
+    inboxes_ClientId:
+      type: string
+      description: Client ID of inbox.
+      title: ClientId
+    ErrorResponse:
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/ErrorName'
+        code:
+          $ref: '#/components/schemas/ErrorCode'
+        message:
+          $ref: '#/components/schemas/ErrorMessage'
+        fix:
+          $ref: '#/components/schemas/ErrorFix'
+        docs:
+          $ref: '#/components/schemas/ErrorDocs'
+      required:
+      - name
+      - message
+      title: ErrorResponse
+    inboxes_InboxStatus:
+      type: string
+      enum:
+      - active
+      - paused
+      description: 'Whether the inbox sends and receives mail. `paused` stops both: sends
+
+        return `403` with code `inbox_paused`, and incoming mail is not
+
+        delivered and not bounced, then or on resume. Mail already in the inbox,
+
+        its drafts, and its API keys are kept. Set `active` to resume.'
+      title: InboxStatus
+    ErrorName:
+      type: string
+      description: Name of error.
+      title: ErrorName
+    inboxes_Inbox:
       type: object
       properties:
         pod_id:
-          $ref: '#/components/schemas/type_pods_PodId'
+          $ref: '#/components/schemas/pods_PodId'
         inbox_id:
-          $ref: '#/components/schemas/type_inboxes_InboxId'
+          $ref: '#/components/schemas/inboxes_InboxId'
         email:
-          $ref: '#/components/schemas/type_inboxes_Email'
+          $ref: '#/components/schemas/inboxes_Email'
         display_name:
-          $ref: '#/components/schemas/type_inboxes_DisplayName'
+          $ref: '#/components/schemas/inboxes_DisplayName'
         client_id:
-          $ref: '#/components/schemas/type_inboxes_ClientId'
+          $ref: '#/components/schemas/inboxes_ClientId'
+        status:
+          $ref: '#/components/schemas/inboxes_InboxStatus'
+          description: '`paused` when the inbox is paused. Omitted when the inbox is active.
+
+            Treat any value other than `paused` as an inbox that sends and
+
+            receives normally.'
         metadata:
-          $ref: '#/components/schemas/type_inboxes_Metadata'
+          $ref: '#/components/schemas/inboxes_Metadata'
           description: Custom metadata attached to the inbox.
         updated_at:
           type: string
@@ -422,44 +554,6 @@ components:
       - updated_at
       - created_at
       title: Inbox
-    type_inboxes_MetadataValue:
-      oneOf:
-      - type: string
-      - type: number
-        format: double
-      - type: boolean
-      description: A metadata value. May be a string, number, or boolean.
-      title: MetadataValue
-    type_inboxes_Email:
-      type: string
-      description: Email address of the inbox.
-      title: Email
-    type_inboxes_DisplayName:
-      type: string
-      description: 'Display name: `Display Name <username@domain.com>`.'
-      title: DisplayName
-    type_inboxes_ListInboxesResponse:
-      type: object
-      properties:
-        count:
-          $ref: '#/components/schemas/type__Count'
-        limit:
-          $ref: '#/components/schemas/type__Limit'
-        next_page_token:
-          $ref: '#/components/schemas/type__PageToken'
-        inboxes:
-          type: array
-          items:
-            $ref: '#/components/schemas/type_inboxes_Inbox'
-          description: Ordered by `created_at` descending.
-      required:
-      - count
-      - inboxes
-      title: ListInboxesResponse
-    type__Limit:
-      type: integer
-      description: Limit of number of items returned.
-      title: Limit
   securitySchemes:
     Bearer:
       type: http

@@ -1,0 +1,356 @@
+openapi: 3.2.0
+info:
+  title: Reference Accounts API
+  version: 1.0.0
+servers:
+- url: https://api.agentmail.to
+  description: prod
+- url: https://x402.api.agentmail.to
+  description: prod-x402
+- url: https://mpp.api.agentmail.to
+  description: prod-mpp
+- url: https://api.agentmail.eu
+  description: eu-prod
+tags:
+- name: Accounts
+paths:
+  /v0/accounts:
+    get:
+      operationId: accounts_list
+      summary: List Accounts
+      description: 'Lists accounts across all apps, scoped to the API key: an
+
+        organization key sees every account, a pod key its pod''s, an inbox key
+
+        its inbox''s. Requires `inbox_read`.'
+      tags:
+      - Accounts
+      parameters:
+      - name: limit
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/Limit'
+      - name: page_token
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/PageToken'
+      - name: ascending
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/Ascending'
+      responses:
+        '200':
+          description: Response with status 200
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/accounts_ListAccountsResponse'
+        '400':
+          description: Error response with status 400
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
+      security:
+      - Bearer: []
+  /v0/accounts/{account_id}:
+    get:
+      operationId: accounts_get
+      summary: Get Account
+      description: 'Returns one account by ID. An account outside the key''s scope is a 404.
+
+        Requires `inbox_read`.'
+      tags:
+      - Accounts
+      parameters:
+      - name: account_id
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/accounts_AccountId'
+      responses:
+        '200':
+          description: Response with status 200
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/accounts_Account'
+        '404':
+          description: Error response with status 404
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - Bearer: []
+  /v0/accounts/{account_id}/update:
+    patch:
+      operationId: accounts_update
+      summary: Update Account
+      description: 'Updates one account. Set `status` to `disabled` to stop the inbox from
+
+        signing in at the app again, or to `enabled` to re-enable it.
+
+        Idempotent: disabling an already disabled account keeps its original
+
+        `disabled_at`, and enabling an enabled account is a no-op.
+
+
+        Find the `account_id` with List Accounts. An account exists only after an
+
+        inbox''s first sign-in at an app, so it cannot be disabled in advance.
+
+        A disable applies to that inbox at that app whichever sign-in key is
+
+        used: the app''s next authorization ends in `access_denied`, and a code
+
+        issued earlier is refused with `invalid_grant`. Access tokens already
+
+        issued stay valid until they expire, and the app''s own session is
+
+        unaffected.
+
+
+        Requires `account_update`, which sign-in keys (`type: public_key`) cannot
+
+        hold, so call this with a bearer API key. An account outside the key''s
+
+        scope is a 404. A 409 means the account changed during the write; read it
+
+        again and retry.'
+      tags:
+      - Accounts
+      parameters:
+      - name: account_id
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/accounts_AccountId'
+      responses:
+        '200':
+          description: Response with status 200
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/accounts_Account'
+        '400':
+          description: Error response with status 400
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
+        '404':
+          description: Error response with status 404
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '409':
+          description: Error response with status 409
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/accounts_UpdateAccountRequest'
+      security:
+      - Bearer: []
+components:
+  schemas:
+    ErrorMessage:
+      type: string
+      description: Error message.
+      title: ErrorMessage
+    accounts_AccountStatus:
+      type: string
+      enum:
+      - disabled
+      description: '`disabled` refuses every new sign-in for the account until it is
+
+        re-enabled. Access tokens already issued are not revoked.'
+      title: AccountStatus
+    accounts_AccountId:
+      type: string
+      format: uuid
+      description: ID of account.
+      title: AccountId
+    Ascending:
+      type: boolean
+      description: Sort in ascending temporal order.
+      title: Ascending
+    PageToken:
+      type: string
+      description: Page token for pagination.
+      title: PageToken
+    ErrorDocs:
+      type: string
+      description: Link to the error reference entry for this code.
+      title: ErrorDocs
+    OrganizationId:
+      type: string
+      description: ID of organization.
+      title: OrganizationId
+    Count:
+      type: integer
+      description: Number of items returned.
+      title: Count
+    inboxes_InboxId:
+      type: string
+      description: The ID of the inbox.
+      title: InboxId
+    accounts_UpdateAccountRequest:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/accounts_UpdateAccountStatus'
+      description: 'Fields to change on the account. Fields you omit are left unchanged and
+
+        unknown fields are rejected. Expects at least one field; today that is
+
+        `status`.'
+      title: UpdateAccountRequest
+    Limit:
+      type: integer
+      description: Limit of number of items returned.
+      title: Limit
+    ValidationErrorResponse:
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/ErrorName'
+        code:
+          $ref: '#/components/schemas/ErrorCode'
+        message:
+          $ref: '#/components/schemas/ErrorMessage'
+        errors:
+          description: Validation errors. Each entry has a path and a message identifying the invalid field.
+        fix:
+          $ref: '#/components/schemas/ErrorFix'
+        docs:
+          $ref: '#/components/schemas/ErrorDocs'
+      required:
+      - name
+      - errors
+      title: ValidationErrorResponse
+    ErrorFix:
+      type: string
+      description: The concrete next action that resolves the error.
+      title: ErrorFix
+    ErrorCode:
+      type: string
+      description: Stable, machine-readable error code in snake_case (for example, not_found or missing_permission). Branch on this rather than the message text.
+      title: ErrorCode
+    pods_PodId:
+      type: string
+      description: ID of pod.
+      title: PodId
+    accounts_Account:
+      type: object
+      properties:
+        account_id:
+          $ref: '#/components/schemas/accounts_AccountId'
+        app_id:
+          $ref: '#/components/schemas/apps_AppId'
+        app_name:
+          type: string
+          description: Display name of app.
+        inbox_id:
+          $ref: '#/components/schemas/inboxes_InboxId'
+        pod_id:
+          $ref: '#/components/schemas/pods_PodId'
+        organization_id:
+          $ref: '#/components/schemas/OrganizationId'
+        first_signed_in_at:
+          type: string
+          format: date-time
+          description: Time of first sign-in at app.
+        last_signed_in_at:
+          type: string
+          format: date-time
+          description: Time of most recent sign-in at app.
+        sign_in_count:
+          type: integer
+          description: Number of sign-ins at app.
+        status:
+          $ref: '#/components/schemas/accounts_AccountStatus'
+          description: Present only while the account is disabled. Absent means the inbox may sign in.
+        disabled_at:
+          type: string
+          format: date-time
+          description: Time at which the account was disabled. Present only while `status` is `disabled`.
+      required:
+      - account_id
+      - app_id
+      - inbox_id
+      - pod_id
+      - organization_id
+      - first_signed_in_at
+      - last_signed_in_at
+      - sign_in_count
+      description: One inbox signed in at one app.
+      title: Account
+    accounts_ListAccountsResponse:
+      type: object
+      properties:
+        count:
+          $ref: '#/components/schemas/Count'
+        limit:
+          $ref: '#/components/schemas/Limit'
+        next_page_token:
+          $ref: '#/components/schemas/PageToken'
+        accounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/accounts_Account'
+      required:
+      - count
+      - limit
+      - accounts
+      title: ListAccountsResponse
+    ErrorResponse:
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/ErrorName'
+        code:
+          $ref: '#/components/schemas/ErrorCode'
+        message:
+          $ref: '#/components/schemas/ErrorMessage'
+        fix:
+          $ref: '#/components/schemas/ErrorFix'
+        docs:
+          $ref: '#/components/schemas/ErrorDocs'
+      required:
+      - name
+      - message
+      title: ErrorResponse
+    ErrorName:
+      type: string
+      description: Name of error.
+      title: ErrorName
+    apps_AppId:
+      type: string
+      format: uuid
+      description: ID of app.
+      title: AppId
+    accounts_UpdateAccountStatus:
+      type: string
+      enum:
+      - enabled
+      - disabled
+      description: 'Status to set. `disabled` stops the inbox from signing in at the
+
+        app; `enabled` re-enables it. An enabled account reads back with no
+
+        `status`.'
+      title: UpdateAccountStatus
+  securitySchemes:
+    Bearer:
+      type: http
+      scheme: bearer

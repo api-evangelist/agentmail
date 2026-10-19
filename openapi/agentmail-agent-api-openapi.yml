@@ -16,12 +16,18 @@ tags:
 paths:
   /v0/agent/sign-up:
     post:
-      operationId: sign-up
+      operationId: agent_signUp
       summary: Sign Up
       description: 'Create a new agent organization with an inbox and API key. This endpoint is for signing up for the first time. If you''ve already signed up, you''re all set — just use your existing API key.
 
 
         A 6-digit OTP is sent to the human''s email for verification.
+
+
+        The new organization starts with 1 inbox, no custom domains, and 10 emails per day, which can be sent only to `human_email` until the organization is verified.
+
+
+        `human_email` is optional. Without it, the inbox can receive email but cannot send to anyone until a human is attached with the attach human endpoint or, for a US-region inbox, claims it in the AgentMail Console with the API key (see How do I claim my agent''s inbox?). There is also no way to recover the API key, so store it durably. Calling sign-up again without `human_email` creates a new organization, which needs a different `username`: the original username stays with the lost organization''s inbox.
 
 
         This endpoint is idempotent. Calling it again with the same `human_email` will rotate the API key and resend the OTP if expired.
@@ -45,29 +51,83 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/type_agent_AgentSignupResponse'
+                $ref: '#/components/schemas/agent_AgentSignupResponse'
         '400':
           description: Error response with status 400
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/type__ValidationErrorResponse'
+                $ref: '#/components/schemas/ValidationErrorResponse'
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/type_agent_AgentSignupRequest'
+              $ref: '#/components/schemas/agent_AgentSignupRequest'
+  /v0/agent/human:
+    post:
+      operationId: agent_attachHuman
+      summary: Attach Human
+      description: 'Attach a human to an unverified agent organization. A 6-digit OTP is sent to the human''s email, which you then submit to the verify endpoint.
+
+
+        Use it after signing up without a `human_email`. Once the human is attached, the organization can send email to that human only, and verification lifts the remaining restrictions. For up to 5 minutes after attaching, sends to the human can still be rejected with a `429` daily send limit error while the API key''s cached limits catch up. Wait and retry.
+
+
+        Calling it again with the same `human_email` does not rotate the API key. It resends the OTP if it was never delivered, or issues a new one if it expired. While the current OTP is still valid, calling it again keeps that OTP and its attempt count. If all 10 attempts are used up, wait until the OTP expires, 24 hours after it was issued, then call it again for a new one.
+
+
+        Calling it with a different `human_email` replaces the attached human and sends the new human an OTP. An organization can replace its human at most 2 times.
+
+
+        Only available until the organization is verified.
+
+
+        **CLI:**
+
+        ```bash
+
+        agentmail agent attach-human --human-email user@example.com
+
+        ```'
+      tags:
+      - Agent
+      responses:
+        '200':
+          description: Response with status 200
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/agent_AgentAttachHumanResponse'
+        '400':
+          description: Error response with status 400
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
+        '409':
+          description: Error response with status 409
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/agent_AgentAttachHumanRequest'
+      security:
+      - Bearer: []
   /v0/agent/verify:
     post:
-      operationId: verify
+      operationId: agent_verify
       summary: Verify
       description: 'Verify an agent organization using the 6-digit OTP sent to the human''s email during sign-up.
 
 
-        On success, the organization is upgraded from `agent_unverified` to `agent_verified`, the send allowlist is removed, and free plan entitlements are applied.
+        On success, the organization is upgraded from `agent_unverified` to `agent_verified`, the send allowlist is removed, and the Free plan''s entitlements are applied: 3 inboxes and 100 emails per day, at first to at most 3 distinct recipients in the first hour, 5 in the first day, and 10 in the first week.
 
 
-        The OTP expires after 24 hours and allows a maximum of 10 attempts. If you run into any difficulties receiving the OTP code, you can also create an account on console.agentmail.to using the human email address you provided to verify your account.
+        The OTP expires after 24 hours and allows a maximum of 10 attempts. If the OTP expired, call the attach human endpoint with the same `human_email` to get a new one without rotating the API key. Once all 10 attempts are used, even the correct OTP is rejected, and attach human keeps returning the same OTP until it expires, so wait for it to expire before asking for a new one. An organization that signed up without a `human_email` has no OTP until a human is attached. If you run into any difficulties receiving the OTP code, you can also create an account on console.agentmail.to using the human email address you provided to verify your account.
 
 
         **CLI:**
@@ -79,51 +139,49 @@ paths:
         ```'
       tags:
       - Agent
-      parameters:
-      - name: Authorization
-        in: header
-        description: Bearer authentication
-        required: true
-        schema:
-          type: string
       responses:
         '200':
           description: Response with status 200
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/type_agent_AgentVerifyResponse'
+                $ref: '#/components/schemas/agent_AgentVerifyResponse'
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/type_agent_AgentVerifyRequest'
+              $ref: '#/components/schemas/agent_AgentVerifyRequest'
+      security:
+      - Bearer: []
 components:
   schemas:
-    type__ErrorCode:
+    ErrorName:
+      type: string
+      description: Name of error.
+      title: ErrorName
+    ErrorFix:
+      type: string
+      description: The concrete next action that resolves the error.
+      title: ErrorFix
+    ErrorMessage:
+      type: string
+      description: Error message.
+      title: ErrorMessage
+    agent_AgentVerifyResponse:
+      type: object
+      properties:
+        verified:
+          type: boolean
+          description: Whether the organization was verified.
+      required:
+      - verified
+      description: Response after successful agent verification.
+      title: AgentVerifyResponse
+    ErrorCode:
       type: string
       description: Stable, machine-readable error code in snake_case (for example, not_found or missing_permission). Branch on this rather than the message text.
       title: ErrorCode
-    type__ValidationErrorResponse:
-      type: object
-      properties:
-        name:
-          $ref: '#/components/schemas/type__ErrorName'
-        code:
-          $ref: '#/components/schemas/type__ErrorCode'
-        message:
-          $ref: '#/components/schemas/type__ErrorMessage'
-        errors:
-          description: Validation errors. Each entry has a path and a message identifying the invalid field.
-        fix:
-          $ref: '#/components/schemas/type__ErrorFix'
-        docs:
-          $ref: '#/components/schemas/type__ErrorDocs'
-      required:
-      - name
-      - errors
-      title: ValidationErrorResponse
-    type_agent_AgentSignupResponse:
+    agent_AgentSignupResponse:
       type: object
       properties:
         organization_id:
@@ -141,28 +199,69 @@ components:
       - api_key
       description: Response after successful agent sign-up.
       title: AgentSignupResponse
-    type__ErrorDocs:
-      type: string
-      description: Link to the error reference entry for this code.
-      title: ErrorDocs
-    type__ErrorMessage:
-      type: string
-      description: Error message.
-      title: ErrorMessage
-    type__ErrorName:
-      type: string
-      description: Name of error.
-      title: ErrorName
-    type__ErrorFix:
-      type: string
-      description: The concrete next action that resolves the error.
-      title: ErrorFix
-    type_agent_AgentSignupRequest:
+    agent_AgentAttachHumanRequest:
       type: object
       properties:
         human_email:
           type: string
           description: Email address of the human who owns the agent. A 6-digit OTP will be sent to this address.
+      required:
+      - human_email
+      description: Request body to attach a human to an agent organization.
+      title: AgentAttachHumanRequest
+    agent_AgentVerifyRequest:
+      type: object
+      properties:
+        otp_code:
+          type: string
+          description: 6-digit verification code sent to the human's email address.
+      required:
+      - otp_code
+      description: Request body to verify an agent with an OTP code.
+      title: AgentVerifyRequest
+    ErrorResponse:
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/ErrorName'
+        code:
+          $ref: '#/components/schemas/ErrorCode'
+        message:
+          $ref: '#/components/schemas/ErrorMessage'
+        fix:
+          $ref: '#/components/schemas/ErrorFix'
+        docs:
+          $ref: '#/components/schemas/ErrorDocs'
+      required:
+      - name
+      - message
+      title: ErrorResponse
+    ErrorDocs:
+      type: string
+      description: Link to the error reference entry for this code.
+      title: ErrorDocs
+    agent_AgentAttachHumanResponse:
+      type: object
+      properties:
+        human_email:
+          type: string
+          description: Email address of the attached human.
+        instructions:
+          type: string
+          description: Next steps for the agent, in plain text.
+      required:
+      - human_email
+      - instructions
+      description: Response after attaching a human to an agent organization.
+      title: AgentAttachHumanResponse
+    agent_AgentSignupRequest:
+      type: object
+      properties:
+        human_email:
+          type: string
+          description: 'Email address of the human who owns the agent. A 6-digit OTP will be sent to this address.
+
+            Omit it to get a receive-only inbox: it can receive email but cannot send until a human is attached with the attach human endpoint.'
         username:
           type: string
           description: Username for the auto-created inbox (e.g. "my-agent" creates my-agent@agentmail.to).
@@ -181,30 +280,28 @@ components:
 
             Max 2048 characters.'
       required:
-      - human_email
       - username
       description: Request body to sign up an agent.
       title: AgentSignupRequest
-    type_agent_AgentVerifyRequest:
+    ValidationErrorResponse:
       type: object
       properties:
-        otp_code:
-          type: string
-          description: 6-digit verification code sent to the human's email address.
+        name:
+          $ref: '#/components/schemas/ErrorName'
+        code:
+          $ref: '#/components/schemas/ErrorCode'
+        message:
+          $ref: '#/components/schemas/ErrorMessage'
+        errors:
+          description: Validation errors. Each entry has a path and a message identifying the invalid field.
+        fix:
+          $ref: '#/components/schemas/ErrorFix'
+        docs:
+          $ref: '#/components/schemas/ErrorDocs'
       required:
-      - otp_code
-      description: Request body to verify an agent with an OTP code.
-      title: AgentVerifyRequest
-    type_agent_AgentVerifyResponse:
-      type: object
-      properties:
-        verified:
-          type: boolean
-          description: Whether the organization was verified.
-      required:
-      - verified
-      description: Response after successful agent verification.
-      title: AgentVerifyResponse
+      - name
+      - errors
+      title: ValidationErrorResponse
   securitySchemes:
     Bearer:
       type: http

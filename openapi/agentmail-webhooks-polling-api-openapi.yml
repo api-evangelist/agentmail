@@ -1,0 +1,466 @@
+openapi: 3.2.0
+info:
+  title: Reference webhooks > polling API
+  version: 1.0.0
+servers:
+- url: https://api.agentmail.to
+  description: prod
+- url: https://x402.api.agentmail.to
+  description: prod-x402
+- url: https://mpp.api.agentmail.to
+  description: prod-mpp
+- url: https://api.agentmail.eu
+  description: eu-prod
+tags:
+- name: webhooks > polling
+paths:
+  /v0/webhooks/polling:
+    get:
+      operationId: webhooks_polling_list
+      summary: List Polling Webhooks
+      description: 'Lists the polling webhooks created through this route. `page_token` must come from this
+
+        endpoint; a token from another list endpoint is rejected.
+
+
+        **CLI:**
+
+        ```bash
+
+        agentmail webhooks polling list
+
+        ```'
+      tags:
+      - webhooks > polling
+      parameters:
+      - name: limit
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/Limit'
+      - name: page_token
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/PageToken'
+      - name: ascending
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/Ascending'
+      responses:
+        '200':
+          description: Response with status 200
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/webhooks_polling_ListPollingWebhooksResponse'
+        '400':
+          description: Error response with status 400
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
+      security:
+      - Bearer: []
+    post:
+      operationId: webhooks_polling_create
+      summary: Create Polling Webhook
+      description: 'Creates a subscription the agent polls for events, and returns the `token` that reads it. Each
+
+        organization, pod, and inbox holds at most 10 polling webhooks; a repeat create with the same
+
+        `client_id` re-issues the token of the existing one instead of counting against that limit.
+
+
+        **CLI:**
+
+        ```bash
+
+        agentmail webhooks polling create --client-id my-agent --event-types message.received
+
+        ```'
+      tags:
+      - webhooks > polling
+      responses:
+        '200':
+          description: Response with status 200
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/webhooks_polling_CreatePollingWebhookResponse'
+        '400':
+          description: Error response with status 400
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
+        '409':
+          description: Error response with status 409
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/webhooks_polling_CreatePollingWebhookRequest'
+      security:
+      - Bearer: []
+  /v0/webhooks/polling/{webhook_id}:
+    get:
+      operationId: webhooks_polling_get
+      summary: Get Polling Webhook
+      description: 'The `token` is never returned here: create again with the same `client_id` to get a new one.
+
+
+        **CLI:**
+
+        ```bash
+
+        agentmail webhooks polling get --webhook-id
+
+        ```'
+      tags:
+      - webhooks > polling
+      parameters:
+      - name: webhook_id
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/webhooks_WebhookId'
+      responses:
+        '200':
+          description: Response with status 200
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/webhooks_polling_PollingWebhook'
+        '404':
+          description: Error response with status 404
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - Bearer: []
+    delete:
+      operationId: webhooks_polling_delete
+      summary: Delete Polling Webhook
+      description: 'Stops delivery and invalidates the subscription''s token.
+
+
+        **CLI:**
+
+        ```bash
+
+        agentmail webhooks polling delete --webhook-id
+
+        ```'
+      tags:
+      - webhooks > polling
+      parameters:
+      - name: webhook_id
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/webhooks_WebhookId'
+      responses:
+        '200':
+          description: Successful response
+        '404':
+          description: Error response with status 404
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - Bearer: []
+components:
+  schemas:
+    ErrorMessage:
+      type: string
+      description: Error message.
+      title: ErrorMessage
+    Ascending:
+      type: boolean
+      description: Sort in ascending temporal order.
+      title: Ascending
+    PageToken:
+      type: string
+      description: Page token for pagination.
+      title: PageToken
+    ErrorDocs:
+      type: string
+      description: Link to the error reference entry for this code.
+      title: ErrorDocs
+    events_EventTypes:
+      type: array
+      items:
+        $ref: '#/components/schemas/events_EventType'
+      description: Event types for which to send events.
+      title: EventTypes
+    webhooks_polling_PollingClientId:
+      $ref: '#/components/schemas/webhooks_ClientId'
+      description: 'Required. Idempotency key of the subscription: creating again with the same `client_id` through the
+
+        same route returns the existing subscription with a fresh token instead of a second subscription, so a
+
+        restarted agent resumes where it left off. Also accepted in place of `webhook_id` on get and delete.'
+      title: PollingClientId
+    webhooks_ClientId:
+      type: string
+      description: Client ID of webhook.
+      title: ClientId
+    Count:
+      type: integer
+      description: Number of items returned.
+      title: Count
+    webhooks_polling_CreatePollingWebhookRequest:
+      type: object
+      properties:
+        client_id:
+          $ref: '#/components/schemas/webhooks_polling_PollingClientId'
+        event_types:
+          $ref: '#/components/schemas/webhooks_CreateWebhookEventTypes'
+        inbox_ids:
+          $ref: '#/components/schemas/events_InboxIds'
+        pod_ids:
+          $ref: '#/components/schemas/events_PodIds'
+          description: 'Pods for which to receive events. Maximum 10 channels (pods plus inboxes) per subscription. The
+
+            subscription receives an event that matches any listed pod or inbox, so a listed pod already
+
+            covers every inbox in it.'
+      required:
+      - client_id
+      - event_types
+      title: CreatePollingWebhookRequest
+    events_InboxIds:
+      type: array
+      items:
+        type: string
+      description: Inboxes for which to send events.
+      title: InboxIds
+    Limit:
+      type: integer
+      description: Limit of number of items returned.
+      title: Limit
+    ValidationErrorResponse:
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/ErrorName'
+        code:
+          $ref: '#/components/schemas/ErrorCode'
+        message:
+          $ref: '#/components/schemas/ErrorMessage'
+        errors:
+          description: Validation errors. Each entry has a path and a message identifying the invalid field.
+        fix:
+          $ref: '#/components/schemas/ErrorFix'
+        docs:
+          $ref: '#/components/schemas/ErrorDocs'
+      required:
+      - name
+      - errors
+      title: ValidationErrorResponse
+    ErrorFix:
+      type: string
+      description: The concrete next action that resolves the error.
+      title: ErrorFix
+    webhooks_polling_ListPollingWebhooksResponse:
+      type: object
+      properties:
+        count:
+          $ref: '#/components/schemas/Count'
+        limit:
+          $ref: '#/components/schemas/Limit'
+        next_page_token:
+          $ref: '#/components/schemas/PageToken'
+        polling_webhooks:
+          type: array
+          items:
+            $ref: '#/components/schemas/webhooks_polling_PollingWebhook'
+          description: 'Ordered by `created_at` descending. Lists the subscriptions created through this route
+
+            (organization, pod, or inbox); subscriptions created through a pod or inbox route are listed
+
+            through that route.'
+      required:
+      - count
+      - polling_webhooks
+      title: ListPollingWebhooksResponse
+    ErrorCode:
+      type: string
+      description: Stable, machine-readable error code in snake_case (for example, not_found or missing_permission). Branch on this rather than the message text.
+      title: ErrorCode
+    webhooks_polling_CreatePollingWebhookResponse:
+      type: object
+      properties:
+        webhook_id:
+          $ref: '#/components/schemas/webhooks_WebhookId'
+        client_id:
+          $ref: '#/components/schemas/webhooks_polling_PollingClientId'
+        event_types:
+          $ref: '#/components/schemas/events_EventTypes'
+        pod_ids:
+          $ref: '#/components/schemas/events_PodIds'
+        inbox_ids:
+          $ref: '#/components/schemas/events_InboxIds'
+        pod_id:
+          type: string
+          description: 'ID of the pod the subscription belongs to: the pod it was created in, or the pod of the inbox it
+
+            belongs to. Absent for an organization subscription. This is not the list of pods it receives
+
+            events for; see `pod_ids`.'
+        inbox_id:
+          type: string
+          description: 'ID of the inbox the subscription belongs to, if it was created for an inbox. This is not the
+
+            list of inboxes it receives events for; see `inbox_ids`.'
+        updated_at:
+          type: string
+          format: date-time
+          description: Time at which the subscription was last updated.
+        created_at:
+          type: string
+          format: date-time
+          description: Time at which the subscription was created.
+        token:
+          $ref: '#/components/schemas/webhooks_polling_PollingToken'
+      required:
+      - webhook_id
+      - client_id
+      - event_types
+      - updated_at
+      - created_at
+      - token
+      description: The subscription plus the one-time `token` that reads it.
+      title: CreatePollingWebhookResponse
+    webhooks_WebhookId:
+      type: string
+      description: ID of webhook.
+      title: WebhookId
+    webhooks_polling_PollingToken:
+      type: string
+      description: 'Credential for reading this subscription''s events. Hand it to the Svix AutoConfig consumer
+
+        (`AutoConfigConsumer` in the `svix` package for TypeScript and Python): `receive` returns the events
+
+        queued since your last commit, `commit` marks them as processed. Returned by create only and never
+
+        readable afterward. Create again with the same `client_id` to get a new token; the previous one stops
+
+        working immediately.'
+      title: PollingToken
+    webhooks_polling_PollingWebhook:
+      type: object
+      properties:
+        webhook_id:
+          $ref: '#/components/schemas/webhooks_WebhookId'
+        client_id:
+          $ref: '#/components/schemas/webhooks_polling_PollingClientId'
+        event_types:
+          $ref: '#/components/schemas/events_EventTypes'
+        pod_ids:
+          $ref: '#/components/schemas/events_PodIds'
+        inbox_ids:
+          $ref: '#/components/schemas/events_InboxIds'
+        pod_id:
+          type: string
+          description: 'ID of the pod the subscription belongs to: the pod it was created in, or the pod of the inbox it
+
+            belongs to. Absent for an organization subscription. This is not the list of pods it receives
+
+            events for; see `pod_ids`.'
+        inbox_id:
+          type: string
+          description: 'ID of the inbox the subscription belongs to, if it was created for an inbox. This is not the
+
+            list of inboxes it receives events for; see `inbox_ids`.'
+        updated_at:
+          type: string
+          format: date-time
+          description: Time at which the subscription was last updated.
+        created_at:
+          type: string
+          format: date-time
+          description: Time at which the subscription was created.
+      required:
+      - webhook_id
+      - client_id
+      - event_types
+      - updated_at
+      - created_at
+      description: 'A subscription the agent polls for events instead of receiving them at a URL. Same event types,
+
+        channels (pods and inboxes) and permissions as a webhook; no public endpoint is needed.'
+      title: PollingWebhook
+    webhooks_CreateWebhookEventTypes:
+      $ref: '#/components/schemas/events_EventTypes'
+      description: 'Full list of event types this webhook should receive. Required: omitting it or sending an empty array
+
+        returns a `400`, and there is no "all events" default. Send every type you want in this array (not
+
+        incremental). See [Webhooks overview](https://docs.agentmail.to/webhooks-overview)
+
+        for spam, blocked, and unauthenticated events and required permissions.'
+      title: CreateWebhookEventTypes
+    ErrorResponse:
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/ErrorName'
+        code:
+          $ref: '#/components/schemas/ErrorCode'
+        message:
+          $ref: '#/components/schemas/ErrorMessage'
+        fix:
+          $ref: '#/components/schemas/ErrorFix'
+        docs:
+          $ref: '#/components/schemas/ErrorDocs'
+      required:
+      - name
+      - message
+      title: ErrorResponse
+    events_EventType:
+      type: string
+      enum:
+      - message.received
+      - message.received.spam
+      - message.received.blocked
+      - message.received.unauthenticated
+      - message.security.completed
+      - message.security.review
+      - message.security.override
+      - message.sent
+      - message.delivered
+      - message.bounced
+      - message.complained
+      - message.rejected
+      - message.opened
+      - domain.verified
+      - calendar.event.created
+      - calendar.event.updated
+      - calendar.event.deleted
+      - calendar.event.responded
+      - calendar.event.starting
+      - calendar.event.ending
+      title: EventType
+    ErrorName:
+      type: string
+      description: Name of error.
+      title: ErrorName
+    events_PodIds:
+      type: array
+      items:
+        type: string
+      description: Pods for which to send events.
+      title: PodIds
+  securitySchemes:
+    Bearer:
+      type: http
+      scheme: bearer

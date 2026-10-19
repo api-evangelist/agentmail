@@ -1,0 +1,12 @@
+{
+ "url": "https://docs.agentmail.to/openapi.json",
+ "final": "https://docs.agentmail.to/openapi.json",
+ "status": 200,
+ "content_type": "application/json; charset=utf-8",
+ "bytes": 407093,
+ "sha256": "966cbf3c5197c5cb01c470f41ea4db427472bf6f75002be387544d7ad28797c4",
+ "fetched_at": "2026-10-19",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "byte-identical",
+ "note": "re-archived: the provider's current document replaced a stale archive (roadmap#793); the old files are in openapi/_superseded/2026-10-19-stale"
+}

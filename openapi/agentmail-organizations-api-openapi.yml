@@ -16,7 +16,7 @@ tags:
 paths:
   /v0/organizations:
     get:
-      operationId: get
+      operationId: organizations_get
       summary: Get Organization
       description: 'Returns the organization for the authenticated API key (usage limits, counts, and billing metadata).
 
@@ -30,27 +30,145 @@ paths:
         ```'
       tags:
       - Organizations
-      parameters:
-      - name: Authorization
-        in: header
-        description: Bearer authentication
-        required: true
-        schema:
-          type: string
       responses:
         '200':
           description: Response with status 200
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/type_organizations_Organization'
+                $ref: '#/components/schemas/organizations_Organization'
+      security:
+      - Bearer: []
+  /v0/organizations/labs:
+    get:
+      operationId: organizations_getLabs
+      summary: Get Labs
+      description: 'Returns whether the organization is in AgentMail Labs, which turns on features that are still in preview, such as calendar. Requires an organization-scoped API key.
+
+
+        **CLI:**
+
+        ```bash
+
+        agentmail organizations get-labs
+
+        ```'
+      tags:
+      - Organizations
+      responses:
+        '200':
+          description: Response with status 200
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/organizations_OrganizationLabs'
+        '403':
+          description: 'The credential can''t do this. For Get Labs, `code` is `missing_permission` when the API key
+
+            is inbox- or pod-scoped. For Join Labs, `code` is `unrestricted_key_required` when the
+
+            credential isn''t an organization-scoped API key with no permissions restriction. Other Join
+
+            Labs refusals (an unverified or suspended organization, a deployment without Labs, or an
+
+            organization whose content access policy keeps API keys from joining) have `code`
+
+            `forbidden` or `account_suspended`. Every refusal except a deployment without Labs has a
+
+            `fix` that says what to do.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - Bearer: []
+    post:
+      operationId: organizations_joinLabs
+      summary: Join Labs
+      description: 'Joins AgentMail Labs for the whole organization, which turns on every feature in Labs for every inbox. Joining again has no effect. There is no leave on the API; an organization admin can leave in the console under Settings, then Labs.
+
+
+        Join only when your organization has decided to. Get Labs reads the same for an organization that never joined and one whose admin left Labs on purpose, so don''t join just because `enabled` is `false`.
+
+
+        Requires an organization-scoped API key with no permissions restriction, and a verified organization. API keys see the change within five minutes. Where Labs isn''t offered (`available` is `false` on Get Labs), joining returns `403`.
+
+
+        **CLI:**
+
+        ```bash
+
+        agentmail organizations join-labs
+
+        ```'
+      tags:
+      - Organizations
+      responses:
+        '200':
+          description: Response with status 200
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/organizations_OrganizationLabs'
+        '400':
+          description: Error response with status 400
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
+        '403':
+          description: 'The credential can''t do this. For Get Labs, `code` is `missing_permission` when the API key
+
+            is inbox- or pod-scoped. For Join Labs, `code` is `unrestricted_key_required` when the
+
+            credential isn''t an organization-scoped API key with no permissions restriction. Other Join
+
+            Labs refusals (an unverified or suspended organization, a deployment without Labs, or an
+
+            organization whose content access policy keeps API keys from joining) have `code`
+
+            `forbidden` or `account_suspended`. Every refusal except a deployment without Labs has a
+
+            `fix` that says what to do.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '409':
+          description: Error response with status 409
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - Bearer: []
 components:
   schemas:
-    type_organizations_Organization:
+    ErrorName:
+      type: string
+      description: Name of error.
+      title: ErrorName
+    ErrorFix:
+      type: string
+      description: The concrete next action that resolves the error.
+      title: ErrorFix
+    ErrorMessage:
+      type: string
+      description: Error message.
+      title: ErrorMessage
+    OrganizationId:
+      type: string
+      description: ID of organization.
+      title: OrganizationId
+    ErrorCode:
+      type: string
+      description: Stable, machine-readable error code in snake_case (for example, not_found or missing_permission). Branch on this rather than the message text.
+      title: ErrorCode
+    organizations_Organization:
       type: object
       properties:
         organization_id:
-          $ref: '#/components/schemas/type__OrganizationId'
+          $ref: '#/components/schemas/OrganizationId'
         inbox_count:
           type: integer
           description: Current number of inboxes.
@@ -78,6 +196,21 @@ components:
         authentication_type:
           type: string
           description: Authentication provider type.
+        suspended_at:
+          type: string
+          format: date-time
+          description: 'Time at which the organization was suspended. Absent when it is not suspended. A suspended
+
+            organization cannot send, but it still receives mail, its webhooks and WebSocket events still
+
+            fire, and API reads keep working. See [account_suspended](https://docs.agentmail.to/errors#account_suspended).'
+        suspended_reason:
+          type: string
+          description: 'Why the organization is suspended, in a short machine-readable form such as `message.bounced`
+
+            or `message.complained`. Absent when it is not suspended. Email support@agentmail.cc to resolve
+
+            a suspension.'
         updated_at:
           type: string
           format: date-time
@@ -94,10 +227,67 @@ components:
       - created_at
       description: Organization details with usage limits and counts.
       title: Organization
-    type__OrganizationId:
+    ErrorResponse:
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/ErrorName'
+        code:
+          $ref: '#/components/schemas/ErrorCode'
+        message:
+          $ref: '#/components/schemas/ErrorMessage'
+        fix:
+          $ref: '#/components/schemas/ErrorFix'
+        docs:
+          $ref: '#/components/schemas/ErrorDocs'
+      required:
+      - name
+      - message
+      title: ErrorResponse
+    ErrorDocs:
       type: string
-      description: ID of organization.
-      title: OrganizationId
+      description: Link to the error reference entry for this code.
+      title: ErrorDocs
+    organizations_OrganizationLabs:
+      type: object
+      properties:
+        enabled:
+          type: boolean
+          description: Whether the organization is in AgentMail Labs.
+        enabled_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: Time at which the organization joined Labs. `null` when it is not in Labs.
+        available:
+          type: boolean
+          description: Whether Labs is offered in this deployment. Labs is available in US production (`api.agentmail.to`), not yet in EU production (`api.agentmail.eu`).
+      required:
+      - enabled
+      - enabled_at
+      - available
+      description: Whether the organization is in AgentMail Labs, and whether Labs is offered in this deployment.
+      title: OrganizationLabs
+    ValidationErrorResponse:
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/ErrorName'
+        code:
+          $ref: '#/components/schemas/ErrorCode'
+        message:
+          $ref: '#/components/schemas/ErrorMessage'
+        errors:
+          description: Validation errors. Each entry has a path and a message identifying the invalid field.
+        fix:
+          $ref: '#/components/schemas/ErrorFix'
+        docs:
+          $ref: '#/components/schemas/ErrorDocs'
+      required:
+      - name
+      - errors
+      title: ValidationErrorResponse
   securitySchemes:
     Bearer:
       type: http

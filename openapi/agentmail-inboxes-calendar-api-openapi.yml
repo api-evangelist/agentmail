@@ -1,0 +1,1756 @@
+openapi: 3.2.0
+info:
+  title: Reference inboxes > calendar API
+  version: 1.0.0
+servers:
+- url: https://api.agentmail.to
+  description: prod
+- url: https://x402.api.agentmail.to
+  description: prod-x402
+- url: https://mpp.api.agentmail.to
+  description: prod-mpp
+- url: https://api.agentmail.eu
+  description: eu-prod
+tags:
+- name: inboxes > calendar
+paths:
+  /v0/inboxes/{inbox_id}/calendar:
+    get:
+      operationId: inboxes_calendar_get
+      summary: Get Calendar
+      description: 'Gets the inbox''s calendar. Every inbox has one calendar, so this works before any event is
+
+        created. Its `etag` (also the `ETag` response header) is the value to send in `If-Match` to
+
+        make an update conditional.
+
+
+        Requires the `calendar_read` permission. Calendar is in AgentMail Labs, available in US production (`api.agentmail.to`)
+
+        but not yet in EU production (`api.agentmail.eu`). Organizations that have not joined
+
+        Labs receive a `403`.'
+      tags:
+      - inboxes > calendar
+      parameters:
+      - name: inbox_id
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/inboxes_InboxId'
+      - name: consistency
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/calendar_CalendarConsistency'
+      responses:
+        '200':
+          description: Response with status 200
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/calendar_Calendar'
+        '400':
+          description: Error response with status 400
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
+        '403':
+          description: 'The organization does not have calendar access (it has not joined AgentMail Labs), or the API
+
+            key lacks the required calendar permission.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Error response with status 404
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - Bearer: []
+    patch:
+      operationId: inboxes_calendar_update
+      summary: Update Calendar
+      description: 'Updates the calendar''s default time zone. Existing events keep their own `timezone`; only
+
+        events created later without a `timezone` use the new default.
+
+
+        Requires the `calendar_update` permission. To make the update conditional, send the
+
+        calendar''s current `etag` in `If-Match`: a stale value returns `412`. Without `If-Match` the
+
+        update applies to the calendar as it is.
+
+
+        Calendar is in AgentMail Labs, available in US production (`api.agentmail.to`) but not yet
+
+        in EU production (`api.agentmail.eu`). Organizations that have not joined Labs receive a `403`.'
+      tags:
+      - inboxes > calendar
+      parameters:
+      - name: inbox_id
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/inboxes_InboxId'
+      - name: If-Match
+        in: header
+        description: The calendar's current `etag`, for example `"rv-0"`. Optional; makes the update conditional; `*` matches any current version.
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Response with status 200
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/calendar_Calendar'
+        '400':
+          description: Error response with status 400
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
+        '403':
+          description: 'The organization does not have calendar access (it has not joined AgentMail Labs), or the API
+
+            key lacks the required calendar permission.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Error response with status 404
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '409':
+          description: Error response with status 409
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '412':
+          description: The resource changed since the `If-Match` value was read. Fetch it again, reapply the change, and retry with the new `etag`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/calendar_PreconditionFailedErrorResponse'
+        '413':
+          description: The request body is too large (8 KB for calendar settings, 128 KB for events).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                timezone:
+                  $ref: '#/components/schemas/calendar_IanaTimezone'
+                  description: New default time zone for events created without a `timezone`.
+              required:
+              - timezone
+      security:
+      - Bearer: []
+  /v0/inboxes/{inbox_id}/calendar/events:
+    get:
+      operationId: inboxes_calendar_listEvents
+      summary: List Events
+      description: 'Lists the events stored on the calendar: one item per one-off or recurring event, plus one
+
+        item for each edited date of a recurring event (as that dated event, with
+
+        `is_exception: true`). Ordered by most recently updated, and cancelled events are included.
+
+        Use it to sync or manage what you created. To see what is on the calendar in a time window,
+
+        use Get Agenda.
+
+
+        The list is always read in the region that serves the request, so it can trail a change made
+
+        moments earlier by a few seconds. Requires the `calendar_event_read` permission.
+
+
+        Calendar is in AgentMail Labs, available in US production (`api.agentmail.to`) but not yet
+
+        in EU production (`api.agentmail.eu`). Organizations that have not joined Labs receive a `403`.'
+      tags:
+      - inboxes > calendar
+      parameters:
+      - name: inbox_id
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/inboxes_InboxId'
+      - name: limit
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/calendar_CalendarLimit'
+      - name: page_token
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/PageToken'
+      responses:
+        '200':
+          description: Response with status 200
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/calendar_ListCalendarEventsResponse'
+        '400':
+          description: Error response with status 400
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
+        '403':
+          description: 'The organization does not have calendar access (it has not joined AgentMail Labs), or the API
+
+            key lacks the required calendar permission.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Error response with status 404
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - Bearer: []
+    post:
+      operationId: inboxes_calendar_createEvent
+      summary: Create Event
+      description: 'Creates a one-off or recurring event on the inbox''s calendar. Times are wall-clock values in
+
+        `timezone` (the calendar''s default time zone if omitted); the response also gives each
+
+        boundary as a UTC instant in `start_at` and `end_at`.
+
+
+        `calendar.event.created` is sent once the event is stored, then `calendar.event.starting`
+
+        and `calendar.event.ending` as each date begins and ends. With `send_invites: true` the
+
+        inbox also emails an invitation to every attendee.
+
+
+        Pass `client_id` to make retries safe: repeating the request with the same `client_id` and
+
+        body returns the original event with status `200` instead of `201`, for as long as the event
+
+        exists.
+
+
+        With `send_invites: true`, each attendee counts as one send against the organization, pod
+
+        and inbox send limits, charged before the event is stored. An over-limit request returns
+
+        `429` `rate_limit_exceeded` and creates nothing. A replay of an earlier create is not
+
+        charged again.
+
+
+        The event''s `etag` is the value to send in `If-Match` to make a later update or delete
+
+        conditional. Requires the `calendar_event_create` permission.
+
+
+        Calendar is in AgentMail Labs, available in US production (`api.agentmail.to`) but not yet
+
+        in EU production (`api.agentmail.eu`). Organizations that have not joined Labs receive a `403`.'
+      tags:
+      - inboxes > calendar
+      parameters:
+      - name: inbox_id
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/inboxes_InboxId'
+      responses:
+        '201':
+          description: Response with status 201
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/calendar_CalendarEventMutationResponse'
+        '400':
+          description: Error response with status 400
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
+        '403':
+          description: 'The organization does not have calendar access (it has not joined AgentMail Labs), or the API
+
+            key lacks the required calendar permission.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Error response with status 404
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '409':
+          description: Error response with status 409
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '413':
+          description: The request body is too large (8 KB for calendar settings, 128 KB for events).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '429':
+          description: 'Too many requests, or the invitation emails this request would send exceed an organization,
+
+            pod or inbox send limit. Nothing was changed. Honor the `Retry-After` header when present.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/calendar_CreateCalendarEventRequest'
+      security:
+      - Bearer: []
+  /v0/inboxes/{inbox_id}/calendar/agenda:
+    get:
+      operationId: inboxes_calendar_getAgenda
+      summary: Get Agenda
+      description: 'Lists every date on the calendar in a time window, ordered by start time: one-off events,
+
+        and recurring events expanded into their individual dates, with cancelled dates left out.
+
+        Use it to answer "what is on the calendar".
+
+
+        The window defaults to now through 90 days from now and can be at most 366 days. Items omit
+
+        `description`, `metadata` and `attendees`; get an event by ID for the full object. An item
+
+        the inbox is invited to still carries `response_status`, so `needs_action` marks an
+
+        invitation waiting for a reply. Dates of
+
+        recurring events appear only up to about 90 days from now; use List Event Instances for a
+
+        recurring event''s later dates. While a recurring event''s dates are being regenerated after a
+
+        schedule change, which takes a few seconds, the agenda can briefly leave out some of them;
+
+        dates that have already started or ended stay as they ran.
+
+
+        The agenda is read in the region that serves the request, so it can trail a change made
+
+        moments earlier by a few seconds. Pass `consistency=primary` to read your own change right
+
+        away. Requires the `calendar_event_read` permission.
+
+
+        Calendar is in AgentMail Labs, available in US production (`api.agentmail.to`) but not yet
+
+        in EU production (`api.agentmail.eu`). Organizations that have not joined Labs receive a `403`.'
+      tags:
+      - inboxes > calendar
+      parameters:
+      - name: inbox_id
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/inboxes_InboxId'
+      - name: consistency
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/calendar_CalendarConsistency'
+      - name: after
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/calendar_WindowAfter'
+      - name: before
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/calendar_WindowBefore'
+      - name: include_overlapping
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/calendar_IncludeOverlapping'
+      - name: limit
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/calendar_CalendarLimit'
+      - name: page_token
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/PageToken'
+      responses:
+        '200':
+          description: Response with status 200
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/calendar_ListCalendarEventsResponse'
+        '400':
+          description: Error response with status 400
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
+        '403':
+          description: 'The organization does not have calendar access (it has not joined AgentMail Labs), or the API
+
+            key lacks the required calendar permission.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Error response with status 404
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - Bearer: []
+  /v0/inboxes/{inbox_id}/calendar/events/{event_id}:
+    get:
+      operationId: inboxes_calendar_getEvent
+      summary: Get Event
+      description: 'Gets an event by its UUID, or one date of a recurring event by its dated ID
+
+        (`_`). A dated ID returns the date as it currently stands, including any edit
+
+        to it, with `kind: instance`.
+
+
+        The response''s `etag` (also the `ETag` header) is the value to send in `If-Match` to make an
+
+        update, delete or response to this event or date conditional. Treat it as opaque.
+
+
+        Reads can trail a change made moments earlier by a few seconds; pass `consistency=primary`
+
+        to read the latest state of an event or a date. A date that has already started or ended
+
+        reads back as it ran, even if a later change to the series no longer produces it. Requires
+
+        the `calendar_event_read` permission.
+
+
+        Calendar is in AgentMail Labs, available in US production (`api.agentmail.to`) but not yet
+
+        in EU production (`api.agentmail.eu`). Organizations that have not joined Labs receive a `403`.'
+      tags:
+      - inboxes > calendar
+      parameters:
+      - name: inbox_id
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/inboxes_InboxId'
+      - name: event_id
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/calendar_CalendarEventId'
+      - name: consistency
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/calendar_CalendarConsistency'
+      responses:
+        '200':
+          description: Response with status 200
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/calendar_CalendarEvent'
+        '400':
+          description: Error response with status 400
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
+        '403':
+          description: 'The organization does not have calendar access (it has not joined AgentMail Labs), or the API
+
+            key lacks the required calendar permission.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Error response with status 404
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '410':
+          description: The event's date is outside the retained history window and can no longer be read or changed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - Bearer: []
+    patch:
+      operationId: inboxes_calendar_updateEvent
+      summary: Update Event
+      description: 'Updates an event. Send only the fields to change. To make the update conditional, send the
+
+        event''s current `etag` in `If-Match`: a stale value returns `412`. Without `If-Match` the
+
+        update applies to the event as it is; a change that lands while it runs returns `409`
+
+        `race_condition`, so retry. Send `If-Match` when replacing `attendees`, so you don''t
+
+        overwrite a response that arrived in the meantime.
+
+
+        - **One-off or series UUID:** changes the event itself. For a series, the change applies to
+
+        every date that has not been edited individually.
+
+        - **Dated ID (`_`):** changes one date (`mode=single`, the default) or that date
+
+        and every later date (`mode=future`). `all_day`, `timezone` and `recurrence` cannot be sent
+
+        for a dated ID.
+
+
+        Once a date has started, its start can no longer change (409 `event_already_started`), but
+
+        its end and status can; for a one-off or series UUID, send the unchanged `start` with the new
+
+        `end`. Once it has ended, only `title`, `description`, `location`,
+
+        `metadata` and `attendees` can change. During the few seconds a date is starting, schedule
+
+        changes return 409 `event_starting`; retry shortly.
+
+
+        Sends `calendar.event.updated`. With `send_invites: true` the organizer inbox also emails the
+
+        updated invitation to every attendee. Requires the `calendar_event_update` permission.
+
+
+        Emailing attendees counts one send per attendee against the organization, pod and inbox
+
+        send limits, charged before the change is saved; an over-limit request returns `429`
+
+        `rate_limit_exceeded` and changes nothing.
+
+
+        Calendar is in AgentMail Labs, available in US production (`api.agentmail.to`) but not yet
+
+        in EU production (`api.agentmail.eu`). Organizations that have not joined Labs receive a `403`.'
+      tags:
+      - inboxes > calendar
+      parameters:
+      - name: inbox_id
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/inboxes_InboxId'
+      - name: event_id
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/calendar_CalendarEventId'
+      - name: mode
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/calendar_InstanceMutationMode'
+      - name: If-Match
+        in: header
+        description: The event's or date's current `etag`, from the latest read or write response. Optional; makes the update conditional; `*` matches any current version.
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Response with status 200
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/calendar_CalendarEventMutationResponse'
+        '400':
+          description: Error response with status 400
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
+        '403':
+          description: 'The organization does not have calendar access (it has not joined AgentMail Labs), or the API
+
+            key lacks the required calendar permission.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Error response with status 404
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '409':
+          description: Error response with status 409
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '410':
+          description: The event's date is outside the retained history window and can no longer be read or changed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '412':
+          description: The resource changed since the `If-Match` value was read. Fetch it again, reapply the change, and retry with the new `etag`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/calendar_PreconditionFailedErrorResponse'
+        '413':
+          description: The request body is too large (8 KB for calendar settings, 128 KB for events).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '429':
+          description: 'Too many requests, or the invitation emails this request would send exceed an organization,
+
+            pod or inbox send limit. Nothing was changed. Honor the `Retry-After` header when present.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                description:
+                  type:
+                  - string
+                  - 'null'
+                  description: Set to `null` to clear.
+                location:
+                  type:
+                  - string
+                  - 'null'
+                  description: Set to `null` to clear.
+                metadata:
+                  oneOf:
+                  - description: Any type
+                  - type: 'null'
+                  description: Replaces the metadata (any JSON value, usually an object). Set to `null` to clear.
+                status:
+                  $ref: '#/components/schemas/calendar_CalendarEventStatus'
+                all_day:
+                  type: boolean
+                  description: Changing `all_day` requires `start`, `end` and `timezone` in the same request. Not accepted for dated event IDs.
+                start:
+                  $ref: '#/components/schemas/calendar_WallTime'
+                  description: New start. For a one-off or series UUID, send it together with `end`. Not accepted with `mode=future`.
+                end:
+                  $ref: '#/components/schemas/calendar_WallTime'
+                  description: New end. For a one-off or series UUID, send it together with `start`. A dated ID accepts `end` alone.
+                timezone:
+                  $ref: '#/components/schemas/calendar_IanaTimezone'
+                  description: New time zone. Not accepted for dated event IDs.
+                duration_mode:
+                  $ref: '#/components/schemas/calendar_DurationMode'
+                recurrence:
+                  oneOf:
+                  - $ref: '#/components/schemas/calendar_RecurrenceInput'
+                  - type: 'null'
+                  description: 'Replaces the recurrence. Set to `null` to turn a series into a one-off event (only when no
+
+                    date of it has been edited). Not accepted for dated event IDs. A series ended with a
+
+                    `mode=future` delete stays ended: the new rule keeps its `truncate_before`.'
+                attendees:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/calendar_Attendee'
+                  description: Replaces the attendee list.
+                send_invites:
+                  type: boolean
+                  description: 'When `true`, emails the updated invitation to every attendee. Only the organizer (an `api`
+
+                    event) can send. Defaults to `false`.'
+      security:
+      - Bearer: []
+    delete:
+      operationId: inboxes_calendar_deleteEvent
+      summary: Delete Event
+      description: 'Deletes an event, or cancels dates of a recurring event.
+
+
+        - **One-off or series UUID:** deletes the event and every date of it. The event disappears
+
+        from reads immediately and is removed in the background; the response is `202` with a
+
+        `deletion_id`. A retry returns the same `deletion_id` while removal runs (send the same
+
+        `Idempotency-Key`, or none and the same `send_invites`); once it has finished, the event
+
+        no longer exists and a retry returns `404`. No `calendar.event.starting` or
+
+        `calendar.event.ending` webhook is sent for the event after the delete is accepted.
+
+        - **Dated ID (`_`):** cancels that date (`mode=single`, the default) or that date
+
+        and every later date (`mode=future`). Returns `202` with the cancelled date. A `mode=future`
+
+        delete from the first date deletes the whole series and returns a `deletion_id` instead.
+
+        A date that is already running still gets its `calendar.event.ending`.
+
+
+        Deleting a one-off or series event sends `calendar.event.deleted`. Cancelling dates sends
+
+        `calendar.event.updated` with the cancelled date. With `send_invites=true` the organizer
+
+        inbox also emails a cancellation to every attendee. Requires the `calendar_event_delete`
+
+        permission. To make the delete conditional, send the current `etag` in `If-Match`.
+
+
+        Emailing cancellations counts one send per attendee against the organization, pod and inbox
+
+        send limits, charged before the delete; an over-limit request returns `429`
+
+        `rate_limit_exceeded` and deletes nothing.
+
+
+        Calendar is in AgentMail Labs, available in US production (`api.agentmail.to`) but not yet
+
+        in EU production (`api.agentmail.eu`). Organizations that have not joined Labs receive a `403`.'
+      tags:
+      - inboxes > calendar
+      parameters:
+      - name: inbox_id
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/inboxes_InboxId'
+      - name: event_id
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/calendar_CalendarEventId'
+      - name: mode
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/calendar_InstanceMutationMode'
+      - name: send_invites
+        in: query
+        description: When `true`, emails a cancellation (iCalendar `CANCEL`) to every attendee. Only the organizer can send. Defaults to `false`.
+        required: false
+        schema:
+          type: boolean
+      - name: If-Match
+        in: header
+        description: The event's or date's current `etag`. Optional; makes the delete conditional; `*` matches any current version.
+        required: false
+        schema:
+          type: string
+      - name: Idempotency-Key
+        in: header
+        description: '1 to 128 visible ASCII characters. Optional. Retrying a delete with the same key
+
+          returns the original result; without a key, retries of the same delete share one
+
+          derived from the event and `send_invites`, so a keyless retry that changes
+
+          `send_invites` is a different delete and returns `404` while removal runs. Keys are
+
+          unique across your organization: reusing one to delete a different event returns
+
+          `409` `idempotency_conflict`.'
+        required: false
+        schema:
+          type: string
+      responses:
+        '202':
+          description: Response with status 202
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/calendar_DeleteCalendarEventResponse'
+        '400':
+          description: Error response with status 400
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
+        '403':
+          description: 'The organization does not have calendar access (it has not joined AgentMail Labs), or the API
+
+            key lacks the required calendar permission.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Error response with status 404
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '409':
+          description: Error response with status 409
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '410':
+          description: The event's date is outside the retained history window and can no longer be read or changed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '412':
+          description: The resource changed since the `If-Match` value was read. Fetch it again, reapply the change, and retry with the new `etag`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/calendar_PreconditionFailedErrorResponse'
+        '429':
+          description: 'Too many requests, or the invitation emails this request would send exceed an organization,
+
+            pod or inbox send limit. Nothing was changed. Honor the `Retry-After` header when present.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - Bearer: []
+  /v0/inboxes/{inbox_id}/calendar/events/{event_id}/instances:
+    get:
+      operationId: inboxes_calendar_listEventInstances
+      summary: List Event Instances
+      description: 'Lists the dates of one recurring event in a time window, in start order, with each date''s
+
+        edits applied. Dates are computed from the rule, so this works for any window up to 366
+
+        days, including dates far in the future. Cancelled dates are left out.
+
+
+        The window defaults to now through 90 days from now. Items omit `description`, `metadata`
+
+        and `attendees`; get a date by its ID for the full object. Like other reads, the list can
+
+        trail a change made moments earlier by a few seconds; pass `consistency=primary` to read
+
+        your own change right away. Requires the `calendar_event_read` permission.
+
+
+        Calendar is in AgentMail Labs, available in US production (`api.agentmail.to`) but not yet
+
+        in EU production (`api.agentmail.eu`). Organizations that have not joined Labs receive a `403`.'
+      tags:
+      - inboxes > calendar
+      parameters:
+      - name: inbox_id
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/inboxes_InboxId'
+      - name: event_id
+        in: path
+        description: UUID of the recurring event.
+        required: true
+        schema:
+          type: string
+      - name: consistency
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/calendar_CalendarConsistency'
+      - name: after
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/calendar_WindowAfter'
+      - name: before
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/calendar_WindowBefore'
+      - name: include_overlapping
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/calendar_IncludeOverlapping'
+      - name: limit
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/calendar_CalendarLimit'
+      - name: page_token
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/PageToken'
+      responses:
+        '200':
+          description: Response with status 200
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/calendar_ListCalendarEventsResponse'
+        '400':
+          description: Error response with status 400
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
+        '403':
+          description: 'The organization does not have calendar access (it has not joined AgentMail Labs), or the API
+
+            key lacks the required calendar permission.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Error response with status 404
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '409':
+          description: Error response with status 409
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - Bearer: []
+  /v0/inboxes/{inbox_id}/calendar/events/{event_id}/respond:
+    post:
+      operationId: inboxes_calendar_respondToEvent
+      summary: Respond to Event
+      description: 'Accepts, declines or tentatively accepts an invitation the inbox received by email. Pass the
+
+        event''s UUID to respond for every date, or a dated ID to respond for one date only.
+
+
+        Only works on `email` events where the inbox is an attendee; anything else returns 409
+
+        `calendar_response_invalid`. Updates the inbox''s attendee entry and sends
+
+        `calendar.event.responded`. With `send_reply` (default `true`) the inbox emails the response
+
+        to the organizer.
+
+
+        Requires the `calendar_event_update` permission. To make the response conditional, send the
+
+        current `etag` in `If-Match`.
+
+
+        A reply email counts as one send against the organization, pod and inbox send limits,
+
+        charged before the response is saved; an over-limit request returns `429`
+
+        `rate_limit_exceeded` and changes nothing.
+
+
+        Calendar is in AgentMail Labs, available in US production (`api.agentmail.to`) but not yet
+
+        in EU production (`api.agentmail.eu`). Organizations that have not joined Labs receive a `403`.'
+      tags:
+      - inboxes > calendar
+      parameters:
+      - name: inbox_id
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/inboxes_InboxId'
+      - name: event_id
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/calendar_CalendarEventId'
+      - name: If-Match
+        in: header
+        description: The event's or date's current `etag`. Optional; makes the response conditional; `*` matches any current version.
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Response with status 200
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/calendar_CalendarEventMutationResponse'
+        '400':
+          description: Error response with status 400
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
+        '403':
+          description: 'The organization does not have calendar access (it has not joined AgentMail Labs), or the API
+
+            key lacks the required calendar permission.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Error response with status 404
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '409':
+          description: Error response with status 409
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '410':
+          description: The event's date is outside the retained history window and can no longer be read or changed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '412':
+          description: The resource changed since the `If-Match` value was read. Fetch it again, reapply the change, and retry with the new `etag`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/calendar_PreconditionFailedErrorResponse'
+        '413':
+          description: The request body is too large (8 KB for calendar settings, 128 KB for events).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '429':
+          description: 'Too many requests, or the invitation emails this request would send exceed an organization,
+
+            pod or inbox send limit. Nothing was changed. Honor the `Retry-After` header when present.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  $ref: '#/components/schemas/calendar_RespondStatus'
+                comment:
+                  type: string
+                  description: 'Comment to include with the response. At most 4,096 UTF-8 bytes, with no control characters
+
+                    other than tab, line feed and carriage return; a longer comment returns `400`. It is stored
+
+                    as the inbox''s attendee `comment`.'
+                send_reply:
+                  type: boolean
+                  description: When `true` (default), emails the response (iCalendar `REPLY`) to the organizer.
+              required:
+              - status
+      security:
+      - Bearer: []
+components:
+  schemas:
+    ErrorMessage:
+      type: string
+      description: Error message.
+      title: ErrorMessage
+    calendar_DurationMode:
+      type: string
+      enum:
+      - nominal
+      - exact
+      description: "How the event's length is kept when a date crosses a daylight-saving change.\n\n- `exact`: the event lasts the same elapsed time. Default for one-off timed events.\n- `nominal`: the event keeps its wall-clock end time (a 09:00 to 10:00 meeting stays 09:00 to\n  10:00 local time). Default for recurring timed events.\n\nAll-day events are always `nominal`."
+      title: DurationMode
+    calendar_DeleteCalendarEventResponse:
+      type: object
+      properties:
+        deletion_id:
+          $ref: '#/components/schemas/calendar_DeletionId'
+        event:
+          $ref: '#/components/schemas/calendar_CalendarEvent'
+        operation_id:
+          $ref: '#/components/schemas/calendar_OperationId'
+      description: 'Deleting a one-off or recurring event (or a `mode=future` delete that covers a whole series)
+
+        returns `deletion_id`. Deleting dates of a series returns the cancelled date as `event` with an
+
+        `operation_id`.'
+      title: DeleteCalendarEventResponse
+    calendar_CalendarEvent:
+      type: object
+      properties:
+        event_id:
+          $ref: '#/components/schemas/calendar_CalendarEventId'
+        kind:
+          $ref: '#/components/schemas/calendar_CalendarEventKind'
+        series_id:
+          type: string
+          description: For `instance` events, the UUID of the series this date belongs to.
+        original_start:
+          $ref: '#/components/schemas/calendar_WallTime'
+          description: For `instance` events, the date's start as the series rule generated it, before any edit.
+        original_start_at:
+          type: string
+          format: date-time
+          description: For `instance` events, `original_start` as a UTC instant.
+        is_exception:
+          type: boolean
+          description: For `instance` events, `true` when this date was edited or moved, individually or by a `mode=future` change.
+        title:
+          type: string
+          description: Title of the event.
+        description:
+          type: string
+          description: Description of the event. Omitted from agenda and instance list items.
+        location:
+          type: string
+          description: Location of the event.
+        metadata:
+          description: Your own JSON value for the event, usually an object. Never sent to attendees. Omitted from agenda and instance list items.
+        status:
+          $ref: '#/components/schemas/calendar_CalendarEventStatus'
+        all_day:
+          type: boolean
+          description: Whether this is an all-day event.
+        start:
+          $ref: '#/components/schemas/calendar_WallTime'
+          description: Local start time in `timezone`. For all-day events, the first day.
+        end:
+          $ref: '#/components/schemas/calendar_WallTime'
+          description: Local end time in `timezone`. For all-day events, the last day (inclusive).
+        timezone:
+          $ref: '#/components/schemas/calendar_IanaTimezone'
+        duration_mode:
+          $ref: '#/components/schemas/calendar_DurationMode'
+        duration_value:
+          type: integer
+          description: Length of the event, in milliseconds for timed events and in days for all-day events.
+        start_at:
+          type: string
+          format: date-time
+          description: Start as a UTC instant. This is when `calendar.event.starting` is due.
+        end_at:
+          type: string
+          format: date-time
+          description: End as a UTC instant. This is when `calendar.event.ending` is due.
+        recurrence:
+          $ref: '#/components/schemas/calendar_Recurrence'
+          description: For `series` events, the recurrence.
+        attendees:
+          type: array
+          items:
+            $ref: '#/components/schemas/calendar_Attendee'
+          description: Attendees of the event. Omitted from agenda and instance list items; `attendee_count` is always present.
+        attendee_count:
+          type: integer
+          description: Number of attendees.
+        response_status:
+          $ref: '#/components/schemas/calendar_AttendeeStatus'
+          description: 'The inbox''s own response: the `status` of its entry in `attendees`. Present only on events
+
+            the inbox can respond to: `email` events with an `organizer_email` and an
+
+            `origin_message_id` that list the inbox as an attendee. Included on agenda and instance list
+
+            items, which omit `attendees`. `needs_action` means the invitation is waiting for a reply.'
+        uid:
+          type: string
+          description: iCalendar UID of the event. Invitations about this event carry the same UID.
+        sequence:
+          type: integer
+          description: 'iCalendar SEQUENCE number. It increases when a change to a one-off or series event affects
+
+            what attendees see (time, status, title, description, location, recurrence or attendees).
+
+            A change to a dated event increases it only when the change is sent with `send_invites`.'
+        source:
+          $ref: '#/components/schemas/calendar_CalendarEventSource'
+        organizer_email:
+          type: string
+          description: Email address of the organizer. For `api` events, the inbox.
+        origin_message_id:
+          type: string
+          description: For `email` events, the ID of the message whose invitation last created or updated the event.
+        resource_revision:
+          $ref: '#/components/schemas/calendar_ResourceRevision'
+          description: 'Present on `single` and `series` events, except agenda items and
+
+            `calendar.event.starting` and `calendar.event.ending` payloads, which omit it.'
+        created_at:
+          type: string
+          format: date-time
+          description: Time at which the event (or, for a date, the definition governing it) was created.
+        updated_at:
+          type: string
+          format: date-time
+          description: Time at which the event (or, for a date, the definition governing it) was last updated.
+        etag:
+          type: string
+          description: 'The event''s or date''s current version, also sent as the `ETag` response header. Send it in
+
+            `If-Match` to make an update, delete or response conditional. Present on Get, Create,
+
+            Update, Delete and Respond responses; list items and webhooks omit it. Treat it as opaque:
+
+            a dated event''s `etag` (`"occ-..."`) is not derived from `resource_revision`.'
+      required:
+      - event_id
+      - kind
+      - title
+      - status
+      - all_day
+      - start
+      - end
+      - timezone
+      - duration_mode
+      - duration_value
+      - start_at
+      - end_at
+      - attendee_count
+      - uid
+      - sequence
+      - source
+      - created_at
+      - updated_at
+      description: 'A calendar event. The same shape is used by every response, list item and webhook. `kind` says
+
+        whether it is a one-off event, the definition of a recurring series, or one date of a series.'
+      title: CalendarEvent
+    calendar_CalendarEventSource:
+      type: string
+      enum:
+      - api
+      - email
+      description: 'Where the event came from. `api` events were created through this API and the inbox is their
+
+        organizer. `email` events were created from a calendar invitation (iMIP) received by the inbox;
+
+        their organizer is the sender of the invitation.'
+      title: CalendarEventSource
+    PageToken:
+      type: string
+      description: Page token for pagination.
+      title: PageToken
+    calendar_CalendarEventMutationResponse:
+      type: object
+      properties:
+        event:
+          $ref: '#/components/schemas/calendar_CalendarEvent'
+        operation_id:
+          $ref: '#/components/schemas/calendar_OperationId'
+      required:
+      - event
+      - operation_id
+      title: CalendarEventMutationResponse
+    calendar_WindowBefore:
+      type: string
+      format: date-time
+      description: 'End of the window, as a UTC timestamp ending in `Z` (an offset such as `-04:00` is rejected).
+
+        Defaults to 90 days after `after`. The window between `after` and `before` can be at most 366
+
+        days.'
+      title: WindowBefore
+    calendar_IncludeOverlapping:
+      type: boolean
+      description: 'When `true` (default), include events that started before `after` but are still running at
+
+        `after`. When `false`, include only events that start inside the window.'
+      title: IncludeOverlapping
+    calendar_PreconditionFailedErrorResponse:
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/ErrorName'
+        code:
+          $ref: '#/components/schemas/ErrorCode'
+        message:
+          $ref: '#/components/schemas/ErrorMessage'
+        current_revision:
+          type: integer
+          description: The resource's current revision.
+        fix:
+          $ref: '#/components/schemas/ErrorFix'
+        docs:
+          $ref: '#/components/schemas/ErrorDocs'
+      required:
+      - name
+      - message
+      title: PreconditionFailedErrorResponse
+    ErrorDocs:
+      type: string
+      description: Link to the error reference entry for this code.
+      title: ErrorDocs
+    calendar_RecurrencePeriod:
+      type: object
+      properties:
+        start:
+          $ref: '#/components/schemas/calendar_WallTime'
+        end:
+          $ref: '#/components/schemas/calendar_WallTime'
+        duration:
+          type: string
+          description: ISO 8601 duration, for example `PT30M`.
+      required:
+      - start
+      description: An extra date (RDATE) given as a period. Specify exactly one of `end` or `duration`.
+      title: RecurrencePeriod
+    calendar_Attendee:
+      type: object
+      properties:
+        email:
+          type: string
+          description: Email address of the attendee. Stored in lowercase. Must be unique within the event.
+        name:
+          type: string
+          description: Display name of the attendee. At most 256 characters.
+        status:
+          $ref: '#/components/schemas/calendar_AttendeeStatus'
+          description: Response status. Defaults to `needs_action`.
+        role:
+          $ref: '#/components/schemas/calendar_AttendeeRole'
+          description: Defaults to `required`.
+        comment:
+          type: string
+          description: 'Comment the attendee sent with their response. At most 4,096 UTF-8 bytes; on create or
+
+            update, a longer comment is dropped rather than rejected.'
+        responded_at:
+          type: string
+          format: date-time
+          description: Time at which the attendee last responded.
+      required:
+      - email
+      title: Attendee
+    calendar_WindowAfter:
+      type: string
+      format: date-time
+      description: 'Start of the window, as a UTC timestamp ending in `Z` (an offset such as `-04:00` is
+
+        rejected). Defaults to now. The window between `after` and `before` can be at most 366 days.'
+      title: WindowAfter
+    Count:
+      type: integer
+      description: Number of items returned.
+      title: Count
+    inboxes_InboxId:
+      type: string
+      description: The ID of the inbox.
+      title: InboxId
+    calendar_ResourceRevision:
+      type: integer
+      description: 'Revision of the resource. It increases on every change. The resource''s `etag` is
+
+        `"rv-<resource_revision>"`.'
+      title: ResourceRevision
+    calendar_InstanceMutationMode:
+      type: string
+      enum:
+      - single
+      - future
+      description: 'Which dates a change to a dated event applies to. `single` (default) changes only this date.
+
+        `future` changes this date and every later date of the series. Applies only to dated event IDs;
+
+        sending `mode` with a one-off or series UUID is a `400`.'
+      title: InstanceMutationMode
+    calendar_CalendarEventId:
+      type: string
+      description: 'ID of a calendar event. A one-off or recurring event is addressed by its UUID. One date of a
+
+        recurring event is addressed by a dated ID, `<uuid>_<slot>`: `<uuid>_t20261015T090000` for a
+
+        timed date (the original wall-clock start in the event''s time zone) or `<uuid>_d20261015` for an
+
+        all-day date. Dated IDs are stable: moving a date keeps its original ID.'
+      title: CalendarEventId
+    calendar_RecurrenceInput:
+      type: object
+      properties:
+        rule:
+          type: string
+          description: 'RFC 5545 RRULE body, with or without the `RRULE:` prefix, for example
+
+            `FREQ=WEEKLY;BYDAY=MO,WE,FR` or `FREQ=MONTHLY;BYDAY=-1FR;COUNT=12`. Supported parts: `FREQ`,
+
+            `INTERVAL` (1 to 366), `COUNT` (1 to 10,000), `UNTIL` (`YYYYMMDD` for all-day events,
+
+            `YYYYMMDDTHHMMSSZ` for timed events),
+
+            `WKST`, `BYMONTH`, `BYWEEKNO`, `BYYEARDAY`, `BYMONTHDAY`, `BYDAY`, `BYHOUR`, `BYMINUTE`,
+
+            `BYSECOND` and `BYSETPOS`. `COUNT` and `UNTIL` are mutually exclusive. The rule is stored in
+
+            a normalized form, so a response can differ textually from what you sent. At most 512
+
+            characters after normalization.'
+        exdates:
+          type: array
+          items:
+            $ref: '#/components/schemas/calendar_WallTime'
+          description: 'Dates to skip, matching the original start of a date: `YYYY-MM-DDTHH:mm:ss` for timed events,
+
+            `YYYY-MM-DD` for all-day events. At most 366.'
+        rdates:
+          type: array
+          items:
+            $ref: '#/components/schemas/calendar_RecurrenceDate'
+          description: 'Extra dates to add. Timed events take date-times or periods; all-day events take dates. At
+
+            most 100.'
+      required:
+      - rule
+      description: 'Repeats the event. `rule` is an RFC 5545 RRULE, evaluated in the event''s `timezone` from the
+
+        event''s `start`. Each date keeps its wall-clock time across daylight-saving changes.'
+      title: RecurrenceInput
+    Limit:
+      type: integer
+      description: Limit of number of items returned.
+      title: Limit
+    ValidationErrorResponse:
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/ErrorName'
+        code:
+          $ref: '#/components/schemas/ErrorCode'
+        message:
+          $ref: '#/components/schemas/ErrorMessage'
+        errors:
+          description: Validation errors. Each entry has a path and a message identifying the invalid field.
+        fix:
+          $ref: '#/components/schemas/ErrorFix'
+        docs:
+          $ref: '#/components/schemas/ErrorDocs'
+      required:
+      - name
+      - errors
+      title: ValidationErrorResponse
+    ErrorFix:
+      type: string
+      description: The concrete next action that resolves the error.
+      title: ErrorFix
+    calendar_CalendarConsistency:
+      type: string
+      enum:
+      - eventual
+      - primary
+      description: 'Read consistency. `eventual` (default) reads from the region that serves your request and may
+
+        lag a write made moments earlier by up to a few seconds. `primary` reads from the primary region
+
+        and always reflects every completed write.'
+      title: CalendarConsistency
+    calendar_Calendar:
+      type: object
+      properties:
+        inbox_id:
+          $ref: '#/components/schemas/inboxes_InboxId'
+        timezone:
+          $ref: '#/components/schemas/calendar_IanaTimezone'
+          description: 'Default time zone for events created without a `timezone`. Defaults to `UTC`. Changing it
+
+            does not move existing events.'
+        event_count:
+          type: integer
+          description: Number of one-off and recurring events on the calendar. Each recurring event counts once.
+        created_at:
+          type: string
+          format: date-time
+          description: Time at which the calendar was created. The calendar exists from the moment the inbox does, so this is the inbox's creation time.
+        updated_at:
+          type: string
+          format: date-time
+          description: Time at which the calendar was last updated.
+        etag:
+          type: string
+          description: 'The calendar''s current version, also sent as the `ETag` response header. Send it in
+
+            `If-Match` to make an update conditional.'
+      required:
+      - inbox_id
+      - timezone
+      - event_count
+      - created_at
+      - updated_at
+      - etag
+      description: 'An inbox''s calendar. Every inbox has exactly one calendar; it exists from the moment the inbox
+
+        does and is deleted with it.'
+      title: Calendar
+    ErrorCode:
+      type: string
+      description: Stable, machine-readable error code in snake_case (for example, not_found or missing_permission). Branch on this rather than the message text.
+      title: ErrorCode
+    calendar_CalendarLimit:
+      type: integer
+      description: Maximum number of events to return, from 1 to 100. Defaults to 50.
+      title: CalendarLimit
+    calendar_CalendarEventStatus:
+      type: string
+      enum:
+      - confirmed
+      - tentative
+      - cancelled
+      description: 'Status of the event. A `cancelled` event or date stays readable but sends no
+
+        `calendar.event.starting` or `calendar.event.ending` webhooks (cancelling a date that is
+
+        already running still sends its `calendar.event.ending`). A date cancelled by deleting its
+
+        dated ID is removed from the series instead, so reading it can return `404` or `410`.'
+      title: CalendarEventStatus
+    calendar_OperationId:
+      type: string
+      description: 'ID of the change this request made. The `calendar.event.created`, `calendar.event.updated`,
+
+        `calendar.event.deleted` or `calendar.event.responded` webhook for the change carries the same
+
+        value as its `event_id`, so you can match webhooks to your own requests.'
+      title: OperationId
+    calendar_ListCalendarEventsResponse:
+      type: object
+      properties:
+        count:
+          $ref: '#/components/schemas/Count'
+        limit:
+          $ref: '#/components/schemas/Limit'
+        next_page_token:
+          $ref: '#/components/schemas/PageToken'
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/calendar_CalendarEvent'
+          description: 'On List Events, ordered by `updated_at` descending. On Get Agenda and List Event Instances,
+
+            ordered by `start_at` ascending.'
+      required:
+      - count
+      - limit
+      - events
+      title: ListCalendarEventsResponse
+    calendar_Recurrence:
+      type: object
+      properties:
+        rule:
+          type: string
+          description: Normalized RRULE body, without the `RRULE:` prefix.
+        exdates:
+          type: array
+          items:
+            $ref: '#/components/schemas/calendar_WallTime'
+        rdates:
+          type: array
+          items:
+            $ref: '#/components/schemas/calendar_RecurrenceDate'
+        truncate_before:
+          $ref: '#/components/schemas/calendar_WallTime'
+          description: 'Set when the series was ended with a `mode=future` delete: no date starting at or after
+
+            this wall-clock time occurs.'
+      required:
+      - rule
+      description: The recurrence of a series, as stored.
+      title: Recurrence
+    ErrorResponse:
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/ErrorName'
+        code:
+          $ref: '#/components/schemas/ErrorCode'
+        message:
+          $ref: '#/components/schemas/ErrorMessage'
+        fix:
+          $ref: '#/components/schemas/ErrorFix'
+        docs:
+          $ref: '#/components/schemas/ErrorDocs'
+      required:
+      - name
+      - message
+      title: ErrorResponse
+    calendar_WallTime:
+      type: string
+      description: 'A local wall-clock time without an offset, interpreted in the event''s `timezone`.
+
+        Timed events use `YYYY-MM-DDTHH:mm:ss` (for example `2026-10-15T09:00:00`). All-day events use
+
+        `YYYY-MM-DD`. Years must be between 1900 and 9999.'
+      title: WallTime
+    ErrorName:
+      type: string
+      description: Name of error.
+      title: ErrorName
+    calendar_RespondStatus:
+      type: string
+      enum:
+      - accepted
+      - declined
+      - tentative
+      description: Your response to the invitation.
+      title: RespondStatus
+    calendar_CalendarEventKind:
+      type: string
+      enum:
+      - single
+      - series
+      - instance
+      description: "What the event object represents.\n\n- `single`: a one-off event, addressed by its UUID.\n- `series`: the definition of a recurring event, addressed by its UUID. It carries\n  `recurrence`; `start` and `end` describe its first date.\n- `instance`: one date of a recurring event, addressed by its dated ID. It carries `series_id`,\n  `original_start` and `is_exception`."
+      title: CalendarEventKind
+    calendar_DeletionId:
+      type: string
+      description: 'ID of an accepted deletion. While the event is being removed, retrying the same delete (with the
+
+        same `Idempotency-Key`, or none and the same `send_invites`) returns it again. Once removal has
+
+        finished, a retry returns `404`.'
+      title: DeletionId
+    calendar_AttendeeStatus:
+      type: string
+      enum:
+      - needs_action
+      - accepted
+      - declined
+      - tentative
+      description: The attendee's response to the invitation.
+      title: AttendeeStatus
+    calendar_IanaTimezone:
+      type: string
+      description: 'Canonical IANA time zone name, for example `America/New_York`, `Europe/London` or `UTC`.
+
+        Abbreviations such as `PST`, Windows names such as `Pacific Standard Time`, and spellings that
+
+        differ from the canonical name are rejected.'
+      title: IanaTimezone
+    calendar_RecurrenceDate:
+      oneOf:
+      - $ref: '#/components/schemas/calendar_WallTime'
+      - $ref: '#/components/schemas/calendar_RecurrencePeriod'
+      description: A wall-clock date or date-time, or (timed events only) a period.
+      title: RecurrenceDate
+    calendar_AttendeeRole:
+      type: string
+      enum:
+      - required
+      - optional
+      description: Whether the attendee's presence is required.
+      title: AttendeeRole
+    calendar_CreateCalendarEventRequest:
+      type: object
+      properties:
+        client_id:
+          type: string
+          description: 'Your idempotency key for this create. Retrying with the same `client_id` and the same body
+
+            returns the original event with `200` instead of creating a second one, for as long as the
+
+            event exists (`404` once it has been deleted). Reusing it with a different body is a `409`
+
+            `idempotency_conflict`.'
+        title:
+          type: string
+          description: Title of the event. 1 to 1,000 characters.
+        description:
+          type: string
+          description: Description of the event. At most 65,536 bytes.
+        location:
+          type: string
+          description: Location of the event. At most 1,024 characters.
+        metadata:
+          description: Your own JSON value (usually an object), returned on reads and in webhooks (except agenda and instance list items, and the webhook for a date cancelled with `DELETE`). Never sent to attendees. At most 16,384 bytes serialized.
+        status:
+          $ref: '#/components/schemas/calendar_CalendarEventStatus'
+          description: Defaults to `confirmed`.
+        all_day:
+          type: boolean
+          description: Set to `true` for an all-day event. Defaults to `false`.
+        start:
+          $ref: '#/components/schemas/calendar_WallTime'
+          description: 'Local start time in `timezone`: `YYYY-MM-DDTHH:mm:ss` for timed events, `YYYY-MM-DD` for
+
+            all-day events. For a recurring event, this is the first date.'
+        end:
+          $ref: '#/components/schemas/calendar_WallTime'
+          description: 'Local end time in `timezone`, in the same format as `start`. For timed events it must be
+
+            after `start`; for all-day events it is the last day (inclusive) and can equal `start`.
+
+            One-off events can last up to 366 days; each date of a recurring event up to 31 days.'
+        timezone:
+          $ref: '#/components/schemas/calendar_IanaTimezone'
+          description: Time zone of `start` and `end`. Defaults to the calendar's `timezone`.
+        duration_mode:
+          $ref: '#/components/schemas/calendar_DurationMode'
+          description: Timed events only. Defaults to `exact` for one-off events and `nominal` for recurring events.
+        recurrence:
+          $ref: '#/components/schemas/calendar_RecurrenceInput'
+          description: Makes this a recurring event.
+        attendees:
+          type: array
+          items:
+            $ref: '#/components/schemas/calendar_Attendee'
+          description: Attendees of the event. At most 100.
+        send_invites:
+          type: boolean
+          description: 'When `true`, the inbox emails an invitation (iCalendar `REQUEST`) to every attendee. Defaults
+
+            to `false`.'
+      required:
+      - title
+      - start
+      - end
+      title: CreateCalendarEventRequest
+  securitySchemes:
+    Bearer:
+      type: http
+      scheme: bearer

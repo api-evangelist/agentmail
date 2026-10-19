@@ -560,6 +560,98 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/agentmail-api-reference-api-openapi.yml
+- aid: agentmail:agentmail-accounts-api
+  name: AgentMail Accounts API
+  description: The accounts API from AgentMail — 3 operation(s) for accounts.
+  humanURL: https://docs.agentmail.to
+  baseURL: https://api.agentmail.to
+  tags:
+  - accounts
+  properties:
+  - type: OpenAPI
+    url: openapi/agentmail-accounts-api-openapi.yml
+- aid: agentmail:agentmail-apps-api
+  name: AgentMail Apps API
+  description: The apps API from AgentMail — 5 operation(s) for apps.
+  humanURL: https://docs.agentmail.to
+  baseURL: https://api.agentmail.to
+  tags:
+  - apps
+  properties:
+  - type: OpenAPI
+    url: openapi/agentmail-apps-api-openapi.yml
+- aid: agentmail:agentmail-inboxes-accounts-api
+  name: AgentMail inboxes > accounts API
+  description: The inboxes > accounts API from AgentMail — 2 operation(s) for inboxes > accounts.
+  humanURL: https://docs.agentmail.to
+  baseURL: https://api.agentmail.to
+  tags:
+  - inboxes > accounts
+  properties:
+  - type: OpenAPI
+    url: openapi/agentmail-inboxes-accounts-api-openapi.yml
+- aid: agentmail:agentmail-inboxes-calendar-api
+  name: AgentMail inboxes > calendar API
+  description: The inboxes > calendar API from AgentMail — 6 operation(s) for inboxes > calendar.
+  humanURL: https://docs.agentmail.to
+  baseURL: https://api.agentmail.to
+  tags:
+  - inboxes > calendar
+  properties:
+  - type: OpenAPI
+    url: openapi/agentmail-inboxes-calendar-api-openapi.yml
+- aid: agentmail:agentmail-inboxes-files-api
+  name: AgentMail inboxes > files API
+  description: The inboxes > files API from AgentMail — 3 operation(s) for inboxes > files.
+  humanURL: https://docs.agentmail.to
+  baseURL: https://api.agentmail.to
+  tags:
+  - inboxes > files
+  properties:
+  - type: OpenAPI
+    url: openapi/agentmail-inboxes-files-api-openapi.yml
+- aid: agentmail:agentmail-inboxes-webhooks-polling-api
+  name: AgentMail inboxes > webhooks > polling API
+  description: >-
+    The inboxes > webhooks > polling API from AgentMail — 2 operation(s) for inboxes > webhooks > polling.
+  humanURL: https://docs.agentmail.to
+  baseURL: https://api.agentmail.to
+  tags:
+  - inboxes > webhooks > polling
+  properties:
+  - type: OpenAPI
+    url: openapi/agentmail-inboxes-webhooks-polling-api-openapi.yml
+- aid: agentmail:agentmail-pods-accounts-api
+  name: AgentMail pods > accounts API
+  description: The pods > accounts API from AgentMail — 2 operation(s) for pods > accounts.
+  humanURL: https://docs.agentmail.to
+  baseURL: https://api.agentmail.to
+  tags:
+  - pods > accounts
+  properties:
+  - type: OpenAPI
+    url: openapi/agentmail-pods-accounts-api-openapi.yml
+- aid: agentmail:agentmail-pods-webhooks-polling-api
+  name: AgentMail pods > webhooks > polling API
+  description: >-
+    The pods > webhooks > polling API from AgentMail — 2 operation(s) for pods > webhooks > polling.
+  humanURL: https://docs.agentmail.to
+  baseURL: https://api.agentmail.to
+  tags:
+  - pods > webhooks > polling
+  properties:
+  - type: OpenAPI
+    url: openapi/agentmail-pods-webhooks-polling-api-openapi.yml
+- aid: agentmail:agentmail-webhooks-polling-api
+  name: AgentMail webhooks > polling API
+  description: The webhooks > polling API from AgentMail — 2 operation(s) for webhooks > polling.
+  humanURL: https://docs.agentmail.to
+  baseURL: https://api.agentmail.to
+  tags:
+  - webhooks > polling
+  properties:
+  - type: OpenAPI
+    url: openapi/agentmail-webhooks-polling-api-openapi.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com

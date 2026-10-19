@@ -16,13 +16,13 @@ tags:
 paths:
   /v0/inboxes/{inbox_id}/lists/{direction}/{type}:
     get:
-      operationId: list
+      operationId: inboxes_lists_list
       summary: List Entries
       description: '**CLI:**
 
         ```bash
 
-        agentmail inboxes:lists list --inbox-id --direction --type
+        agentmail inboxes lists list --inbox-id --direction --type
 
         ```'
       tags:
@@ -32,48 +32,44 @@ paths:
         in: path
         required: true
         schema:
-          $ref: '#/components/schemas/type_inboxes_InboxId'
+          $ref: '#/components/schemas/inboxes_InboxId'
       - name: direction
         in: path
         required: true
         schema:
-          $ref: '#/components/schemas/type_lists_Direction'
+          $ref: '#/components/schemas/lists_Direction'
       - name: type
         in: path
         required: true
         schema:
-          $ref: '#/components/schemas/type_lists_ListType'
+          $ref: '#/components/schemas/lists_ListType'
       - name: limit
         in: query
         required: false
         schema:
-          $ref: '#/components/schemas/type__Limit'
+          $ref: '#/components/schemas/Limit'
       - name: page_token
         in: query
         required: false
         schema:
-          $ref: '#/components/schemas/type__PageToken'
-      - name: Authorization
-        in: header
-        description: Bearer authentication
-        required: true
-        schema:
-          type: string
+          $ref: '#/components/schemas/PageToken'
       responses:
         '200':
           description: Response with status 200
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/type_lists_PodListListEntriesResponse'
+                $ref: '#/components/schemas/lists_PodListListEntriesResponse'
+      security:
+      - Bearer: []
     post:
-      operationId: create
+      operationId: inboxes_lists_create
       summary: Create List Entry
       description: '**CLI:**
 
         ```bash
 
-        agentmail inboxes:lists create --inbox-id --direction --type --entry user@example.com
+        agentmail inboxes lists create --inbox-id --direction --type --entry user@example.com
 
         ```'
       tags:
@@ -83,50 +79,46 @@ paths:
         in: path
         required: true
         schema:
-          $ref: '#/components/schemas/type_inboxes_InboxId'
+          $ref: '#/components/schemas/inboxes_InboxId'
       - name: direction
         in: path
         required: true
         schema:
-          $ref: '#/components/schemas/type_lists_Direction'
+          $ref: '#/components/schemas/lists_Direction'
       - name: type
         in: path
         required: true
         schema:
-          $ref: '#/components/schemas/type_lists_ListType'
-      - name: Authorization
-        in: header
-        description: Bearer authentication
-        required: true
-        schema:
-          type: string
+          $ref: '#/components/schemas/lists_ListType'
       responses:
         '200':
           description: Response with status 200
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/type_lists_PodListEntry'
+                $ref: '#/components/schemas/lists_PodListEntry'
         '400':
           description: Error response with status 400
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/type__ValidationErrorResponse'
+                $ref: '#/components/schemas/ValidationErrorResponse'
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/type_lists_CreateListEntryRequest'
+              $ref: '#/components/schemas/lists_CreateListEntryRequest'
+      security:
+      - Bearer: []
   /v0/inboxes/{inbox_id}/lists/{direction}/{type}/{entry}:
     get:
-      operationId: get
+      operationId: inboxes_lists_get
       summary: Get List Entry
       description: '**CLI:**
 
         ```bash
 
-        agentmail inboxes:lists get --inbox-id --direction --type --entry
+        agentmail inboxes lists get --inbox-id --direction --type --entry
 
         ```'
       tags:
@@ -136,26 +128,20 @@ paths:
         in: path
         required: true
         schema:
-          $ref: '#/components/schemas/type_inboxes_InboxId'
+          $ref: '#/components/schemas/inboxes_InboxId'
       - name: direction
         in: path
         required: true
         schema:
-          $ref: '#/components/schemas/type_lists_Direction'
+          $ref: '#/components/schemas/lists_Direction'
       - name: type
         in: path
         required: true
         schema:
-          $ref: '#/components/schemas/type_lists_ListType'
+          $ref: '#/components/schemas/lists_ListType'
       - name: entry
         in: path
         description: Email address or domain.
-        required: true
-        schema:
-          type: string
-      - name: Authorization
-        in: header
-        description: Bearer authentication
         required: true
         schema:
           type: string
@@ -165,21 +151,23 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/type_lists_PodListEntry'
+                $ref: '#/components/schemas/lists_PodListEntry'
         '404':
           description: Error response with status 404
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/type__ErrorResponse'
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - Bearer: []
     delete:
-      operationId: delete
+      operationId: inboxes_lists_delete
       summary: Delete List Entry
       description: '**CLI:**
 
         ```bash
 
-        agentmail inboxes:lists delete --inbox-id --direction --type --entry
+        agentmail inboxes lists delete --inbox-id --direction --type --entry
 
         ```'
       tags:
@@ -189,26 +177,20 @@ paths:
         in: path
         required: true
         schema:
-          $ref: '#/components/schemas/type_inboxes_InboxId'
+          $ref: '#/components/schemas/inboxes_InboxId'
       - name: direction
         in: path
         required: true
         schema:
-          $ref: '#/components/schemas/type_lists_Direction'
+          $ref: '#/components/schemas/lists_Direction'
       - name: type
         in: path
         required: true
         schema:
-          $ref: '#/components/schemas/type_lists_ListType'
+          $ref: '#/components/schemas/lists_ListType'
       - name: entry
         in: path
         description: Email address or domain.
-        required: true
-        schema:
-          type: string
-      - name: Authorization
-        in: header
-        description: Bearer authentication
         required: true
         schema:
           type: string
@@ -220,122 +202,59 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/type__ErrorResponse'
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - Bearer: []
 components:
   schemas:
-    type_inboxes_InboxId:
+    ErrorName:
       type: string
-      description: The ID of the inbox.
-      title: InboxId
-    type_lists_PodListListEntriesResponse:
-      type: object
-      properties:
-        count:
-          $ref: '#/components/schemas/type__Count'
-        limit:
-          $ref: '#/components/schemas/type__Limit'
-        next_page_token:
-          $ref: '#/components/schemas/type__PageToken'
-        entries:
-          type: array
-          items:
-            $ref: '#/components/schemas/type_lists_PodListEntry'
-          description: Ordered by entry ascending.
-      required:
-      - count
-      - entries
-      title: PodListListEntriesResponse
-    type__ErrorCode:
+      description: Name of error.
+      title: ErrorName
+    ErrorFix:
+      type: string
+      description: The concrete next action that resolves the error.
+      title: ErrorFix
+    ErrorMessage:
+      type: string
+      description: Error message.
+      title: ErrorMessage
+    OrganizationId:
+      type: string
+      description: ID of organization.
+      title: OrganizationId
+    ErrorCode:
       type: string
       description: Stable, machine-readable error code in snake_case (for example, not_found or missing_permission). Branch on this rather than the message text.
       title: ErrorCode
-    type__ValidationErrorResponse:
-      type: object
-      properties:
-        name:
-          $ref: '#/components/schemas/type__ErrorName'
-        code:
-          $ref: '#/components/schemas/type__ErrorCode'
-        message:
-          $ref: '#/components/schemas/type__ErrorMessage'
-        errors:
-          description: Validation errors. Each entry has a path and a message identifying the invalid field.
-        fix:
-          $ref: '#/components/schemas/type__ErrorFix'
-        docs:
-          $ref: '#/components/schemas/type__ErrorDocs'
-      required:
-      - name
-      - errors
-      title: ValidationErrorResponse
-    type__PageToken:
-      type: string
-      description: Page token for pagination.
-      title: PageToken
-    type_lists_ListType:
+    Count:
+      type: integer
+      description: Number of items returned.
+      title: Count
+    lists_ListType:
       type: string
       enum:
       - allow
       - block
       description: Type of list entry.
       title: ListType
-    type__OrganizationId:
-      type: string
-      description: ID of organization.
-      title: OrganizationId
-    type__ErrorDocs:
-      type: string
-      description: Link to the error reference entry for this code.
-      title: ErrorDocs
-    type_lists_Direction:
-      type: string
-      enum:
-      - send
-      - receive
-      - reply
-      description: Direction of list entry.
-      title: Direction
-    type_lists_EntryType:
-      type: string
-      enum:
-      - email
-      - domain
-      description: Whether the entry is an email address or domain.
-      title: EntryType
-    type__ErrorResponse:
-      type: object
-      properties:
-        name:
-          $ref: '#/components/schemas/type__ErrorName'
-        code:
-          $ref: '#/components/schemas/type__ErrorCode'
-        message:
-          $ref: '#/components/schemas/type__ErrorMessage'
-        fix:
-          $ref: '#/components/schemas/type__ErrorFix'
-        docs:
-          $ref: '#/components/schemas/type__ErrorDocs'
-      required:
-      - name
-      - message
-      title: ErrorResponse
-    type_lists_PodListEntry:
+    lists_PodListEntry:
       type: object
       properties:
         entry:
           type: string
           description: Email address or domain of list entry.
         organization_id:
-          $ref: '#/components/schemas/type__OrganizationId'
+          $ref: '#/components/schemas/OrganizationId'
         reason:
           type: string
           description: Reason for adding the entry.
         direction:
-          $ref: '#/components/schemas/type_lists_Direction'
+          $ref: '#/components/schemas/lists_Direction'
         list_type:
-          $ref: '#/components/schemas/type_lists_ListType'
+          $ref: '#/components/schemas/lists_ListType'
         entry_type:
-          $ref: '#/components/schemas/type_lists_EntryType'
+          $ref: '#/components/schemas/lists_EntryType'
         created_at:
           type: string
           format: date-time
@@ -358,23 +277,23 @@ components:
       - created_at
       - pod_id
       title: PodListEntry
-    type__ErrorMessage:
+    PageToken:
       type: string
-      description: Error message.
-      title: ErrorMessage
-    type__ErrorName:
+      description: Page token for pagination.
+      title: PageToken
+    inboxes_InboxId:
       type: string
-      description: Name of error.
-      title: ErrorName
-    type__Count:
-      type: integer
-      description: Number of items returned.
-      title: Count
-    type__ErrorFix:
+      description: The ID of the inbox.
+      title: InboxId
+    lists_Direction:
       type: string
-      description: The concrete next action that resolves the error.
-      title: ErrorFix
-    type_lists_CreateListEntryRequest:
+      enum:
+      - send
+      - receive
+      - reply
+      description: Direction of list entry.
+      title: Direction
+    lists_CreateListEntryRequest:
       type: object
       properties:
         entry:
@@ -386,10 +305,75 @@ components:
       required:
       - entry
       title: CreateListEntryRequest
-    type__Limit:
+    ValidationErrorResponse:
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/ErrorName'
+        code:
+          $ref: '#/components/schemas/ErrorCode'
+        message:
+          $ref: '#/components/schemas/ErrorMessage'
+        errors:
+          description: Validation errors. Each entry has a path and a message identifying the invalid field.
+        fix:
+          $ref: '#/components/schemas/ErrorFix'
+        docs:
+          $ref: '#/components/schemas/ErrorDocs'
+      required:
+      - name
+      - errors
+      title: ValidationErrorResponse
+    ErrorResponse:
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/ErrorName'
+        code:
+          $ref: '#/components/schemas/ErrorCode'
+        message:
+          $ref: '#/components/schemas/ErrorMessage'
+        fix:
+          $ref: '#/components/schemas/ErrorFix'
+        docs:
+          $ref: '#/components/schemas/ErrorDocs'
+      required:
+      - name
+      - message
+      title: ErrorResponse
+    ErrorDocs:
+      type: string
+      description: Link to the error reference entry for this code.
+      title: ErrorDocs
+    Limit:
       type: integer
       description: Limit of number of items returned.
       title: Limit
+    lists_PodListListEntriesResponse:
+      type: object
+      properties:
+        count:
+          $ref: '#/components/schemas/Count'
+        limit:
+          $ref: '#/components/schemas/Limit'
+        next_page_token:
+          $ref: '#/components/schemas/PageToken'
+        entries:
+          type: array
+          items:
+            $ref: '#/components/schemas/lists_PodListEntry'
+          description: Ordered by entry ascending.
+      required:
+      - count
+      - entries
+      title: PodListListEntriesResponse
+    lists_EntryType:
+      type: string
+      enum:
+      - email
+      - domain
+      description: Whether the entry is an email address or domain.
+      title: EntryType
   securitySchemes:
     Bearer:
       type: http

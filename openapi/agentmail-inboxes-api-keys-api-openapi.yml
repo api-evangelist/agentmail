@@ -16,13 +16,13 @@ tags:
 paths:
   /v0/inboxes/{inbox_id}/api-keys:
     get:
-      operationId: list
+      operationId: inboxes_apiKeys_list
       summary: List API Keys
       description: '**CLI:**
 
         ```bash
 
-        agentmail inboxes:api-keys list --inbox-id
+        agentmail inboxes api-keys list --inbox-id
 
         ```'
       tags:
@@ -32,44 +32,40 @@ paths:
         in: path
         required: true
         schema:
-          $ref: '#/components/schemas/type_inboxes_InboxId'
+          $ref: '#/components/schemas/inboxes_InboxId'
       - name: limit
         in: query
         required: false
         schema:
-          $ref: '#/components/schemas/type__Limit'
+          $ref: '#/components/schemas/Limit'
       - name: page_token
         in: query
         required: false
         schema:
-          $ref: '#/components/schemas/type__PageToken'
-      - name: Authorization
-        in: header
-        description: Bearer authentication
-        required: true
-        schema:
-          type: string
+          $ref: '#/components/schemas/PageToken'
       responses:
         '200':
           description: Response with status 200
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/type_api-keys_ListApiKeysResponse'
+                $ref: '#/components/schemas/apiKeys_ListApiKeysResponse'
         '404':
           description: Error response with status 404
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/type__ErrorResponse'
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - Bearer: []
     post:
-      operationId: create
+      operationId: inboxes_apiKeys_create
       summary: Create API Key
       description: '**CLI:**
 
         ```bash
 
-        agentmail inboxes:api-keys create --inbox-id --name "My Key"
+        agentmail inboxes api-keys create --inbox-id --name "My Key"
 
         ```'
       tags:
@@ -79,46 +75,42 @@ paths:
         in: path
         required: true
         schema:
-          $ref: '#/components/schemas/type_inboxes_InboxId'
-      - name: Authorization
-        in: header
-        description: Bearer authentication
-        required: true
-        schema:
-          type: string
+          $ref: '#/components/schemas/inboxes_InboxId'
       responses:
         '200':
           description: Response with status 200
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/type_api-keys_CreateApiKeyResponse'
+                $ref: '#/components/schemas/apiKeys_CreateApiKeyResult'
         '400':
           description: Error response with status 400
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/type__ValidationErrorResponse'
+                $ref: '#/components/schemas/ValidationErrorResponse'
         '404':
           description: Error response with status 404
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/type__ErrorResponse'
+                $ref: '#/components/schemas/ErrorResponse'
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/type_api-keys_CreateApiKeyRequest'
+              $ref: '#/components/schemas/apiKeys_CreateApiKeyRequest'
+      security:
+      - Bearer: []
   /v0/inboxes/{inbox_id}/api-keys/{api_key_id}:
-    delete:
-      operationId: delete
-      summary: Delete API Key
+    patch:
+      operationId: inboxes_apiKeys_update
+      summary: Update API Key
       description: '**CLI:**
 
         ```bash
 
-        agentmail inboxes:api-keys delete --inbox-id --api-key-id
+        agentmail inboxes api-keys update --inbox-id --api-key-id --name "Renamed"
 
         ```'
       tags:
@@ -128,18 +120,61 @@ paths:
         in: path
         required: true
         schema:
-          $ref: '#/components/schemas/type_inboxes_InboxId'
+          $ref: '#/components/schemas/inboxes_InboxId'
       - name: api_key_id
         in: path
         required: true
         schema:
-          $ref: '#/components/schemas/type_api-keys_ApiKeyId'
-      - name: Authorization
-        in: header
-        description: Bearer authentication
+          $ref: '#/components/schemas/apiKeys_ApiKeyId'
+      responses:
+        '200':
+          description: Response with status 200
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiKeys_ApiKey'
+        '400':
+          description: Error response with status 400
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
+        '404':
+          description: Error response with status 404
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/apiKeys_UpdateApiKeyRequest'
+      security:
+      - Bearer: []
+    delete:
+      operationId: inboxes_apiKeys_delete
+      summary: Delete API Key
+      description: '**CLI:**
+
+        ```bash
+
+        agentmail inboxes api-keys delete --inbox-id --api-key-id
+
+        ```'
+      tags:
+      - inboxes > api-keys
+      parameters:
+      - name: inbox_id
+        in: path
         required: true
         schema:
-          type: string
+          $ref: '#/components/schemas/inboxes_InboxId'
+      - name: api_key_id
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/apiKeys_ApiKeyId'
       responses:
         '200':
           description: Successful response
@@ -148,49 +183,142 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/type__ErrorResponse'
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - Bearer: []
 components:
   schemas:
-    type__ValidationErrorResponse:
+    apiKeys_CreatedAt:
+      type: string
+      format: date-time
+      description: Time at which api key was created.
+      title: CreatedAt
+    apiKeys_PublicKeyMaterial:
       type: object
       properties:
-        name:
-          $ref: '#/components/schemas/type__ErrorName'
-        code:
-          $ref: '#/components/schemas/type__ErrorCode'
-        message:
-          $ref: '#/components/schemas/type__ErrorMessage'
-        errors:
-          description: Validation errors. Each entry has a path and a message identifying the invalid field.
-        fix:
-          $ref: '#/components/schemas/type__ErrorFix'
-        docs:
-          $ref: '#/components/schemas/type__ErrorDocs'
+        jwk:
+          $ref: '#/components/schemas/apiKeys_PublicJwk'
+        fingerprint:
+          type: string
+          pattern: ^[A-Za-z0-9_-]{43}$
+          minLength: 43
+          maxLength: 43
+          description: RFC 7638 SHA-256 JWK thumbprint encoded as unpadded base64url.
       required:
-      - name
-      - errors
-      title: ValidationErrorResponse
-    type_api-keys_Name:
-      type: string
-      description: Name of api key.
-      title: Name
-    type__ErrorMessage:
+      - jwk
+      - fingerprint
+      description: Registered public key material and its server-computed RFC 7638 thumbprint.
+      title: PublicKeyMaterial
+    ErrorMessage:
       type: string
       description: Error message.
       title: ErrorMessage
-    type__ErrorName:
+    apiKeys_PodScopeId:
       type: string
-      description: Name of error.
-      title: ErrorName
-    type__Count:
-      type: integer
-      description: Number of items returned.
-      title: Count
-    type_api-keys_ApiKeyId:
+      description: Pod ID the api key is scoped to. If set, the key can only access resources within this pod.
+      title: PodScopeId
+    apiKeys_BearerApiKey:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - bearer
+        api_key_id:
+          $ref: '#/components/schemas/apiKeys_ApiKeyId'
+        prefix:
+          $ref: '#/components/schemas/apiKeys_Prefix'
+        name:
+          $ref: '#/components/schemas/apiKeys_Name'
+        pod_id:
+          $ref: '#/components/schemas/apiKeys_PodScopeId'
+        inbox_id:
+          $ref: '#/components/schemas/apiKeys_InboxScopeId'
+        used_at:
+          $ref: '#/components/schemas/apiKeys_UsedAt'
+        permissions:
+          $ref: '#/components/schemas/apiKeys_ApiKeyPermissions'
+        created_at:
+          $ref: '#/components/schemas/apiKeys_CreatedAt'
+        updated_at:
+          $ref: '#/components/schemas/apiKeys_UpdatedAt'
+        expires_at:
+          $ref: '#/components/schemas/apiKeys_ExpiresAt'
+      required:
+      - type
+      - api_key_id
+      - prefix
+      - name
+      - created_at
+      - updated_at
+      description: An API key presented as a bearer token in the `Authorization` header.
+      title: BearerApiKey
+    apiKeys_CreatePublicKeyRequest:
+      type: object
+      properties:
+        public_key:
+          $ref: '#/components/schemas/apiKeys_PublicJwk'
+        client_id:
+          $ref: '#/components/schemas/apiKeys_PublicKeyClientId'
+        name:
+          $ref: '#/components/schemas/apiKeys_Name'
+        permissions:
+          $ref: '#/components/schemas/apiKeys_ApiKeyPermissions'
+        expires_at:
+          $ref: '#/components/schemas/apiKeys_ExpiresAt'
+      required:
+      - public_key
+      description: 'Registers a public P-256 JWK at the route''s scope. `type` and
+
+        `api_key_id` are server-owned. `name` defaults to
+
+        `AgentID key {first eight fingerprint characters}`; `permissions`
+
+        defaults to the registering key''s, and only grants it holds may be
+
+        true; `expires_at` defaults to the registering key''s expiry and is
+
+        independent of that key afterward.'
+      title: CreatePublicKeyRequest
+    apiKeys_CreateBearerApiKeyRequest:
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/apiKeys_Name'
+        permissions:
+          $ref: '#/components/schemas/apiKeys_ApiKeyPermissions'
+        expires_at:
+          $ref: '#/components/schemas/apiKeys_ExpiresAt'
+      description: '`expires_at` must be in the future and is immutable once the key exists.
+
+        Omitted, the new key inherits the authenticating key''s expiry, and never
+
+        expires only when that key never does. A key cannot create one that
+
+        outlives it: an `expires_at` later than the authenticating key''s own
+
+        returns `403`.'
+      title: CreateBearerApiKeyRequest
+    PageToken:
       type: string
-      description: ID of api key.
-      title: ApiKeyId
-    type_api-keys_ApiKeyPermissions:
+      description: Page token for pagination.
+      title: PageToken
+    apiKeys_ExpiresAt:
+      type: string
+      format: date-time
+      description: Time at which api key expires. Omitted when it does not expire.
+      title: ExpiresAt
+    apiKeys_PublicKeyClientId:
+      type: string
+      description: 'Caller-chosen alias for a public key, unique within the organization and
+
+        reusable after deletion. Accepted in place of `api_key_id` on get, update,
+
+        and delete. Registration is idempotent on it: the same alias returns the
+
+        existing key, a conflicting one returns `409`. URL-safe; no slash or `@`.'
+      title: PublicKeyClientId
+    apiKeys_ApiKeyPermissions:
       type: object
       properties:
         inbox_read:
@@ -205,27 +333,35 @@ components:
         inbox_delete:
           type: boolean
           description: Delete inboxes.
-        thread_read:
-          type: boolean
-          description: Read threads.
-        thread_delete:
-          type: boolean
-          description: Delete threads.
         message_read:
           type: boolean
-          description: Read messages.
+          description: Read messages. Also required to read threads.
+        message_reply:
+          type: boolean
+          description: Reply and reply-all when the request is signed with a registered public key. Bearer keys reply with `message_send`.
         message_send:
           type: boolean
           description: Send messages.
         message_update:
           type: boolean
-          description: Update message labels.
+          description: Update message labels. Also required to update threads.
+        message_delete:
+          type: boolean
+          description: Delete messages. Also required to delete threads.
+        agent_armor_release:
+          type: boolean
+          description: 'Release mail Agent Armor holds for review. Opt-in: no key has it unless it was granted explicitly, even one
+
+            without a `permissions` object. See [Permissions](/permissions#agent-armor).'
         label_spam_read:
           type: boolean
           description: Access messages labeled spam.
         label_blocked_read:
           type: boolean
           description: Access messages labeled blocked.
+        label_unauthenticated_read:
+          type: boolean
+          description: Access messages labeled unauthenticated.
         label_trash_read:
           type: boolean
           description: Access messages labeled trash.
@@ -286,137 +422,344 @@ components:
         api_key_create:
           type: boolean
           description: Create API keys.
+        api_key_update:
+          type: boolean
+          description: Update API keys.
         api_key_delete:
           type: boolean
           description: Delete API keys.
+        app_connect:
+          type: boolean
+          description: 'Sign in to apps as an inbox: connect an app, authorize an inbox, and mint the
+
+            sign-in keys. Omitted on a new bearer key means false, whatever else the key holds.'
+        app_share_owner:
+          type: boolean
+          description: 'Share the organization owner''s name and email with apps at sign-in. One permission
+
+            for both values.'
+        account_update:
+          type: boolean
+          description: 'Update accounts: disable or re-enable an inbox''s sign-in at an app. Reading accounts
+
+            needs only `inbox_read`.'
         pod_read:
           type: boolean
           description: Read pods.
         pod_create:
           type: boolean
           description: Create pods.
+        pod_update:
+          type: boolean
+          description: Update pods.
         pod_delete:
           type: boolean
           description: Delete pods.
+        calendar_read:
+          type: boolean
+          description: Read inbox calendar settings.
+        calendar_update:
+          type: boolean
+          description: Update inbox calendar settings.
+        calendar_event_read:
+          type: boolean
+          description: Read calendar events, and receive `calendar.event.*` webhook and WebSocket events.
+        calendar_event_create:
+          type: boolean
+          description: Create calendar events.
+        calendar_event_update:
+          type: boolean
+          description: Update calendar events and respond to invitations.
+        calendar_event_delete:
+          type: boolean
+          description: Delete calendar events.
+        file_read:
+          type: boolean
+          description: Reserved; not released yet.
+        file_create:
+          type: boolean
+          description: Reserved; not released yet.
+        file_update:
+          type: boolean
+          description: Reserved; not released yet.
+        file_delete:
+          type: boolean
+          description: Reserved; not released yet.
       description: Granular permissions for the API key. When ommitted all permissions are granted. Otherwise, only permissions set to true are granted.
       title: ApiKeyPermissions
-    type__ErrorCode:
+    ErrorDocs:
+      type: string
+      description: Link to the error reference entry for this code.
+      title: ErrorDocs
+    apiKeys_InboxScopeId:
+      type: string
+      description: Inbox ID the api key is scoped to. If set, the key can only access resources within this inbox.
+      title: InboxScopeId
+    apiKeys_UpdateApiKeyRequest:
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/apiKeys_Name'
+        permissions:
+          $ref: '#/components/schemas/apiKeys_ApiKeyPermissions'
+      description: 'Rename a credential or change its permissions. Key material, type,
+
+        scope, and expiry are immutable.'
+      title: UpdateApiKeyRequest
+    apiKeys_ApiKey:
+      oneOf:
+      - $ref: '#/components/schemas/apiKeys_BearerApiKey'
+      - $ref: '#/components/schemas/apiKeys_PublicKeyCredential'
+      description: 'One credential of any family. `type` is `bearer` or `public_key`. A
+
+        public key carrying `status` is a sign-in key; one without it is a
+
+        registered signing key.'
+      title: ApiKey
+    apiKeys_CreateApiKeyResult:
+      oneOf:
+      - $ref: '#/components/schemas/apiKeys_CreateApiKeyResponse'
+      - $ref: '#/components/schemas/apiKeys_PublicKeyCredential'
+      description: The secret-bearing bearer key, or the registered public key without any secret.
+      title: CreateApiKeyResult
+    apiKeys_PublicKeyStatus:
+      type: string
+      enum:
+      - pending
+      - active
+      description: 'Lifecycle of a sign-in key: `pending` until the client finishes
+
+        creating it on the AgentID page, `active` once it can sign in as the
+
+        inbox. Absent on a registered key.'
+      title: PublicKeyStatus
+    Count:
+      type: integer
+      description: Number of items returned.
+      title: Count
+    inboxes_InboxId:
+      type: string
+      description: The ID of the inbox.
+      title: InboxId
+    apiKeys_Name:
+      type: string
+      description: Name of api key.
+      title: Name
+    apiKeys_CreateApiKeyRequest:
+      oneOf:
+      - $ref: '#/components/schemas/apiKeys_CreateBearerApiKeyRequest'
+      - $ref: '#/components/schemas/apiKeys_CreatePublicKeyRequest'
+      description: 'A body with `public_key` registers a public-key credential; any other
+
+        body mints a bearer key.'
+      title: CreateApiKeyRequest
+    apiKeys_PublicJwk:
+      type: object
+      properties:
+        kty:
+          type: string
+          enum:
+          - EC
+        crv:
+          type: string
+          enum:
+          - P-256
+        x:
+          $ref: '#/components/schemas/apiKeys_PublicJwkCoordinate'
+        y:
+          $ref: '#/components/schemas/apiKeys_PublicJwkCoordinate'
+      required:
+      - kty
+      - crv
+      - x
+      - y
+      description: 'A public P-256 JWK. The object accepts exactly `kty`, `crv`, `x`, and `y`.
+
+        Private key material such as `d`, embedded key IDs, and all other members
+
+        are rejected. The server also rejects coordinates that are not a point on
+
+        P-256.'
+      title: PublicJwk
+    Limit:
+      type: integer
+      description: Limit of number of items returned.
+      title: Limit
+    ValidationErrorResponse:
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/ErrorName'
+        code:
+          $ref: '#/components/schemas/ErrorCode'
+        message:
+          $ref: '#/components/schemas/ErrorMessage'
+        errors:
+          description: Validation errors. Each entry has a path and a message identifying the invalid field.
+        fix:
+          $ref: '#/components/schemas/ErrorFix'
+        docs:
+          $ref: '#/components/schemas/ErrorDocs'
+      required:
+      - name
+      - errors
+      title: ValidationErrorResponse
+    ErrorFix:
+      type: string
+      description: The concrete next action that resolves the error.
+      title: ErrorFix
+    apiKeys_ApiKeyCreator:
+      type: object
+      properties:
+        api_key_id:
+          $ref: '#/components/schemas/apiKeys_ApiKeyId'
+      required:
+      - api_key_id
+      description: The bearer API key that created the credential. Provenance only; the credential outlives it.
+      title: ApiKeyCreator
+    ErrorCode:
       type: string
       description: Stable, machine-readable error code in snake_case (for example, not_found or missing_permission). Branch on this rather than the message text.
       title: ErrorCode
-    type_api-keys_ListApiKeysResponse:
+    apiKeys_ListApiKeysResponse:
       type: object
       properties:
         count:
-          $ref: '#/components/schemas/type__Count'
+          $ref: '#/components/schemas/Count'
         next_page_token:
-          $ref: '#/components/schemas/type__PageToken'
+          $ref: '#/components/schemas/PageToken'
         api_keys:
           type: array
           items:
-            $ref: '#/components/schemas/type_api-keys_ApiKey'
-          description: Ordered by `created_at` descending.
+            $ref: '#/components/schemas/apiKeys_ApiKey'
+          description: 'Every credential family, ordered by `created_at`. `type` restricts
+
+            to one family.'
       required:
       - count
       - api_keys
       title: ListApiKeysResponse
-    type__ErrorResponse:
+    apiKeys_ApiKeyId:
+      type: string
+      description: ID of api key.
+      title: ApiKeyId
+    apiKeys_Prefix:
+      type: string
+      description: Prefix of api key.
+      title: Prefix
+    apiKeys_PublicKeyCredential:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - public_key
+        api_key_id:
+          $ref: '#/components/schemas/apiKeys_ApiKeyId'
+        client_id:
+          $ref: '#/components/schemas/apiKeys_PublicKeyClientId'
+        name:
+          $ref: '#/components/schemas/apiKeys_Name'
+        public_key:
+          $ref: '#/components/schemas/apiKeys_PublicKeyMaterial'
+        pod_id:
+          $ref: '#/components/schemas/apiKeys_PodScopeId'
+        inbox_id:
+          $ref: '#/components/schemas/apiKeys_InboxScopeId'
+        status:
+          $ref: '#/components/schemas/apiKeys_PublicKeyStatus'
+        used_at:
+          $ref: '#/components/schemas/apiKeys_UsedAt'
+        permissions:
+          $ref: '#/components/schemas/apiKeys_ApiKeyPermissions'
+        created_by:
+          $ref: '#/components/schemas/apiKeys_ApiKeyCreator'
+        created_at:
+          $ref: '#/components/schemas/apiKeys_CreatedAt'
+        updated_at:
+          $ref: '#/components/schemas/apiKeys_UpdatedAt'
+        expires_at:
+          $ref: '#/components/schemas/apiKeys_ExpiresAt'
+      required:
+      - type
+      - api_key_id
+      - name
+      - permissions
+      - created_by
+      - created_at
+      - updated_at
+      description: 'An AgentID sign-in credential, scoped like a bearer key; `api_key_id` is
+
+        the JWS `kid`. A sign-in key carries `status`, gains `public_key` once
+
+        the client has proved it, expires 30 days after
+
+        activation, and carries exactly `app_connect` and
+
+        `app_share_owner`, snapshotted from the bearer key that created it
+
+        and enforced from the key itself.'
+      title: PublicKeyCredential
+    apiKeys_PublicJwkCoordinate:
+      type: string
+      pattern: ^[A-Za-z0-9_-]{43}$
+      minLength: 43
+      maxLength: 43
+      description: A 32-byte P-256 coordinate encoded as unpadded base64url.
+      title: PublicJwkCoordinate
+    apiKeys_UpdatedAt:
+      type: string
+      format: date-time
+      description: Time at which api key was last updated.
+      title: UpdatedAt
+    ErrorResponse:
       type: object
       properties:
         name:
-          $ref: '#/components/schemas/type__ErrorName'
+          $ref: '#/components/schemas/ErrorName'
         code:
-          $ref: '#/components/schemas/type__ErrorCode'
+          $ref: '#/components/schemas/ErrorCode'
         message:
-          $ref: '#/components/schemas/type__ErrorMessage'
+          $ref: '#/components/schemas/ErrorMessage'
         fix:
-          $ref: '#/components/schemas/type__ErrorFix'
+          $ref: '#/components/schemas/ErrorFix'
         docs:
-          $ref: '#/components/schemas/type__ErrorDocs'
+          $ref: '#/components/schemas/ErrorDocs'
       required:
       - name
       - message
       title: ErrorResponse
-    type__ErrorFix:
-      type: string
-      description: The concrete next action that resolves the error.
-      title: ErrorFix
-    type_api-keys_ApiKey:
-      type: object
-      properties:
-        api_key_id:
-          $ref: '#/components/schemas/type_api-keys_ApiKeyId'
-        prefix:
-          $ref: '#/components/schemas/type_api-keys_Prefix'
-        name:
-          $ref: '#/components/schemas/type_api-keys_Name'
-        pod_id:
-          type: string
-          description: Pod ID the api key is scoped to. If set, the key can only access resources within this pod.
-        inbox_id:
-          type: string
-          description: Inbox ID the api key is scoped to. If set, the key can only access resources within this inbox.
-        used_at:
-          type: string
-          format: date-time
-          description: Time at which api key was last used.
-        permissions:
-          $ref: '#/components/schemas/type_api-keys_ApiKeyPermissions'
-        created_at:
-          $ref: '#/components/schemas/type_api-keys_CreatedAt'
-      required:
-      - api_key_id
-      - prefix
-      - name
-      - created_at
-      title: ApiKey
-    type_inboxes_InboxId:
-      type: string
-      description: The ID of the inbox.
-      title: InboxId
-    type__PageToken:
-      type: string
-      description: Page token for pagination.
-      title: PageToken
-    type_api-keys_CreatedAt:
+    apiKeys_UsedAt:
       type: string
       format: date-time
-      description: Time at which api key was created.
-      title: CreatedAt
-    type__ErrorDocs:
+      description: Time at which api key was last used.
+      title: UsedAt
+    ErrorName:
       type: string
-      description: Link to the error reference entry for this code.
-      title: ErrorDocs
-    type_api-keys_CreateApiKeyRequest:
-      type: object
-      properties:
-        name:
-          $ref: '#/components/schemas/type_api-keys_Name'
-        permissions:
-          $ref: '#/components/schemas/type_api-keys_ApiKeyPermissions'
-      title: CreateApiKeyRequest
-    type_api-keys_CreateApiKeyResponse:
+      description: Name of error.
+      title: ErrorName
+    apiKeys_CreateApiKeyResponse:
       type: object
       properties:
         api_key_id:
-          $ref: '#/components/schemas/type_api-keys_ApiKeyId'
+          $ref: '#/components/schemas/apiKeys_ApiKeyId'
         api_key:
           type: string
           description: API key.
         prefix:
-          $ref: '#/components/schemas/type_api-keys_Prefix'
+          $ref: '#/components/schemas/apiKeys_Prefix'
         name:
-          $ref: '#/components/schemas/type_api-keys_Name'
+          $ref: '#/components/schemas/apiKeys_Name'
         pod_id:
-          type: string
-          description: Pod ID the api key is scoped to.
+          $ref: '#/components/schemas/apiKeys_PodScopeId'
         inbox_id:
-          type: string
-          description: Inbox ID the api key is scoped to.
+          $ref: '#/components/schemas/apiKeys_InboxScopeId'
         permissions:
-          $ref: '#/components/schemas/type_api-keys_ApiKeyPermissions'
+          $ref: '#/components/schemas/apiKeys_ApiKeyPermissions'
         created_at:
-          $ref: '#/components/schemas/type_api-keys_CreatedAt'
+          $ref: '#/components/schemas/apiKeys_CreatedAt'
+        expires_at:
+          $ref: '#/components/schemas/apiKeys_ExpiresAt'
       required:
       - api_key_id
       - api_key
@@ -424,14 +767,6 @@ components:
       - name
       - created_at
       title: CreateApiKeyResponse
-    type_api-keys_Prefix:
-      type: string
-      description: Prefix of api key.
-      title: Prefix
-    type__Limit:
-      type: integer
-      description: Limit of number of items returned.
-      title: Limit
   securitySchemes:
     Bearer:
       type: http
