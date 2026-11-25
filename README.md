@@ -72,7 +72,7 @@ AgentMail is an API-first email platform that gives AI agents their own email in
 
 Everything profiled for AgentMail is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/agentmail/](https://apis.io/providers/agentmail/)** — or go straight to one of the APIs or properties below.
 
-### APIs (29)
+### APIs (38)
 
 - [AgentMail Agent API](https://apis.io/apis/agentmail/agentmail-agent-api/) — The agent API from AgentMail — 2 operation(s) for agent.
 - [AgentMail API Keys API](https://apis.io/apis/agentmail/agentmail-api-keys-api/) — The api-keys API from AgentMail — 2 operation(s) for api-keys.
@@ -103,6 +103,15 @@ Everything profiled for AgentMail is published on APIs.io rather than in this re
 - [AgentMail Threads API](https://apis.io/apis/agentmail/agentmail-threads-api/) — The threads API from AgentMail — 4 operation(s) for threads.
 - [AgentMail Webhooks API](https://apis.io/apis/agentmail/agentmail-webhooks-api/) — The webhooks API from AgentMail — 2 operation(s) for webhooks.
 - [AgentMail API Reference API](https://apis.io/apis/agentmail/agentmail-api-reference-api/) — The API Reference API from AgentMail — 0 operation(s) for api reference.
+- [AgentMail Accounts API](https://apis.io/apis/agentmail/agentmail-accounts-api/) — The accounts API from AgentMail — 3 operation(s) for accounts.
+- [AgentMail Apps API](https://apis.io/apis/agentmail/agentmail-apps-api/) — The apps API from AgentMail — 5 operation(s) for apps.
+- [AgentMail inboxes > accounts API](https://apis.io/apis/agentmail/agentmail-inboxes-accounts-api/) — The inboxes > accounts API from AgentMail — 2 operation(s) for inboxes > accounts.
+- [AgentMail inboxes > calendar API](https://apis.io/apis/agentmail/agentmail-inboxes-calendar-api/) — The inboxes > calendar API from AgentMail — 6 operation(s) for inboxes > calendar.
+- [AgentMail inboxes > files API](https://apis.io/apis/agentmail/agentmail-inboxes-files-api/) — The inboxes > files API from AgentMail — 3 operation(s) for inboxes > files.
+- [AgentMail inboxes > webhooks > polling API](https://apis.io/apis/agentmail/agentmail-inboxes-webhooks-polling-api/) — The inboxes > webhooks > polling API from AgentMail — 2 operation(s) for inboxes > webhooks > polling.
+- [AgentMail pods > accounts API](https://apis.io/apis/agentmail/agentmail-pods-accounts-api/) — The pods > accounts API from AgentMail — 2 operation(s) for pods > accounts.
+- [AgentMail pods > webhooks > polling API](https://apis.io/apis/agentmail/agentmail-pods-webhooks-polling-api/) — The pods > webhooks > polling API from AgentMail — 2 operation(s) for pods > webhooks > polling.
+- [AgentMail webhooks > polling API](https://apis.io/apis/agentmail/agentmail-webhooks-polling-api/) — The webhooks > polling API from AgentMail — 2 operation(s) for webhooks > polling.
 
 ### Published properties
 
@@ -130,7 +139,7 @@ Model Context Protocol servers that expose the API to agents.
 
 Which operations an agent can call, which act, and which need a human in the loop.
 
-- [Agentmail Agentic Access](https://apis.io/agentic-access/agentmail/agentmail-agentic-access/)
+- [AgentMail Agentic Access](https://apis.io/agentic-access/agentmail/agentmail-agentic-access/)
 
 #### Collections (28)
 
@@ -163,32 +172,54 @@ Postman and Open Collection request collections.
 - [API Reference agent pods > threads API](https://apis.io/collections/agentmail/open-agentmail-pods-threads-api/)
 - …and 3 more published on APIs.io
 
-#### Overlays (1)
+#### Overlays (11)
 
 OpenAPI overlays, including conversational phrasing for each operation.
 
-- [Agentmail Openapi Overlay](https://apis.io/overlays/agentmail/agentmail-openapi-overlay/)
+- [AgentMail Api Keys Api Certification Overlay](https://apis.io/overlays/agentmail/agentmail-api-keys-api-certification-overlay/)
+- [AgentMail Auth Api Certification Overlay](https://apis.io/overlays/agentmail/agentmail-auth-api-certification-overlay/)
+- [AgentMail Domains Api Certification Overlay](https://apis.io/overlays/agentmail/agentmail-domains-api-certification-overlay/)
+- [AgentMail Drafts Api Certification Overlay](https://apis.io/overlays/agentmail/agentmail-drafts-api-certification-overlay/)
+- [AgentMail Inboxes Api Certification Overlay](https://apis.io/overlays/agentmail/agentmail-inboxes-api-certification-overlay/)
+- [AgentMail Metrics Api Certification Overlay](https://apis.io/overlays/agentmail/agentmail-metrics-api-certification-overlay/)
+- [AgentMail Openapi Overlay](https://apis.io/overlays/agentmail/agentmail-openapi-overlay/)
+- [AgentMail Organizations Api Certification Overlay](https://apis.io/overlays/agentmail/agentmail-organizations-api-certification-overlay/)
+- [AgentMail Pods Api Certification Overlay](https://apis.io/overlays/agentmail/agentmail-pods-api-certification-overlay/)
+- [AgentMail Threads Api Certification Overlay](https://apis.io/overlays/agentmail/agentmail-threads-api-certification-overlay/)
+- [AgentMail Webhooks Api Certification Overlay](https://apis.io/overlays/agentmail/agentmail-webhooks-api-certification-overlay/)
+
+#### Governance rules (1)
+
+Spectral rulesets for the provider's contracts.
+
+- [AgentMail API Rules](https://apis.io/rules/agentmail/agentmail-rules/)
 
 #### Security (3)
 
 Authentication, trust centre, and vulnerability disclosure.
 
-- [Agentmail Authentication](https://apis.io/security/agentmail/agentmail-authentication/)
-- [Agentmail Domain Security](https://apis.io/security/agentmail/agentmail-domain-security/)
-- [Agentmail Trust Center](https://apis.io/security/agentmail/agentmail-trust-center/)
+- [AgentMail Authentication](https://apis.io/security/agentmail/agentmail-authentication/)
+- [AgentMail Domain Security](https://apis.io/security/agentmail/agentmail-domain-security/)
+- [AgentMail Trust Center](https://apis.io/security/agentmail/agentmail-trust-center/)
 
 #### Plans and pricing (2)
 
 Published plans, tiers and prices.
 
-- [Agentmail Plans Pricing](https://apis.io/plans/agentmail/agentmail-plans-pricing/)
-- [Agentmail Price Estimates](https://apis.io/plans/agentmail/agentmail-price-estimates/)
+- [AgentMail Plans Pricing](https://apis.io/plans/agentmail/agentmail-plans-pricing/)
+- [AgentMail Price Estimates](https://apis.io/plans/agentmail/agentmail-price-estimates/)
 
 #### Rate limits (1)
 
 Published request limits.
 
-- [Agentmail Rate Limits](https://apis.io/rate-limits/agentmail/agentmail-rate-limits/)
+- [AgentMail Rate Limits](https://apis.io/rate-limits/agentmail/agentmail-rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [AgentMail Finops](https://apis.io/finops/agentmail/agentmail-finops/)
 
 ## Where to find this API
 
@@ -208,16 +239,16 @@ Links to the company's own pages. This repository publishes no copy of their spe
 
 ## API Evangelist rating
 
-**Kin Score 60.4** — strong · rubric 0.25.0 · scored 2026-10-23
+**Kin Score 62.2** — strong · rubric 0.28.1 · scored 2026-11-21
 
 | Facet | Score |
 |---|---|
 | Discoverability | 75.0 |
-| Contract quality | 59.5 |
-| Contract governance | 4.5 |
-| Operational transparency | 57.9 |
+| Contract quality | 64.5 |
+| Contract governance | 24.2 |
+| Operational transparency | 54.8 |
 | Developer ergonomics | 78.6 |
-| Access clarity | 71.1 |
+| Access clarity | 68.1 |
 
 **Agent readiness 64.6** — agent-native
 
@@ -228,14 +259,14 @@ Links to the company's own pages. This repository publishes no copy of their spe
 | Reversibility Documented | — |
 | MCP Server | verified |
 | Auth Clarity | served (partial credit) |
-| Idempotency | documented (partial credit) |
+| Idempotency | verified |
 | Error Semantics | verified |
 | OpenAPI Examples | — |
 | Rate Limit Signal | documented (partial credit) |
-| Event Surface Described | yes |
+| Event Surface Described | derived (partial credit) |
 | Agent Skills | yes |
 | Well Known Catalog | yes |
-| Consent Identity | — |
+| Consent Identity | signal |
 | Agent Card | — |
 | Dry Run Mode | — |
 | Delegated Identity | served (partial credit) |
@@ -244,8 +275,12 @@ Links to the company's own pages. This repository publishes no copy of their spe
 | Agentic Commerce | — |
 | Pagination Ratio | partial |
 | Operation Distinctiveness | distinct |
+| MCP Tool Quality | na |
+| Onboarding Descriptor | — |
+| Dns Aid Index | na |
+| Markdown Negotiation | yes |
 
-**Regulatory alignment 20.0** — Horizontal (data, software, accessibility, platform)
+**Regulatory alignment 14.5** — Horizontal (data, software, accessibility, platform)
 
 The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/agentmail/](https://apis.io/providers/agentmail/).
 
